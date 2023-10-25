@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/image1.png",
+      "sha1": "4fc18a2ee90d3a94fbb928a8be0336ed5b830155"
+    },
+    {
+      "path": "src/assets/image2.png",
+      "sha1": "ce703b6af778628889a162b12328cb2013f5799c"
+    },
+    {
+      "path": "src/assets/image3.png",
+      "sha1": "60392d95052d5ec732e3c5bdd0e74113f58d9e3c"
+    },
+    {
+      "path": "src/assets/image5.png",
+      "sha1": "b2b80a22f33afe614823f54e8055b67c8c222efc"
+    },
+    {
+      "path": "src/assets/logo.png",
+      "sha1": "1402f19bc34a0d42b9d6c8afb4499f18764a6f52"
+    },
+    {
+      "path": "src/assets/Person.png",
+      "sha1": "89f5d9a1ee2fa1d5753fbe6e310eea70c935fadf"
+    }
+  ]
+}
