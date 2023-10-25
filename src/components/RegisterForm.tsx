@@ -8,14 +8,25 @@ import {
 } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import auth from '@react-native-firebase/auth';
 
-export default function RegisterForm() {
+export default function RegisterForm({ requestSuccess }) {
 
     const navigation = useNavigation();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const onGetOTP = () => { navigation.navigate("OTPVerifyPage" as never) };
+    const countryCode = "+84";
+    const requestOTP = async () => {
+        try {
+            const confirmation = await auth().signInWithPhoneNumber(countryCode + phoneNumber);
+            requestSuccess(confirmation);
+            //setConfirm(confirmation);
+        } catch (error) {
+            console.log('error');
+            console.log(error)
+        }
+    }
     return (
 
         <View style={AppStyle.StyleLogin.container}>
@@ -53,6 +64,6 @@ export default function RegisterForm() {
                     onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
                 />
             </View>
-            <Button containerStyle={AppStyle.StyleLogin.buttonContainer} buttonStyle={AppStyle.StyleLogin.buttonStyle} onPress={onGetOTP} title={"Get OTP"} />
+            <View style={AppStyle.StyleMain.stretch}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={requestOTP} title={"Get OTP"} /></View>
         </View>)
 }

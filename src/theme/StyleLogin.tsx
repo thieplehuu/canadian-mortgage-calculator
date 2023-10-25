@@ -19,20 +19,7 @@ const StyleLogin = StyleSheet.create({
   },
   TextInput: {
     marginLeft: 12,
-    color: "#ffffff",
-  },
-  buttonContainer: {
-    width: "100%",
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 12,
-  },
-  buttonStyle: {
-    width: "100%",
-    padding: 12,
-    color: "#ffffff",
-    backgroundColor: "#816CEC",
+    color: "#000000",
   },
 });
 export default StyleLogin;

@@ -1,11 +1,9 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import AppStyle from '../theme';
 import {
     View,
 } from "react-native";
-import { ButtonGroup, Input } from "@rneui/themed";
-import LoginForm from "../components/LoginForm";
-import RegisterForm from "../components/RegisterForm";
+import { Input } from "@rneui/themed";
 
 export default function OTPVerifyPage() {
     const [otp, setOTP] = useState("");
