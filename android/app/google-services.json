@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "468755262100",
+    "project_id": "canadian-mortgage-calculator",
+    "storage_bucket": "canadian-mortgage-calculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468755262100:android:ceaaa43cb6f641705ae281",
+        "android_client_info": {
+          "package_name": "com.mortgagemadebetter.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJtuWJ6yvNkGjRzB6AgkXt-ncaea1XB3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
