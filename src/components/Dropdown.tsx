@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { BottomSheet } from '@rneui/themed';
 import AppStyle from '../theme';
-import Icon from 'react-native-ico-material-design';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 interface Props {
     label: string;
@@ -18,7 +18,6 @@ interface Props {
 const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
     const DropdownButton = useRef();
     const [selected, setSelected] = useState(undefined);
-    const [dropdownTop, setDropdownTop] = useState(0);
     const [bottomSheetVisible, showBottomSheet] = useState(false);
 
     const toggleDropdown = (): void => {
@@ -41,20 +40,13 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
                 {(selected && selected.label) || label}
             </Text>
 
-            <Icon
-                name="close-button"
-                group="material-design"
-                height="16"
-                width="16"
+            <FontAwesome6 name={"caret-down"} size={16} 
+                onPress={() => showBottomSheet(false)}
             />
             <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
                 <View>
                     <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                        <Icon
-                            name="close-button"
-                            group="material-design"
-                            height="16"
-                            width="16"
+                        <FontAwesome6 name={"caret-down"} size={16} 
                             onPress={() => showBottomSheet(false)}
                         />
                     </View>
@@ -62,7 +54,7 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
                         {
                             data.map((item: any) => {
                                 return (
-                                    <View key={item.key}><TouchableOpacity key={item.key} onPress={() => onItemPress(item)} key={item.key} style={styles.item}>
+                                    <View key={item.value}><TouchableOpacity onPress={() => onItemPress(item)} style={styles.item}>
                                         <Text>{item.label}</Text>
                                     </TouchableOpacity></View>
                                 );
@@ -87,6 +79,10 @@ const styles = StyleSheet.create({
     buttonText: {
         flex: 1,
         textAlign: 'left',
+        fontSize: 13,
+        color: "#000000",
+        textTransform: "uppercase",
+        opacity: 0.5
     },
     icon: {
         marginRight: 10,

@@ -22,7 +22,7 @@ export default function ContactForm() {
     return (
         <View style={AppStyle.StyleMain.container}>
             <View style={styles.userSection}>
-                <Image style={styles.avatar} source={require("../assets/Person.png")} />
+                <Image style={styles.avatar} source={require("../../assets/images/person.png")} />
                 <View style={styles.userInfo}>
                     <Text style={textStyle.text3}>Suganthan Thavarajasingam</Text>
                     <Text style={textStyle.text4}>Mortgage Broker</Text>

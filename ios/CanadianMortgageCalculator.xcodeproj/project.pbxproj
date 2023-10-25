@@ -14,12 +14,12 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		1E118C9EAF2F47A89E27D2DC /* image1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6086A4069FDD4E538D6B86D4 /* image1.png */; };
-		017322F70D7244F19068066F /* image2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DCCDB95BC264B4B8AE10B7E /* image2.png */; };
-		4018463863D24486B7388B2C /* image3.png in Resources */ = {isa = PBXBuildFile; fileRef = DCB0A3296249427A92AE22CE /* image3.png */; };
-		763AC4F7FEE0446AB98B673D /* image5.png in Resources */ = {isa = PBXBuildFile; fileRef = BB7AC107B6864986B1593E03 /* image5.png */; };
-		7E335EAD4CAB48F3BA2E170D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CFB6CE301CF44B29C892687 /* logo.png */; };
-		11DF98A79E1A4535A6DEC97F /* Person.png in Resources */ = {isa = PBXBuildFile; fileRef = 5557617A597C47AC86F19454 /* Person.png */; };
+		F2931712298A4D0DAD53F2D3 /* image1.png in Resources */ = {isa = PBXBuildFile; fileRef = FF0FB48D6F16464CB3ADC0F6 /* image1.png */; };
+		17B55CC557234C72B610BBC3 /* image2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B1D56D0B83744CE8DAEFA6E /* image2.png */; };
+		E6F30A05993C49C4A57EE94C /* image3.png in Resources */ = {isa = PBXBuildFile; fileRef = 07230D3A23DA40868D2BB9F2 /* image3.png */; };
+		821873B39F5D45CE9C36158A /* image5.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDDCFFE32F24F5EAB532CCD /* image5.png */; };
+		F5A647A42E86403DB45C082F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 44A6C5FF64234572B165EE52 /* logo.png */; };
+		819E1A9631A14F8D847A1097 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D92C9AA9DFC4C2AA498184E /* person.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,12 +50,12 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "CanadianMortgageCalculator/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.release.xcconfig"; path = "Target Support Files/Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests/Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		6086A4069FDD4E538D6B86D4 /* image1.png */ = {isa = PBXFileReference; name = "image1.png"; path = "../src/assets/image1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5DCCDB95BC264B4B8AE10B7E /* image2.png */ = {isa = PBXFileReference; name = "image2.png"; path = "../src/assets/image2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DCB0A3296249427A92AE22CE /* image3.png */ = {isa = PBXFileReference; name = "image3.png"; path = "../src/assets/image3.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		BB7AC107B6864986B1593E03 /* image5.png */ = {isa = PBXFileReference; name = "image5.png"; path = "../src/assets/image5.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7CFB6CE301CF44B29C892687 /* logo.png */ = {isa = PBXFileReference; name = "logo.png"; path = "../src/assets/logo.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5557617A597C47AC86F19454 /* Person.png */ = {isa = PBXFileReference; name = "Person.png"; path = "../src/assets/Person.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FF0FB48D6F16464CB3ADC0F6 /* image1.png */ = {isa = PBXFileReference; name = "image1.png"; path = "../assets/images/image1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2B1D56D0B83744CE8DAEFA6E /* image2.png */ = {isa = PBXFileReference; name = "image2.png"; path = "../assets/images/image2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		07230D3A23DA40868D2BB9F2 /* image3.png */ = {isa = PBXFileReference; name = "image3.png"; path = "../assets/images/image3.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5FDDCFFE32F24F5EAB532CCD /* image5.png */ = {isa = PBXFileReference; name = "image5.png"; path = "../assets/images/image5.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		44A6C5FF64234572B165EE52 /* logo.png */ = {isa = PBXFileReference; name = "logo.png"; path = "../assets/images/logo.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1D92C9AA9DFC4C2AA498184E /* person.png */ = {isa = PBXFileReference; name = "person.png"; path = "../assets/images/person.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,12 +164,12 @@
 		E9ED76F2B4C0432AAF345228 /* Resources */ = {
 			isa = "PBXGroup";
 			children = (
-				6086A4069FDD4E538D6B86D4 /* image1.png */,
-				5DCCDB95BC264B4B8AE10B7E /* image2.png */,
-				DCB0A3296249427A92AE22CE /* image3.png */,
-				BB7AC107B6864986B1593E03 /* image5.png */,
-				7CFB6CE301CF44B29C892687 /* logo.png */,
-				5557617A597C47AC86F19454 /* Person.png */,
+				FF0FB48D6F16464CB3ADC0F6 /* image1.png */,
+				2B1D56D0B83744CE8DAEFA6E /* image2.png */,
+				07230D3A23DA40868D2BB9F2 /* image3.png */,
+				5FDDCFFE32F24F5EAB532CCD /* image5.png */,
+				44A6C5FF64234572B165EE52 /* logo.png */,
+				1D92C9AA9DFC4C2AA498184E /* person.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -271,12 +271,12 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				1E118C9EAF2F47A89E27D2DC /* image1.png in Resources */,
-				017322F70D7244F19068066F /* image2.png in Resources */,
-				4018463863D24486B7388B2C /* image3.png in Resources */,
-				763AC4F7FEE0446AB98B673D /* image5.png in Resources */,
-				7E335EAD4CAB48F3BA2E170D /* logo.png in Resources */,
-				11DF98A79E1A4535A6DEC97F /* Person.png in Resources */,
+				F2931712298A4D0DAD53F2D3 /* image1.png in Resources */,
+				17B55CC557234C72B610BBC3 /* image2.png in Resources */,
+				E6F30A05993C49C4A57EE94C /* image3.png in Resources */,
+				821873B39F5D45CE9C36158A /* image5.png in Resources */,
+				F5A647A42E86403DB45C082F /* logo.png in Resources */,
+				819E1A9631A14F8D847A1097 /* person.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

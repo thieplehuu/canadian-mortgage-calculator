@@ -4,7 +4,7 @@ import { BottomSheet, Button, Card, Image, ListItem } from '@rneui/themed';
 import AppStyle from '../theme';
 import LinearGradient from 'react-native-linear-gradient';
 import ContactForm from '../components/ContactForm';
-import Icon from 'react-native-ico';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { useNavigation } from '@react-navigation/native';
 
 const HomePage = () => {
@@ -21,30 +21,30 @@ const HomePage = () => {
                     <View style={AppStyle.StyleMain.row}>
                         <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#816CEC', '#F4ABED']} style={AppStyle.StyleMain.panelContent}>
-                                <Text style={textStyle.text1}>5.50%</Text>
-                                <Text style={textStyle.text2}>Fixed rate</Text>
-                                <Text style={textStyle.text2}>5 Years</Text>
+                                <Text style={AppStyle.TextStyle.text1}>5.50%</Text>
+                                <Text style={AppStyle.TextStyle.text2}>Fixed rate</Text>
+                                <Text style={AppStyle.TextStyle.text2}>5 Years</Text>
                             </LinearGradient>
                         </Card>
                         <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1.25, y: 0 }} colors={['#43C6AC', '#F8FFAE']} style={AppStyle.StyleMain.panelContent}>
-                                <Text style={textStyle.text1}>5.89%</Text>
-                                <Text style={textStyle.text2}>Fixed rate</Text>
-                                <Text style={textStyle.text2}>3 Years</Text>
+                                <Text style={AppStyle.TextStyle.text1}>5.89%</Text>
+                                <Text style={AppStyle.TextStyle.text2}>Fixed rate</Text>
+                                <Text style={AppStyle.TextStyle.text2}>3 Years</Text>
                             </LinearGradient>
                         </Card>
                         <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#2193B0', '#6DD5ED']} style={AppStyle.StyleMain.panelContent}>
-                                <Text style={textStyle.text1}>6.40%</Text>
-                                <Text style={textStyle.text2}>Variable</Text>
-                                <Text style={textStyle.text2}>5 Year</Text>
+                                <Text style={AppStyle.TextStyle.text1}>6.40%</Text>
+                                <Text style={AppStyle.TextStyle.text2}>Variable</Text>
+                                <Text style={AppStyle.TextStyle.text2}>5 Year</Text>
                             </LinearGradient>
                         </Card>
                         <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                             <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#EF629F', '#F5D8B3']} style={AppStyle.StyleMain.panelContent}>
-                                <Text style={textStyle.text1}>6.95%</Text>
-                                <Text style={textStyle.text2}>Prime</Text>
-                                <Text style={textStyle.text2}>Rate</Text>
+                                <Text style={AppStyle.TextStyle.text1}>6.95%</Text>
+                                <Text style={AppStyle.TextStyle.text2}>Prime</Text>
+                                <Text style={AppStyle.TextStyle.text2}>Rate</Text>
                             </LinearGradient>
                         </Card>
                     </View >
@@ -56,12 +56,12 @@ const HomePage = () => {
                                     <View style={sectionStyle.columns}>
                                         <View style={sectionStyle.left}>
                                             <View style={sectionStyle.content}>
-                                                <Text style={textStyle.text3}>Mortgage Calculator</Text>
-                                                <Text style={textStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                                <Text style={AppStyle.TextStyle.text3}>Mortgage Calculator</Text>
+                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                             </View>
                                         </View>
                                         <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../assets/image1.png")} />
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image1.png")} />
                                         </View>
                                     </View>
                                 </LinearGradient></TouchableOpacity>
@@ -74,12 +74,12 @@ const HomePage = () => {
                                     <View style={sectionStyle.columns}>
                                         <View style={sectionStyle.left}>
                                             <View style={sectionStyle.content}>
-                                                <Text style={textStyle.text3}>Purchase</Text>
-                                                <Text style={textStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                                <Text style={AppStyle.TextStyle.text3}>Purchase</Text>
+                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                             </View>
                                         </View>
                                         <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../assets/image2.png")} />
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image2.png")} />
                                         </View>
                                     </View>
                                 </LinearGradient>
@@ -92,12 +92,12 @@ const HomePage = () => {
                                     <View style={sectionStyle.columns}>
                                         <View style={sectionStyle.left}>
                                             <View style={sectionStyle.content}>
-                                                <Text style={textStyle.text3}>Refinance</Text>
-                                                <Text style={textStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                                <Text style={AppStyle.TextStyle.text3}>Refinance</Text>
+                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                             </View>
                                         </View>
                                         <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../assets/image3.png")} />
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image3.png")} />
                                         </View>
                                     </View>
                                 </LinearGradient>
@@ -110,12 +110,12 @@ const HomePage = () => {
                                     <View style={sectionStyle.columns}>
                                         <View style={sectionStyle.left}>
                                             <View style={sectionStyle.content}>
-                                                <Text style={textStyle.text3}>Consolidation</Text>
-                                                <Text style={textStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                                <Text style={AppStyle.TextStyle.text3}>Consolidation</Text>
+                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                             </View>
                                         </View>
                                         <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../assets/image3.png")} />
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image3.png")} />
                                         </View>
                                     </View>
                                 </LinearGradient>
@@ -128,12 +128,12 @@ const HomePage = () => {
                                     <View style={sectionStyle.columns}>
                                         <View style={sectionStyle.left}>
                                             <View style={sectionStyle.content}>
-                                                <Text style={textStyle.text3}>Pre-Qualifier</Text>
-                                                <Text style={textStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                                <Text style={AppStyle.TextStyle.text3}>Pre-Qualifier</Text>
+                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                             </View>
                                         </View>
                                         <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../assets/image5.png")} />
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image5.png")} />
                                         </View>
                                     </View>
                                 </LinearGradient>
@@ -152,11 +152,7 @@ const HomePage = () => {
             <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
                 <View>
                     <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                        <Icon
-                            name="close-button"
-                            group="material-design"
-                            height="16"
-                            width="16"
+                        <FontAwesome6 name={"rocket"} size={16} 
                             onPress={() => showBottomSheet(false)}
                         />
                     </View>
@@ -189,27 +185,4 @@ const sectionStyle = StyleSheet.create({
         width: "100%",
         height: "100%"
     }
-})
-
-const textStyle = StyleSheet.create({
-    text1: {
-        fontSize: 22,
-        color: "#ffffff"
-    },
-    text2: {
-        marginTop: 5,
-        fontSize: 14,
-        color: "#ffffff",
-        textTransform: "uppercase"
-    },
-    text3: {
-        fontSize: 16,
-        fontWeight: "500",
-        color: "#000000"
-    },
-    text4: {
-        marginTop: 5,
-        fontSize: 12,
-        color: "#000000"
-    },
 })

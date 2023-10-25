@@ -21,7 +21,7 @@ export default function LoginPage() {
         <View style={AppStyle.StyleMain.container}>
             {step === 'INPUT_PHONE_NUMBER' &&
                 <>
-                    <Image style={AppStyle.StyleLogin.logo} source={require("../assets/logo.png")} />
+                    <Image style={AppStyle.StyleLogin.logo} source={require("../../assets/images/logo.png")} />
                     <ButtonGroup
                         buttons={['Sign In', 'Sign up']}
                         selectedIndex={selectedIndex}

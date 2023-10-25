@@ -30,11 +30,23 @@ function App(): JSX.Element {
         <Stack.Screen options={{
           headerShown: false
         }} name="HomePage" component={HomePage} />
-        <Stack.Screen name="MortgageCalculatorPage" component={MortgageCalculatorPage} />
-        <Stack.Screen name="PurchasePage" component={PurchasePage} />
-        <Stack.Screen name="RefinancePage" component={RefinancePage} />
-        <Stack.Screen name="ConsolidationPage" component={ConsolidationPage} />
-        <Stack.Screen name="PreQualifierPage" component={PreQualifierPage} />
+        <Stack.Screen 
+          name="MortgageCalculatorPage" 
+          component={MortgageCalculatorPage} 
+          options={{ title: 'Mortgage Calculator' }}/>
+        <Stack.Screen 
+          name="PurchasePage" 
+          component={PurchasePage} 
+          options={{ title: 'Purchase' }}/>
+        <Stack.Screen name="RefinancePage" 
+          component={RefinancePage} 
+          options={{ title: 'Refinance' }}/>
+        <Stack.Screen name="ConsolidationPage" 
+          component={ConsolidationPage} 
+          options={{ title: 'Consolidation' }}/>
+        <Stack.Screen name="PreQualifierPage" 
+          component={PreQualifierPage} 
+          options={{ title: 'Pre-Qualifier' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -10,7 +10,6 @@ import RnRangeSlider from "rn-range-slider";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 export default function MortgageCalculatorPage() {
-    const [value, setValue] = useState(0);
     const [low, setLow] = useState(0);
     const [high, setHigh] = useState(100);
     const renderThumb = useCallback(() => <View style={AppStyle.Base.sliderThumb} />, []);
@@ -69,12 +68,12 @@ export default function MortgageCalculatorPage() {
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Select Item" data={data} onSelect={setSelected} />
-                            <Text>$3,291.88*</Text>
+                            <Dropdown label="Biweekly Payment" data={data} onSelect={setSelected}/>
+                            <Text style={AppStyle.TextStyle.text6}>$3,291.88*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                title="Contact"
+                                title="Apply Now"
                                 onPress={() => { }} />
                         </View>
                     </View>
