@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import AppStyle from '../theme';
 import {
     Text,
@@ -6,9 +6,12 @@ import {
     Alert
 } from "react-native";
 import { Input, Button } from "@rneui/themed";
-import { useNavigation } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
-export default function RequestOTPForm({ requestSuccess }) {
+interface Props {
+    requestSuccess: ({}) => void;
+}
+
+const RequestOTPForm: FC<Props> = ({ requestSuccess }) => {
+
     const [phoneNumber, setPhoneNumber] = useState("");
 
     const countryCode = "+84";
@@ -32,8 +35,7 @@ export default function RequestOTPForm({ requestSuccess }) {
                     placeholder='Phone Number'
                     value={phoneNumber}
                     leftIcon={
-                        <Text
-                        >{countryCode}</Text>
+                        <View><Text>{countryCode} |</Text></View>
                     }
                     onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
                 />
@@ -42,3 +44,5 @@ export default function RequestOTPForm({ requestSuccess }) {
         </View>)
 
 }
+
+export default RequestOTPForm;

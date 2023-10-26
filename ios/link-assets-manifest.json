@@ -3,19 +3,27 @@
   "data": [
     {
       "path": "assets/images/image1.png",
-      "sha1": "4fc18a2ee90d3a94fbb928a8be0336ed5b830155"
+      "sha1": "fd6c9e6d78129bbbf4dd229b21cd8be10b0dc411"
     },
     {
       "path": "assets/images/image2.png",
-      "sha1": "ce703b6af778628889a162b12328cb2013f5799c"
+      "sha1": "a79a41d97a454b7d191210616e4a1019c997df93"
     },
     {
       "path": "assets/images/image3.png",
       "sha1": "60392d95052d5ec732e3c5bdd0e74113f58d9e3c"
     },
     {
+      "path": "assets/images/image4.png",
+      "sha1": "b7ca96b97140601cc03a0d68cb0715bf4a97720b"
+    },
+    {
       "path": "assets/images/image5.png",
       "sha1": "b2b80a22f33afe614823f54e8055b67c8c222efc"
+    },
+    {
+      "path": "assets/images/image6.png",
+      "sha1": "b5fd27aad60c825dca364173598421e30c5fc393"
     },
     {
       "path": "assets/images/logo.png",

@@ -14,8 +14,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		F2931712298A4D0DAD53F2D3 /* image1.png in Resources */ = {isa = PBXBuildFile; fileRef = FF0FB48D6F16464CB3ADC0F6 /* image1.png */; };
-		17B55CC557234C72B610BBC3 /* image2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B1D56D0B83744CE8DAEFA6E /* image2.png */; };
 		E6F30A05993C49C4A57EE94C /* image3.png in Resources */ = {isa = PBXBuildFile; fileRef = 07230D3A23DA40868D2BB9F2 /* image3.png */; };
 		821873B39F5D45CE9C36158A /* image5.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDDCFFE32F24F5EAB532CCD /* image5.png */; };
 		F5A647A42E86403DB45C082F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 44A6C5FF64234572B165EE52 /* logo.png */; };
@@ -29,6 +27,10 @@
 		9D87B529904C4DC2B0C54E79 /* SFPRODISPLAYSEMIBOLDITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 4F0463858162493CACC99C52 /* SFPRODISPLAYSEMIBOLDITALIC.OTF */; };
 		1C1E4471AACA483DAF4400F5 /* SFPRODISPLAYTHINITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = EC1C73B399BF433A8041560D /* SFPRODISPLAYTHINITALIC.OTF */; };
 		A6A641B91DC6428A9D615A79 /* SFPRODISPLAYULTRALIGHTITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = AD276F49D04D4B1CB2B9D38A /* SFPRODISPLAYULTRALIGHTITALIC.OTF */; };
+		1CD5B25411214F95B2C276BE /* image6.png in Resources */ = {isa = PBXBuildFile; fileRef = C36879D3A9614A67918BFB6B /* image6.png */; };
+		144F2B5EF1A04B3185029D77 /* image4.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5DC0FCB1FA4102958CE482 /* image4.png */; };
+		CE091F41EEAF4FA7A5724F8B /* image2.png in Resources */ = {isa = PBXBuildFile; fileRef = CAA51B1F69224A2A96BDA501 /* image2.png */; };
+		FD463DDA48154A4C862FFB82 /* image1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A6E963838A64FFF90D2465D /* image1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +61,6 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "CanadianMortgageCalculator/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.release.xcconfig"; path = "Target Support Files/Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests/Pods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FF0FB48D6F16464CB3ADC0F6 /* image1.png */ = {isa = PBXFileReference; name = "image1.png"; path = "../assets/images/image1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2B1D56D0B83744CE8DAEFA6E /* image2.png */ = {isa = PBXFileReference; name = "image2.png"; path = "../assets/images/image2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		07230D3A23DA40868D2BB9F2 /* image3.png */ = {isa = PBXFileReference; name = "image3.png"; path = "../assets/images/image3.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5FDDCFFE32F24F5EAB532CCD /* image5.png */ = {isa = PBXFileReference; name = "image5.png"; path = "../assets/images/image5.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		44A6C5FF64234572B165EE52 /* logo.png */ = {isa = PBXFileReference; name = "logo.png"; path = "../assets/images/logo.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
@@ -74,6 +74,10 @@
 		4F0463858162493CACC99C52 /* SFPRODISPLAYSEMIBOLDITALIC.OTF */ = {isa = PBXFileReference; name = "SFPRODISPLAYSEMIBOLDITALIC.OTF"; path = "../assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EC1C73B399BF433A8041560D /* SFPRODISPLAYTHINITALIC.OTF */ = {isa = PBXFileReference; name = "SFPRODISPLAYTHINITALIC.OTF"; path = "../assets/fonts/SFPRODISPLAYTHINITALIC.OTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		AD276F49D04D4B1CB2B9D38A /* SFPRODISPLAYULTRALIGHTITALIC.OTF */ = {isa = PBXFileReference; name = "SFPRODISPLAYULTRALIGHTITALIC.OTF"; path = "../assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C36879D3A9614A67918BFB6B /* image6.png */ = {isa = PBXFileReference; name = "image6.png"; path = "../assets/images/image6.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BF5DC0FCB1FA4102958CE482 /* image4.png */ = {isa = PBXFileReference; name = "image4.png"; path = "../assets/images/image4.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CAA51B1F69224A2A96BDA501 /* image2.png */ = {isa = PBXFileReference; name = "image2.png"; path = "../assets/images/image2.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3A6E963838A64FFF90D2465D /* image1.png */ = {isa = PBXFileReference; name = "image1.png"; path = "../assets/images/image1.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,8 +186,6 @@
 		E9ED76F2B4C0432AAF345228 /* Resources */ = {
 			isa = "PBXGroup";
 			children = (
-				FF0FB48D6F16464CB3ADC0F6 /* image1.png */,
-				2B1D56D0B83744CE8DAEFA6E /* image2.png */,
 				07230D3A23DA40868D2BB9F2 /* image3.png */,
 				5FDDCFFE32F24F5EAB532CCD /* image5.png */,
 				44A6C5FF64234572B165EE52 /* logo.png */,
@@ -197,6 +199,10 @@
 				4F0463858162493CACC99C52 /* SFPRODISPLAYSEMIBOLDITALIC.OTF */,
 				EC1C73B399BF433A8041560D /* SFPRODISPLAYTHINITALIC.OTF */,
 				AD276F49D04D4B1CB2B9D38A /* SFPRODISPLAYULTRALIGHTITALIC.OTF */,
+				C36879D3A9614A67918BFB6B /* image6.png */,
+				BF5DC0FCB1FA4102958CE482 /* image4.png */,
+				CAA51B1F69224A2A96BDA501 /* image2.png */,
+				3A6E963838A64FFF90D2465D /* image1.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -298,8 +304,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				F2931712298A4D0DAD53F2D3 /* image1.png in Resources */,
-				17B55CC557234C72B610BBC3 /* image2.png in Resources */,
 				E6F30A05993C49C4A57EE94C /* image3.png in Resources */,
 				821873B39F5D45CE9C36158A /* image5.png in Resources */,
 				F5A647A42E86403DB45C082F /* logo.png in Resources */,
@@ -313,6 +317,10 @@
 				9D87B529904C4DC2B0C54E79 /* SFPRODISPLAYSEMIBOLDITALIC.OTF in Resources */,
 				1C1E4471AACA483DAF4400F5 /* SFPRODISPLAYTHINITALIC.OTF in Resources */,
 				A6A641B91DC6428A9D615A79 /* SFPRODISPLAYULTRALIGHTITALIC.OTF in Resources */,
+				1CD5B25411214F95B2C276BE /* image6.png in Resources */,
+				144F2B5EF1A04B3185029D77 /* image4.png in Resources */,
+				CE091F41EEAF4FA7A5724F8B /* image2.png in Resources */,
+				FD463DDA48154A4C862FFB82 /* image1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,7 +22,7 @@ export default function LoginPage() {
             alignItems: "center",
             justifyContent: "center",
         }]}>
-            {step === 'INPUT_PHONE_NUMBER' &&
+            { (step === 'INPUT_PHONE_NUMBER'|| step === 'VERIFY_SUCCESS') &&
                 <>
                     <Image style={AppStyle.StyleLogin.logo} source={require("../../assets/images/logo.png")} />
                     <ButtonGroup

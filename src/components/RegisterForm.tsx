@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, FC, useState } from "react";
 import AppStyle from '../theme';
 import {
     Text,
@@ -10,7 +10,11 @@ import { Button, Input } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import auth from '@react-native-firebase/auth';
 
-export default function RegisterForm({ requestSuccess }) {
+interface Props {
+    requestSuccess: ({}) => void;
+}
+
+const RegisterForm: FC<Props> = ({ requestSuccess }) => {
 
     const navigation = useNavigation();
     const [firstName, setFirstName] = useState("");
@@ -58,8 +62,7 @@ export default function RegisterForm({ requestSuccess }) {
                     secureTextEntry={true}
                     value={phoneNumber}
                     leftIcon={
-                        <Text
-                        >+1</Text>
+                        <View><Text>{countryCode} |</Text></View>
                     }
                     onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
                 />
@@ -67,3 +70,5 @@ export default function RegisterForm({ requestSuccess }) {
             <View style={AppStyle.StyleMain.stretch}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={requestOTP} title={"Get OTP"} /></View>
         </View>)
 }
+
+export default RegisterForm;

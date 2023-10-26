@@ -151,7 +151,7 @@ const HomePage = () => {
                                             </View>
                                         </View>
                                         <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image5.png")} />
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image6.png")} />
                                         </View>
                                     </View>
                                 </LinearGradient>
@@ -191,10 +191,10 @@ const sectionStyle = StyleSheet.create({
         alignItems: 'flex-start'
     },
     left: {
-        width: '60%'
+        width: '50%'
     },
     right: {
-        width: '40%'
+        width: '50%'
     },
     content: {
         padding: 16
