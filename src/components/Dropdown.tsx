@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { BottomSheet } from '@rneui/themed';
 import AppStyle from '../theme';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 interface Props {
     label: string;
@@ -16,8 +16,8 @@ interface Props {
 }
 
 const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
-    const DropdownButton = useRef();
-    const [selected, setSelected] = useState(undefined);
+    const DropdownButton = useRef(null);
+    const [selected, setSelected] = useState({ label: "", value: "" });
     const [bottomSheetVisible, showBottomSheet] = useState(false);
 
     const toggleDropdown = (): void => {
@@ -40,13 +40,13 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
                 {(selected && selected.label) || label}
             </Text>
 
-            <FontAwesome6 name={"caret-down"} size={16} 
+            <Icon name={"caretdown"} size={16}
                 onPress={() => showBottomSheet(false)}
             />
             <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
                 <View>
                     <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                        <FontAwesome6 name={"caret-down"} size={16} 
+                        <Icon name={"close"} size={16}
                             onPress={() => showBottomSheet(false)}
                         />
                     </View>

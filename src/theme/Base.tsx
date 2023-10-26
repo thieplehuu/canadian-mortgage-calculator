@@ -24,14 +24,6 @@ const Base = StyleSheet.create({
     paddingHorizontal: 12,
     backgroundColor: "#ffffff"
   },
-  sliderThumb: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    borderWidth: 2,
-    borderColor: '#ffffff',
-    backgroundColor: '#816CEC',
-  },
   sliderRail: {
     flex: 1,
     height: 4,
@@ -65,5 +57,20 @@ const Base = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
+  sliderThumbContainer: {
+    width: 18,
+    height: 18,
+    borderRadius: 18,
+    backgroundColor: "#ffffff",
+    justifyContent: "center", borderWidth: 1,
+    borderColor: "#cdcdcd"
+  },
+  sliderThumb: {
+    width: 12,
+    height: 12,
+    borderRadius: 12,
+    backgroundColor: "#816CEC",
+    alignSelf: "center"
+  }
 });
 export default Base;

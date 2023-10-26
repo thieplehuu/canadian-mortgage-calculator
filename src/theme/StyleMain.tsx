@@ -3,15 +3,6 @@ const StyleMain = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ffffff"
-  },
-  containerFlexStart: {
-    flex: 1,
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "flex-start",
     backgroundColor: "#ffffff"
   },
   stretch: {
@@ -91,8 +82,8 @@ const StyleMain = StyleSheet.create({
     borderRadius: 5,
     paddingTop: 8,
     paddingBottom: 8,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 12,
+    paddingRight: 12,
     color: "#ffffff",
     backgroundColor: "#816CEC",
   },

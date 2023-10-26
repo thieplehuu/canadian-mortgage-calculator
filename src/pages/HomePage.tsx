@@ -4,7 +4,7 @@ import { BottomSheet, Button, Card, Image, ListItem } from '@rneui/themed';
 import AppStyle from '../theme';
 import LinearGradient from 'react-native-linear-gradient';
 import ContactForm from '../components/ContactForm';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 
 const HomePage = () => {
@@ -139,6 +139,24 @@ const HomePage = () => {
                                 </LinearGradient>
                             </TouchableOpacity>
                         </View>
+                        <View style={AppStyle.StyleMain.sectionContainer}>
+                            <TouchableOpacity onPress={() => {
+                                goto("EnquityPage");
+                            }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#bfeeef', '#f4f8fd']} style={AppStyle.StyleMain.sectionContent}>
+                                    <View style={sectionStyle.columns}>
+                                        <View style={sectionStyle.left}>
+                                            <View style={sectionStyle.content}>
+                                                <Text style={AppStyle.TextStyle.text3}>Enquity</Text>
+                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                            </View>
+                                        </View>
+                                        <View style={sectionStyle.right}>
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image5.png")} />
+                                        </View>
+                                    </View>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View >
             </ScrollView>
@@ -152,7 +170,7 @@ const HomePage = () => {
             <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
                 <View>
                     <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                        <FontAwesome6 name={"rocket"} size={16} 
+                        <Icon name={"close"} size={16}
                             onPress={() => showBottomSheet(false)}
                         />
                     </View>

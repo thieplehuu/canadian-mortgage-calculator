@@ -3,31 +3,14 @@ import AppStyle from '../theme';
 import {
     View,
 } from "react-native";
-import { Button, Input, Text } from "@rneui/themed";
-import OutlinedTextInput from "../components/OutlinedTextInput";
-import Dropdown from "../components/Dropdown";
+import { Button, Input, Slider, Text } from "@rneui/themed";
+import { OutlinedTextInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
-import RnRangeSlider from "rn-range-slider";
 
 export default function PreQualifierPage() {
-    const [low, setLow] = useState(0);
-    const [high, setHigh] = useState(100);
-    const renderThumb = useCallback(() => <View style={AppStyle.Base.sliderThumb} />, []);
-    const renderRail = useCallback(() => <View style={AppStyle.Base.sliderRail} />, []);
-    const renderRailSelected = useCallback(() => <View style={AppStyle.Base.sliderRailSelected} />, []);
-    const renderLabel = useCallback((value: any) => <View style={AppStyle.Base.sliderLabel}>
-        <Text style={{
-            fontSize: 16,
-            color: '#fff',
-        }}>{value}</Text>
-    </View>, []);
-    const renderNotch = useCallback(() => <View style={AppStyle.Base.sliderNotch} />, []);
-    const handleValueChange = useCallback((low: any, high: any) => {
-        setLow(low);
-        setHigh(high);
-    }, []);
 
-    const [selected, setSelected] = useState(undefined);
+    const [value, setValue] = useState(0);
+
     const data = [
         { label: 'One', value: '1' },
         { label: 'Two', value: '2' },
@@ -38,28 +21,18 @@ export default function PreQualifierPage() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
-            <View style={AppStyle.StyleMain.containerFlexStart}>
+            <View style={AppStyle.StyleMain.container}>
                 <OutlinedTextInput
-                    label="User name" />
-                <RnRangeSlider
-                    style={{ width: "100%", marginTop: 20 }}
-                    min={0}
-                    max={100}
-                    step={1}
-                    floatingLabel
-                    renderThumb={renderThumb}
-                    renderRail={renderRail}
-                    renderRailSelected={renderRailSelected}
-                    renderLabel={renderLabel}
-                    renderNotch={renderNotch}
-                    onValueChanged={handleValueChange}
-                    disableRange={true}
+                    label="Household Income" />
+                <Slider
+                    value={value}
+                    onValueChange={(value) => setValue(value)}
                 />
                 <View style={AppStyle.Base.sliderLabelContainer}>
                     <View style={{ alignContent: "flex-start" }}><Text>{"$0"}</Text></View>
                     <View style={{ alignSelf: "stretch" }}></View>
                     <View style={{ alignContent: "flex-end" }}><Text>{"$2M"}</Text></View>
-                </View>             
+                </View>
                 <OutlinedTextInput
                     label="Property Tax" />
                 <OutlinedTextInput
@@ -72,12 +45,12 @@ export default function PreQualifierPage() {
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Text style={AppStyle.TextStyle.text5}>New Monthly Payment</Text>
-                            <Text style={AppStyle.TextStyle.text6}>$3,291.88*</Text>
+                            <Text style={AppStyle.TextStyle.text5}>Maximum Mortgage</Text>
+                            <Text style={AppStyle.TextStyle.text6}>$958,744*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                title="Take the Next Step"
+                                title="Get Pre-Qualified"
                                 onPress={() => { }} />
                         </View>
                     </View>

@@ -4,30 +4,17 @@ import {
     View,
     Text,
 } from "react-native";
-import { Button } from "@rneui/themed";
-import OutlinedTextInput from "../components/OutlinedTextInput";
-import RnRangeSlider from "rn-range-slider";
+import { Button, Slider } from "@rneui/themed";
+import { OutlinedTextInput } from "../components/OutlinedInput";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { moneyFormat, rateToString } from "../utils";
 export default function MortgageCalculatorPage() {
-    const [low, setLow] = useState(0);
-    const [high, setHigh] = useState(100);
-    const renderThumb = useCallback(() => <View style={AppStyle.Base.sliderThumb} />, []);
-    const renderRail = useCallback(() => <View style={AppStyle.Base.sliderRail} />, []);
-    const renderRailSelected = useCallback(() => <View style={AppStyle.Base.sliderRailSelected} />, []);
-    const renderLabel = useCallback((value: any) => <View style={AppStyle.Base.sliderLabel}>
-        <Text style={{
-            fontSize: 16,
-            color: '#fff',
-        }}>{value}</Text>
-    </View>, []);
-    const renderNotch = useCallback(() => <View style={AppStyle.Base.sliderNotch} />, []);
-    const handleValueChange = useCallback((low: any, high: any) => {
-        setLow(low);
-        setHigh(high);
-    }, []);
-
-    const [selected, setSelected] = useState(undefined);
+    const [amount, setAmount] = useState(1000000);
+    const [rate, setRate] = useState("1,75");
+    const [amortization, setAmotization] = useState("");
+    const [value, setValue] = useState(0);
+    const [selected, setSelected] = useState({ label: "", value: "" });
     const data = [
         { label: 'One', value: '1' },
         { label: 'Two', value: '2' },
@@ -38,22 +25,25 @@ export default function MortgageCalculatorPage() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
-            <View style={AppStyle.StyleMain.containerFlexStart}>
+            <View style={AppStyle.StyleMain.container}>
                 <OutlinedTextInput
-                    label="User name" />
-                <RnRangeSlider
-                    style={{ width: "100%", marginTop: 20 }}
-                    min={0}
-                    max={100}
-                    step={1}
-                    floatingLabel
-                    renderThumb={renderThumb}
-                    renderRail={renderRail}
-                    renderRailSelected={renderRailSelected}
-                    renderLabel={renderLabel}
-                    renderNotch={renderNotch}
-                    onValueChanged={handleValueChange}
-                    disableRange={true}
+                    label="Mortgage Amount"
+                    value={moneyFormat(amount)}
+                    onTextChange={(text) => setAmount(text)} />
+                <Slider
+                    value={value}
+                    onValueChange={(value) => setValue(value)}
+                    thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
+                    trackStyle={{ height: 4, backgroundColor: 'transparent' }}
+                    minimumTrackTintColor="#816CEC"
+                    maximumTrackTintColor="#816CEC"
+                    thumbProps={{
+                        children: (
+                            <View style={AppStyle.Base.sliderThumbContainer}>
+                                <View style={AppStyle.Base.sliderThumb} />
+                            </View>
+                        ),
+                    }}
                 />
                 <View style={AppStyle.Base.sliderLabelContainer}>
                     <View style={{ alignContent: "flex-start" }}><Text>{"$0"}</Text></View>
@@ -61,14 +51,18 @@ export default function MortgageCalculatorPage() {
                     <View style={{ alignContent: "flex-end" }}><Text>{"$2M"}</Text></View>
                 </View>
                 <OutlinedTextInput
-                    label="Rates" />
+                    label="Rates"
+                    value={rateToString(rate)}
+                    onTextChange={(text) => setRate(text)} />
                 <OutlinedTextInput
-                    label="Amortization" />
+                    label="Amortization"
+                    value={amortization}
+                    onTextChange={(text) => setAmotization(text)} />
 
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Biweekly Payment" data={data} onSelect={setSelected}/>
+                            <Dropdown label="Biweekly Payment" data={data} onSelect={(item) => setSelected(item)} />
                             <Text style={AppStyle.TextStyle.text6}>$3,291.88*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>

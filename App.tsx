@@ -16,6 +16,7 @@ import PurchasePage from './src/pages/PurchasePage';
 import RefinancePage from './src/pages/RefinancePage';
 import ConsolidationPage from './src/pages/ConsolidationPage';
 import PreQualifierPage from './src/pages/PreQualifierPage';
+import EnquityPage from './src/pages/EnquityPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,23 +31,26 @@ function App(): JSX.Element {
         <Stack.Screen options={{
           headerShown: false
         }} name="HomePage" component={HomePage} />
-        <Stack.Screen 
-          name="MortgageCalculatorPage" 
-          component={MortgageCalculatorPage} 
-          options={{ title: 'Mortgage Calculator' }}/>
-        <Stack.Screen 
-          name="PurchasePage" 
-          component={PurchasePage} 
-          options={{ title: 'Purchase' }}/>
-        <Stack.Screen name="RefinancePage" 
-          component={RefinancePage} 
-          options={{ title: 'Refinance' }}/>
-        <Stack.Screen name="ConsolidationPage" 
-          component={ConsolidationPage} 
-          options={{ title: 'Consolidation' }}/>
-        <Stack.Screen name="PreQualifierPage" 
-          component={PreQualifierPage} 
-          options={{ title: 'Pre-Qualifier' }}/>
+        <Stack.Screen
+          name="MortgageCalculatorPage"
+          component={MortgageCalculatorPage}
+          options={{ title: 'Mortgage Calculator' }} />
+        <Stack.Screen
+          name="PurchasePage"
+          component={PurchasePage}
+          options={{ title: 'Purchase' }} />
+        <Stack.Screen name="RefinancePage"
+          component={RefinancePage}
+          options={{ title: 'Refinance' }} />
+        <Stack.Screen name="ConsolidationPage"
+          component={ConsolidationPage}
+          options={{ title: 'Consolidation' }} />
+        <Stack.Screen name="PreQualifierPage"
+          component={PreQualifierPage}
+          options={{ title: 'Pre-Qualifier' }} />
+        <Stack.Screen name="EnquityPage"
+          component={EnquityPage}
+          options={{ title: 'Enquity' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

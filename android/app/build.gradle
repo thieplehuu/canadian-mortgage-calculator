@@ -124,3 +124,8 @@ dependencies {
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+project.ext.vectoricons = [
+    iconFontNames: [ 'FontAwesome.ttf', 'MaterialIcons.ttf', 'AntDesign.ttf'] // Name of the font files you want to copy
+]
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")

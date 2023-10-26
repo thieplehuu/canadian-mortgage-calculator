@@ -18,7 +18,10 @@ export default function LoginPage() {
     const navigation = useNavigation();
     return (
 
-        <View style={AppStyle.StyleMain.container}>
+        <View style={[AppStyle.StyleMain.container, {
+            alignItems: "center",
+            justifyContent: "center",
+        }]}>
             {step === 'INPUT_PHONE_NUMBER' &&
                 <>
                     <Image style={AppStyle.StyleLogin.logo} source={require("../../assets/images/logo.png")} />

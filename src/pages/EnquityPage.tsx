@@ -1,18 +1,18 @@
-import React, { Component, useCallback, useState } from "react";
+import React, { useState } from "react";
 import AppStyle from '../theme';
 import {
     View,
 } from "react-native";
 import { Button, Input, Slider, Text } from "@rneui/themed";
 import { OutlinedTextInput } from "../components/OutlinedInput";
-import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Dropdown from "../components/Dropdown";
 
-export default function RefinancePage() {
+export default function EnquityPage() {
 
     const [value, setValue] = useState(0);
-
     const [selected, setSelected] = useState(undefined);
+
     const data = [
         { label: 'One', value: '1' },
         { label: 'Two', value: '2' },
@@ -23,43 +23,36 @@ export default function RefinancePage() {
     const minValue = 100;
     const maxValue = 400;
 
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
             <View style={AppStyle.StyleMain.container}>
                 <OutlinedTextInput
-                    label="Home Value"
+                    label="Property Value"
                     value={maxValue} />
-                <Slider
-                    value={value}
-                    onValueChange={(value) => setValue(value)}
-                    thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
-                    trackStyle={{ height: 4, backgroundColor: 'transparent' }}
-                    minimumTrackTintColor="#816CEC"
-                    maximumTrackTintColor="#816CEC"
-                    thumbProps={{
-                        children: (
-                            <View style={AppStyle.Base.sliderThumbContainer}>
-                                <View style={AppStyle.Base.sliderThumb} />
-                            </View>
-                        ),
-                    }}
-                />
-                <View style={AppStyle.Base.sliderLabelContainer}>
-                    <View style={{ alignContent: "flex-start" }}><Text>{"$0"}</Text></View>
-                    <View style={{ alignSelf: "stretch" }}></View>
-                    <View style={{ alignContent: "flex-end" }}><Text>{"$2M"}</Text></View>
-                </View>
-                <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.h1}>Maximum Mortgage</Text>
-                </View>
-                <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.text7}>$240,000*</Text>
-                </View>
+                <OutlinedTextInput
+                    label="Current Mortgage Balance"
+                    value={maxValue} />
+
                 <View style={{
                     flexDirection: 'row',
                 }}>
                     <View style={{
-                        width: "70%",
+                        width: "30%",
+                        alignItems: 'stretch',
+                        alignContent: "center",
+                        justifyContent: "center"
+                    }}>
+                        <View style={{
+                            width: "100%", backgroundColor: "yellow",
+                            height: 4,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}></View>
+                    </View>
+
+                    <View style={{
+                        width: "40%",
                         alignItems: 'stretch',
                     }}>
                         <Slider
@@ -106,12 +99,8 @@ export default function RefinancePage() {
                     <View style={{ alignContent: "flex-end" }}><Text>{maxValue}{"k"}</Text></View>
                 </View>
                 <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.h1}>Total Mortgage (Insurance $0)</Text>
+                    <Text style={AppStyle.TextStyle.text7}>$240,000*</Text>
                 </View>
-                <OutlinedTextInput
-                    label="Rates" />
-                <OutlinedTextInput
-                    label="Amortization" />
 
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
@@ -121,7 +110,7 @@ export default function RefinancePage() {
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                title="Take the Next Step"
+                                title="Secure Your Loan"
                                 onPress={() => { }} />
                         </View>
                     </View>
