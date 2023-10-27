@@ -17,7 +17,7 @@ const Base = StyleSheet.create({
   outlinedTextInput: {
     flex: 1,
     borderWidth: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     height: 44,
     borderRadius: 6,
     borderColor: "#cdcdcd",

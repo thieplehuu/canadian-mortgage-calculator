@@ -5,16 +5,19 @@ import {
     View,
 } from "react-native";
 import { Button, Input, Slider, Text } from "@rneui/themed";
-import { OutlinedTextInput } from "../components/OutlinedInput";
+import { OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
+import { moneyFormat, moneyToNumber, rateToString, moneyRound } from "../utils";
+import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores";
 
 export default function PurchasePage() {
+    const [rate, setRate] = useState("1,75");
+    const [mortgateAmount, setMortgateAmount] = useState(0);
+    const [amortization, setAmotization] = useState(amortizations[0]);
+    const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
 
-    const [value, setValue] = useState(0);
-
-    const [selected, setSelected] = useState(undefined);
     const data = [
         { label: 'One', value: '1' },
         { label: 'Two', value: '2' },
@@ -47,83 +50,96 @@ export default function PurchasePage() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
-            <View style={AppStyle.StyleMain.container}>
-                <OutlinedTextInput
-                    label="Purchase Price" />
-                <Slider
-                    value={value}
-                    onValueChange={(value) => setValue(value)}
-                    thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
-                    trackStyle={{ height: 4, backgroundColor: 'transparent' }}
-                    minimumTrackTintColor="#816CEC"
-                    maximumTrackTintColor="#816CEC"
-                    thumbProps={{
-                        children: (
-                            <View style={AppStyle.Base.sliderThumbContainer}>
-                                <View style={AppStyle.Base.sliderThumb} />
-                            </View>
-                        ),
-                    }}
-                />
-                <View style={AppStyle.Base.sliderLabelContainer}>
-                    <View style={{ alignContent: "flex-start" }}><Text>{"$0"}</Text></View>
-                    <View style={{ alignSelf: "stretch" }}></View>
-                    <View style={{ alignContent: "flex-end" }}><Text>{"$2M"}</Text></View>
-                </View>
-                <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.h1}>Down Payment</Text>
-                </View>
-                <View style={styles.DownPaymentSection}>
-                    <ScrollView horizontal={true}>
-                        {
-                            downPayments.map((item: any) => {
-                                if (item.value == currentDownPayment.value) {
-                                    return (
-                                        <View key={item.percent} style={styles.DownPaymentPanelActive}>
-                                            <Text style={styles.LabelPercentPanelActive}>{item.percent}{"%"}</Text>
-                                            <View style={styles.HrPanelActive}></View>
-                                            <Text style={styles.LabelPanelActive}>{"$"}{item.value}</Text>
-                                        </View>
-                                    );
-                                } else {
-                                    return (
-                                        <View key={item.percent} style={styles.DownPaymentPanel}>
-                                            <Text style={styles.LabelPercentPanel}>{item.percent}{"%"}</Text>
-                                            <View style={styles.HrPanel}></View>
-                                            <Text style={styles.LabelPanel}>{"$"}{item.value}</Text>
-                                        </View>
-                                    )
-                                }
-                            })
-                        }
-                    </ScrollView>
-                </View>
-                <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.h1}>Total Mortgage (Insurance $0)</Text>
-                </View>
-                <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.text6}>$800,000*</Text>
-                </View>
-                <OutlinedTextInput
-                    label="Rates" />
-                <OutlinedTextInput
-                    label="Amortization" />
+            <ScrollView>
+                <View style={AppStyle.StyleMain.container}>
+                    <OutlinedTextInput
+                        label="Purchase Price"
+                        value={moneyFormat(mortgateAmount)}
+                        onTextChange={(text) => setMortgateAmount(moneyToNumber(text))} />
+                    <Slider
+                        value={mortgateAmount}
+                        onValueChange={(value) => setMortgateAmount(value)}
+                        thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
+                        trackStyle={{ height: 4, backgroundColor: 'transparent' }}
+                        minimumTrackTintColor="#816CEC"
+                        maximumTrackTintColor="#816CEC"
+                        step={maxQuota / 1000}
+                        minimumValue={minQuota}
+                        maximumValue={maxQuota}
+                        thumbProps={{
+                            children: (
+                                <View style={AppStyle.Base.sliderThumbContainer}>
+                                    <View style={AppStyle.Base.sliderThumb} />
+                                </View>
+                            ),
+                        }}
+                    />
+                    <View style={AppStyle.Base.sliderLabelContainer}>
+                        <View style={{ alignContent: "flex-start" }}><Text>{moneyRound(minQuota, true, true)}</Text></View>
+                        <View style={{ alignSelf: "stretch" }}></View>
+                        <View style={{ alignContent: "flex-end" }}><Text>{moneyRound(maxQuota, true, true)}</Text></View>
+                    </View>
+                    <View style={AppStyle.TextStyle.Label}>
+                        <Text style={AppStyle.TextStyle.h1}>Down Payment</Text>
+                    </View>
+                    <View style={styles.DownPaymentSection}>
+                        <ScrollView horizontal={true}>
+                            {
+                                downPayments.map((item: any) => {
+                                    if (item.value == currentDownPayment.value) {
+                                        return (
+                                            <View key={item.percent} style={styles.DownPaymentPanelActive}>
+                                                <Text style={styles.LabelPercentPanelActive}>{item.percent}{"%"}</Text>
+                                                <View style={styles.HrPanelActive}></View>
+                                                <Text style={styles.LabelPanelActive}>{"$"}{item.value}</Text>
+                                            </View>
+                                        );
+                                    } else {
+                                        return (
+                                            <View key={item.percent} style={styles.DownPaymentPanel}>
+                                                <Text style={styles.LabelPercentPanel}>{item.percent}{"%"}</Text>
+                                                <View style={styles.HrPanel}></View>
+                                                <Text style={styles.LabelPanel}>{"$"}{item.value}</Text>
+                                            </View>
+                                        )
+                                    }
+                                })
+                            }
+                        </ScrollView>
+                    </View>
+                    <View style={AppStyle.TextStyle.Label}>
+                        <Text style={AppStyle.TextStyle.h1}>Total Mortgage (Insurance $0)</Text>
+                    </View>
+                    <View style={AppStyle.TextStyle.Label}>
+                        <Text style={AppStyle.TextStyle.text6}>$800,000*</Text>
+                    </View>
+                    <OutlinedTextInput
+                        label="Rates"
+                        value={rateToString(rate)}
+                        onTextChange={(text) => setRate(text)} />
 
-                <View style={AppStyle.StyleMain.bottomContainer}>
-                    <View style={AppStyle.StyleMain.footerContainer}>
-                        <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Biweekly Payment" data={data} onSelect={setSelected} />
-                            <Text style={AppStyle.TextStyle.text6}>$3,291.88*</Text>
-                        </View>
-                        <View style={AppStyle.StyleMain.footerRightColumn}>
-                            <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                title="Begin Your Journey"
-                                onPress={() => { }} />
-                        </View>
+                    <OutlinedSelectInput
+                        label="Amortization"
+                        value={amortization}
+                        items={amortizations}
+                        onSelect={(item) => setAmotization(item)} />
+                    <View style={{ height: 80, width: "100%" }}></View>
+                </View>
+            </ScrollView>
+            <View style={AppStyle.StyleMain.bottomContainer}>
+                <View style={AppStyle.StyleMain.footerContainer}>
+                    <View style={AppStyle.StyleMain.footerLeftColumn}>
+                        <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => setPaymentPeriod(item)} />
+                        <Text style={AppStyle.TextStyle.text6}>$3,291.88*</Text>
+                    </View>
+                    <View style={AppStyle.StyleMain.footerRightColumn}>
+                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                            title="Begin Your Journey"
+                            onPress={() => { }} />
                     </View>
                 </View>
             </View>
-        </ SafeAreaView>
+        </ SafeAreaView >
     )
 }
 

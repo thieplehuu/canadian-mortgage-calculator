@@ -7,32 +7,35 @@ import { Button, Input, Slider, Text } from "@rneui/themed";
 import { OutlinedTextInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Dropdown from "../components/Dropdown";
+import { moneyFormat, moneyToNumber, moneyRound } from "../utils";
+import { paymentPeriods } from "../stores";
 
 export default function EnquityPage() {
+    const [propertyValue, setPropertyValue] = useState(400000);
+    const [currentMortgateBalance, setCurrentMortgateBalanceValue] = useState(255000);
+    const [minCurrentMortgateValue, setMinCurrentMortgateValue] = useState(100000);
+    const [maxCurrentMortgateValue, setMaxCurrentMortgateValue] = useState(300000);
+    const [currentMortgateValue, setCurrentMortgateValue] = useState(120000);
 
-    const [value, setValue] = useState(0);
-    const [selected, setSelected] = useState(undefined);
+    const [paymentPeriod, setPaymentPeriod] = useState({ label: "", value: "" });
 
-    const data = [
-        { label: 'One', value: '1' },
-        { label: 'Two', value: '2' },
-        { label: 'Three', value: '3' },
-        { label: 'Four', value: '4' },
-        { label: 'Five', value: '5' },
-    ];
-    const minValue = 100;
-    const maxValue = 400;
-
+    const onSetCurrentMortgateBalanceValue = (value: number) => {
+        setCurrentMortgateValue(value);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
             <View style={AppStyle.StyleMain.container}>
                 <OutlinedTextInput
                     label="Property Value"
-                    value={maxValue} />
+                    value={moneyFormat(propertyValue)}
+                    onTextChange={(text) => setPropertyValue(moneyToNumber(text))}
+                />
                 <OutlinedTextInput
                     label="Current Mortgage Balance"
-                    value={maxValue} />
+                    value={moneyFormat(currentMortgateBalance)}
+                    onTextChange={(text) => setCurrentMortgateBalanceValue(moneyToNumber(text))}
+                />
 
                 <View style={{
                     flexDirection: 'row',
@@ -56,14 +59,15 @@ export default function EnquityPage() {
                         alignItems: 'stretch',
                     }}>
                         <Slider
-                            value={value}
-                            onValueChange={(value) => setValue(value)}
                             thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
                             trackStyle={{ height: 4, backgroundColor: 'transparent', borderRadius: 0 }}
-                            minimumValue={30}
-                            maximumValue={70}
                             minimumTrackTintColor="#57D9A3"
                             maximumTrackTintColor="#57D9A3"
+                            value={currentMortgateValue}
+                            onValueChange={(value) => onSetCurrentMortgateBalanceValue(value)}
+                            minimumValue={minCurrentMortgateValue}
+                            maximumValue={maxCurrentMortgateValue}
+                            step={maxCurrentMortgateValue / 1000}
                             thumbProps={{
                                 children: (
                                     <View style={AppStyle.Base.sliderThumbContainer}>
@@ -94,18 +98,23 @@ export default function EnquityPage() {
                     flexWrap: 'wrap',
                     justifyContent: 'space-between',
                 }}>
-                    <View style={{ alignContent: "flex-start" }}><Text>{minValue}{"k"}</Text></View>
+                    <View style={{ alignContent: "flex-start" }}><Text>{moneyRound(minCurrentMortgateValue, true, true)}</Text></View>
                     <View style={{ alignSelf: "stretch" }}></View>
-                    <View style={{ alignContent: "flex-end" }}><Text>{maxValue}{"k"}</Text></View>
+                    <View style={{ alignContent: "flex-end" }}><Text>{moneyRound(maxCurrentMortgateValue, true, true)}</Text></View>
                 </View>
-                <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.text7}>$240,000*</Text>
+
+                <View style={AppStyle.StyleMain.row}>
+                    <View style={AppStyle.TextStyle.Label}>
+                        <Text style={{ lineHeight: 30 }}>Borrow:</Text></View>
+                    <View style={[AppStyle.TextStyle.Label, { marginLeft: 12 }]}>
+                        <Text style={AppStyle.TextStyle.text7}>{moneyFormat(currentMortgateValue)}</Text>
+                    </View>
                 </View>
 
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Biweekly Payment" data={data} onSelect={setSelected} />
+                            <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => setPaymentPeriod(item)} />
                             <Text style={AppStyle.TextStyle.text6}>$3,291.88*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>

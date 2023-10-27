@@ -11,13 +11,14 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 interface Props {
     label: string;
-    data: Array<{ label: string; value: string }>;
+    value: { label: string; value: string },
+    items: Array<{ label: string; value: string }>;
     onSelect: (item: { label: string; value: string }) => void;
 }
 
-const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
+const Dropdown: FC<Props> = ({ value, label, items, onSelect }) => {
     const DropdownButton = useRef(null);
-    const [selected, setSelected] = useState({ label: "", value: "" });
+    const [selected, setSelected] = useState(value);
     const [bottomSheetVisible, showBottomSheet] = useState(false);
 
     const toggleDropdown = (): void => {
@@ -25,6 +26,7 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
     };
 
     const onItemPress = (item: any): void => {
+        console.log(item);
         setSelected(item);
         onSelect(item);
         showBottomSheet(false);
@@ -41,7 +43,7 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
             </Text>
 
             <Icon name={"caretdown"} size={16}
-                onPress={() => showBottomSheet(false)}
+                onPress={() => showBottomSheet(true)}
             />
             <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
                 <View>
@@ -52,7 +54,7 @@ const Dropdown: FC<Props> = ({ label, data, onSelect }) => {
                     </View>
                     <View style={styles.dropdownContent}>
                         {
-                            data.map((item: any) => {
+                            items.map((item: any) => {
                                 return (
                                     <View key={item.value}><TouchableOpacity onPress={() => onItemPress(item)} style={styles.item}>
                                         <Text>{item.label}</Text>
