@@ -22,7 +22,11 @@ const Base = StyleSheet.create({
     borderRadius: 6,
     borderColor: "#cdcdcd",
     paddingHorizontal: 12,
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    color:"#4F4A45"
+  },
+  label:{
+    color:"#4F4A45"
   },
   sliderRail: {
     flex: 1,

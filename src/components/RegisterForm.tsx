@@ -62,7 +62,7 @@ const RegisterForm: FC<Props> = ({ requestSuccess }) => {
                     secureTextEntry={true}
                     value={phoneNumber}
                     leftIcon={
-                        <View><Text>{countryCode} |</Text></View>
+                        <View><Text style={AppStyle.Base.label}>{countryCode} |</Text></View>
                     }
                     onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
                 />

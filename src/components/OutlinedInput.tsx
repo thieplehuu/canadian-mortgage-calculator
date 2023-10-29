@@ -12,7 +12,7 @@ interface TextInputProps {
 const OutlinedTextInput: FC<TextInputProps> = ({ label, value, onTextChange, ...props }) => (
     <View style={AppStyle.Base.outlinedInputContainer}>
         <View style={AppStyle.Base.outlinedLabelContainer}>
-            <Text>{label}</Text>
+            <Text style={AppStyle.Base.label}>{label}</Text>
         </View>
         <TextInput style={AppStyle.Base.outlinedTextInput} value={String(value)} onChangeText={(text) => onTextChange(text)} />
     </View>
@@ -30,7 +30,7 @@ interface SelectInputProps {
 const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSelect, ...props }) => (
     <View style={AppStyle.Base.outlinedInputContainer}>
         <View style={AppStyle.Base.outlinedLabelContainer}>
-            <Text>{label}</Text>
+            <Text style={AppStyle.Base.label}>{label}</Text>
         </View>
         <View style={AppStyle.Base.outlinedTextInput}><Dropdown label={label} value={value} items={items} onSelect={(item) => onSelect(item)} /></View>
     </View>

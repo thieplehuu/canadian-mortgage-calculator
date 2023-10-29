@@ -19,7 +19,7 @@ const StyleLogin = StyleSheet.create({
   },
   TextInput: {
     marginLeft: 12,
-    color: "#000000",
+    color: "#4F4A45",
   },
 });
 export default StyleLogin;

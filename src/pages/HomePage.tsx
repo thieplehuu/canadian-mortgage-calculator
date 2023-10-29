@@ -10,13 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 const HomePage = () => {
 
     const [isLoading, setLoading] = useState(true);
-    const [rates, setRates] = useState(true);
+    const [rates, setRates] = useState({});
     const [bottomSheetVisible, showBottomSheet] = useState(false);
     const navigation = useNavigation();
 
     const loadRates = async () => {
         try {
-            console.log('fetch data');
             const response = await fetch('https://api.mortgagemadebetter.com/wp-json/mmb/v1/rate', {
                 method: 'GET',
                 headers: {
@@ -24,18 +23,14 @@ const HomePage = () => {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log(response);
             const json = await response.json();
-            console.log(json);
-            setRates(json.movies);
+            setRates(json.rate);
         } catch (error) {
-            console.log(error);
             console.error(error);
         } finally {
             setLoading(false);
         }
     }
-    loadRates();
     useEffect(() => {
         loadRates();
     }, []);
@@ -44,34 +39,34 @@ const HomePage = () => {
     }
     return (
         <SafeAreaView style={{ flex: 1, padding: 12, backgroundColor: "#ffffff" }}>
-            <ScrollView>
-                {isLoading ? (
-                    <ActivityIndicator />
-                ) : (<><View style={AppStyle.StyleMain.row}>
+            {isLoading ? (
+                    <View style={{flex:1, justifyContent:"center"}}><ActivityIndicator style={{alignSelf:"center"}}/></View>
+                ) : (<><ScrollView>
+                <View style={AppStyle.StyleMain.row}>
                     <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#816CEC', '#F4ABED']} style={AppStyle.StyleMain.panelContent}>
-                            <Text style={AppStyle.TextStyle.text1}>5.50%</Text>
+                            <Text style={AppStyle.TextStyle.text1}>{rates.fixedrate5years}%</Text>
                             <Text style={AppStyle.TextStyle.text2}>Fixed rate</Text>
                             <Text style={AppStyle.TextStyle.text2}>5 Years</Text>
                         </LinearGradient>
                     </Card>
                     <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1.25, y: 0 }} colors={['#43C6AC', '#F8FFAE']} style={AppStyle.StyleMain.panelContent}>
-                            <Text style={AppStyle.TextStyle.text1}>5.89%</Text>
+                            <Text style={AppStyle.TextStyle.text1}>{rates.fixedrate3years}%</Text>
                             <Text style={AppStyle.TextStyle.text2}>Fixed rate</Text>
                             <Text style={AppStyle.TextStyle.text2}>3 Years</Text>
                         </LinearGradient>
                     </Card>
                     <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#2193B0', '#6DD5ED']} style={AppStyle.StyleMain.panelContent}>
-                            <Text style={AppStyle.TextStyle.text1}>6.40%</Text>
+                            <Text style={AppStyle.TextStyle.text1}>{rates.variablerate}%</Text>
                             <Text style={AppStyle.TextStyle.text2}>Variable</Text>
                             <Text style={AppStyle.TextStyle.text2}>5 Year</Text>
                         </LinearGradient>
                     </Card>
                     <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#EF629F', '#F5D8B3']} style={AppStyle.StyleMain.panelContent}>
-                            <Text style={AppStyle.TextStyle.text1}>6.95%</Text>
+                            <Text style={AppStyle.TextStyle.text1}>{rates.primerate}%</Text>
                             <Text style={AppStyle.TextStyle.text2}>Prime</Text>
                             <Text style={AppStyle.TextStyle.text2}>Rate</Text>
                         </LinearGradient>
@@ -143,7 +138,7 @@ const HomePage = () => {
                                             </View>
                                         </View>
                                         <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image3.png")} />
+                                            <Image style={sectionStyle.image} source={require("../../assets/images/image4.png")} />
                                         </View>
                                     </View>
                                 </LinearGradient>
@@ -187,7 +182,7 @@ const HomePage = () => {
                         </View>
                         <View style={{ height: 80, width: "100%" }}>
                         </View>
-                    </View></>)}
+                    </View>
             </ScrollView>
             <View style={AppStyle.StyleMain.bottomContainer}>
                 <View style={AppStyle.StyleMain.stretch}>
@@ -205,7 +200,7 @@ const HomePage = () => {
                     </View>
                     <ContactForm />
                 </View>
-            </BottomSheet>
+            </BottomSheet></>)}
         </SafeAreaView>
     );
 };

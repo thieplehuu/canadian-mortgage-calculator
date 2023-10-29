@@ -12,7 +12,7 @@ import { moneyFormat, moneyToNumber, rateToString, moneyRound } from "../utils";
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores";
 export default function MortgageCalculatorPage() {
 
-    const [rate, setRate] = useState("1,75");
+    const [rate, setRate] = useState(1.75);
     const [amortization, setAmotization] = useState(amortizations[0]);
     const [mortgateAmount, setMortgateAmount] = useState(0);
     const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
@@ -43,9 +43,9 @@ export default function MortgageCalculatorPage() {
                     }}
                 />
                 <View style={AppStyle.Base.sliderLabelContainer}>
-                    <View style={{ alignContent: "flex-start" }}><Text>{moneyRound(minQuota, true, true)}</Text></View>
+                    <View style={{ alignContent: "flex-start" }}><Text style={AppStyle.Base.label}>{moneyRound(minQuota, true, true)}</Text></View>
                     <View style={{ alignSelf: "stretch" }}></View>
-                    <View style={{ alignContent: "flex-end" }}><Text>{moneyRound(maxQuota, true, true)}</Text></View>
+                    <View style={{ alignContent: "flex-end" }}><Text style={AppStyle.Base.label}>{moneyRound(maxQuota, true, true)}</Text></View>
                 </View>
                 <OutlinedTextInput
                     label="Rates"
