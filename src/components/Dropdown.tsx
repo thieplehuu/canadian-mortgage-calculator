@@ -42,13 +42,13 @@ const Dropdown: FC<Props> = ({ value, label, items, onSelect }) => {
                 {(selected && selected.label) || label}
             </Text>
 
-            <Icon name={"caretdown"} size={16}
+            <Icon name={"caretdown"} size={16} color="#4F4A45"
                 onPress={() => showBottomSheet(true)}
             />
             <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
                 <View>
                     <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                        <Icon name={"close"} size={16}
+                        <Icon name={"close"} size={16} style={styles.icon} color="#4F4A45"
                             onPress={() => showBottomSheet(false)}
                         />
                     </View>
@@ -57,7 +57,7 @@ const Dropdown: FC<Props> = ({ value, label, items, onSelect }) => {
                             items.map((item: any) => {
                                 return (
                                     <View key={item.value}><TouchableOpacity onPress={() => onItemPress(item)} style={styles.item}>
-                                        <Text>{item.label}</Text>
+                                        <Text style={AppStyle.Base.label}>{item.label}</Text>
                                     </TouchableOpacity></View>
                                 );
                             })
@@ -82,12 +82,15 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'left',
         fontSize: 13,
-        color: "#000000",
+        color: "#4F4A45",
         textTransform: "uppercase",
         opacity: 0.5
     },
     icon: {
         marginRight: 10,
+    },
+    iconColor: {
+        color: "#4F4A45"
     },
     dropdownContent: {
         backgroundColor: "#ffffff",
@@ -95,6 +98,7 @@ const styles = StyleSheet.create({
     },
     item: {
         marginTop: 8,
+        color: "#4F4A45"
     }
 });
 

@@ -10,7 +10,7 @@ import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { moneyFormat, moneyToNumber, rateToString, moneyRound } from "../utils";
-import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores";
+import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 
 export default function PurchasePage() {
     const [rate, setRate] = useState("1,75");

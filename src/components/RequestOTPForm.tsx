@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { Input, Button } from "@rneui/themed";
 interface Props {
-    requestSuccess: ({}) => void;
+    requestSuccess: ({ }) => void;
 }
 
 const RequestOTPForm: FC<Props> = ({ requestSuccess }) => {
@@ -42,7 +42,6 @@ const RequestOTPForm: FC<Props> = ({ requestSuccess }) => {
             </View>
             <View style={AppStyle.StyleMain.stretch}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={requestOTP} title={"Get OTP"} /></View>
         </View>)
-
 }
 
 export default RequestOTPForm;

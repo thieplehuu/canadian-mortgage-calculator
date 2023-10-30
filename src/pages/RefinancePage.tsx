@@ -8,7 +8,7 @@ import { OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedIn
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moneyFormat, moneyToNumber, rateToString, moneyRound } from "../utils";
-import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores";
+import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 
 export default function RefinancePage() {
 

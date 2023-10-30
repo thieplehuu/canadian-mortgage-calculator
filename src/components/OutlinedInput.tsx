@@ -32,7 +32,13 @@ const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSele
         <View style={AppStyle.Base.outlinedLabelContainer}>
             <Text style={AppStyle.Base.label}>{label}</Text>
         </View>
-        <View style={AppStyle.Base.outlinedTextInput}><Dropdown label={label} value={value} items={items} onSelect={(item) => onSelect(item)} /></View>
+        <View style={AppStyle.Base.outlinedTextInput}>
+            <Dropdown
+                label={label}
+                value={value}
+                items={items}
+                onSelect={(item) => onSelect(item)} />
+        </View>
     </View>
 );
 

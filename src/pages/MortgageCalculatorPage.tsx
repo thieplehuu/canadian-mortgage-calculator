@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
     View,
@@ -8,14 +8,41 @@ import { Button, Slider } from "@rneui/themed";
 import { OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 import { moneyFormat, moneyToNumber, rateToString, moneyRound } from "../utils";
-import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores";
+import { amortizations, inititalQuota, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
+import { API_URL } from "../constants/urls";
 export default function MortgageCalculatorPage() {
 
-    const [rate, setRate] = useState(1.75);
+    const [rate, setRate] = useState(0);
     const [amortization, setAmotization] = useState(amortizations[0]);
-    const [mortgateAmount, setMortgateAmount] = useState(0);
+    const [mortgateAmount, setMortgateAmount] = useState(inititalQuota);
+    const [mortgateQuota, setMortgateQuota] = useState(0);
     const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
+    const user = useSelector((state) => state.user);
+    const loadRates = async () => {
+        try {
+            const response = await fetch(API_URL + '/rate', {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const json = await response.json();
+            setRate(json.rate.fixedrate5years);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        loadRates();
+    }, []);
+
+    const calculatorMortgate = (value) => {
+        setMortgateAmount(value)
+
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
@@ -30,7 +57,6 @@ export default function MortgageCalculatorPage() {
                     minimumTrackTintColor="#816CEC"
                     maximumTrackTintColor="#816CEC"
                     value={mortgateAmount}
-                    onValueChange={(value) => setMortgateAmount(value)}
                     step={maxQuota / 1000}
                     minimumValue={minQuota}
                     maximumValue={maxQuota}
@@ -41,6 +67,7 @@ export default function MortgageCalculatorPage() {
                             </View>
                         ),
                     }}
+                    onValueChange={(value) => calculatorMortgate(value)}
                 />
                 <View style={AppStyle.Base.sliderLabelContainer}>
                     <View style={{ alignContent: "flex-start" }}><Text style={AppStyle.Base.label}>{moneyRound(minQuota, true, true)}</Text></View>
@@ -62,7 +89,7 @@ export default function MortgageCalculatorPage() {
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
                             <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => setPaymentPeriod(item)} />
-                            <Text style={AppStyle.TextStyle.text6}>$3,291.88*</Text>
+                            <Text style={AppStyle.TextStyle.text6}>{moneyFormat(mortgateQuota)}*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}

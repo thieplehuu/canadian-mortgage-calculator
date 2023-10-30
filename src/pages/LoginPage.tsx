@@ -9,20 +9,24 @@ import RegisterForm from "../components/RegisterForm";
 import RequestOTPForm from "../components/RequestOTPForm";
 import VerifyOTPForm from "../components/VerifyOTPForm";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { API_URL } from "../constants/urls";
 
 export default function LoginPage() {
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const [action, setAction] = useState('SIGNUP');
     const [step, setStep] = useState('INPUT_PHONE_NUMBER');
     const [confirm, setConfirm] = useState("");
 
     const navigation = useNavigation();
+    const user = useSelector((state) => state.user);
     return (
 
         <View style={[AppStyle.StyleMain.container, {
             alignItems: "center",
             justifyContent: "center",
         }]}>
-            { (step === 'INPUT_PHONE_NUMBER'|| step === 'VERIFY_SUCCESS') &&
+            {(step === 'INPUT_PHONE_NUMBER' || step === 'VERIFY_SUCCESS') &&
                 <>
                     <Image style={AppStyle.StyleLogin.logo} source={require("../../assets/images/logo.png")} />
                     <ButtonGroup
@@ -44,6 +48,7 @@ export default function LoginPage() {
                         }} />
                         :
                         <RegisterForm requestSuccess={(confirm: any) => {
+                            setAction("REGISTER");
                             setStep('VERIFY_OTP')
                             setConfirm(confirm)
                         }} />
@@ -51,9 +56,30 @@ export default function LoginPage() {
                 </>
             }
             {step === 'VERIFY_OTP' &&
-                <><VerifyOTPForm confirm={confirm} verifySuccess={(confirm: any) => {
-                    setStep('VERIFY_SUCCESS')
-                    navigation.navigate("HomePage" as never)
+                <><VerifyOTPForm confirm={confirm} verifySuccess={async (confirm: any) => {
+                    if (action == "REGISTER") {
+                        try {
+                            const response = await fetch(API_URL + '/register', {
+                                method: 'POST',
+                                headers: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    first_name: user.firstName,
+                                    last_name: user.lastName,
+                                    mobile: user.phoneNumber
+                                })
+                            });
+                            const data = await response.json();
+                            if (data.status == "success") {
+                                navigation.navigate("HomePage" as never);
+                            }
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }
+                    setStep('VERIFY_SUCCESS');
                 }} /></>
             }
         </View>)

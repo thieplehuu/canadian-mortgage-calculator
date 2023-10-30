@@ -8,7 +8,7 @@ import { OutlinedTextInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Dropdown from "../components/Dropdown";
 import { moneyFormat, moneyToNumber, moneyRound } from "../utils";
-import { paymentPeriods } from "../stores";
+import { paymentPeriods } from "../stores/initial";
 
 export default function EnquityPage() {
     const [propertyValue, setPropertyValue] = useState(400000);

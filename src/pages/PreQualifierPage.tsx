@@ -7,7 +7,7 @@ import { Button, Input, Slider, Text } from "@rneui/themed";
 import { OutlinedTextInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moneyFormat, moneyRound, moneyToNumber } from "../utils";
-import { maxQuota, minQuota } from "../stores";
+import { maxQuota, minQuota } from "../stores/initial";
 
 export default function PreQualifierPage() {
     const [incomeValue, setIncomeValue] = useState(100000);

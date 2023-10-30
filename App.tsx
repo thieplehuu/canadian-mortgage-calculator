@@ -17,12 +17,12 @@ import RefinancePage from './src/pages/RefinancePage';
 import ConsolidationPage from './src/pages/ConsolidationPage';
 import PreQualifierPage from './src/pages/PreQualifierPage';
 import EnquityPage from './src/pages/EnquityPage';
-
-
+import store from './src/stores';
+import { Provider } from 'react-redux';
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
   return (
-    <NavigationContainer>
+    <Provider store={store}><NavigationContainer>
       <Stack.Navigator initialRouteName="LoginPage">
         <Stack.Screen options={{
           headerShown: false
@@ -52,7 +52,7 @@ function App(): JSX.Element {
           component={EnquityPage}
           options={{ title: 'Enquity' }} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer></Provider>
   );
 }
 

@@ -7,25 +7,33 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { Button, Input } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
 import auth from '@react-native-firebase/auth';
+import { useDispatch } from "react-redux";
+import { setUser } from "../actions/index";
+
 
 interface Props {
-    requestSuccess: ({}) => void;
+    requestSuccess: ({ }) => void;
 }
 
 const RegisterForm: FC<Props> = ({ requestSuccess }) => {
 
-    const navigation = useNavigation();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const countryCode = "+84";
+
+    const dispatch = useDispatch();
     const requestOTP = async () => {
         try {
-            const confirmation = await auth().signInWithPhoneNumber(countryCode + phoneNumber);
-            requestSuccess(confirmation);
-            //setConfirm(confirmation);
+            //const confirmation = await auth().signInWithPhoneNumber(countryCode + phoneNumber);
+            //requestSuccess(confirmation);
+            dispatch(setUser({
+                firstName: firstName,
+                lastName: lastName,
+                phoneNumber: phoneNumber
+            }))
+            requestSuccess('confirmation');
         } catch (error) {
             console.log('error');
             console.log(error)
@@ -40,7 +48,6 @@ const RegisterForm: FC<Props> = ({ requestSuccess }) => {
                     inputContainerStyle={{ borderBottomWidth: 0 }}
                     placeholder="First Name"
                     value={firstName}
-                    secureTextEntry={true}
                     onChangeText={(firstName) => setFirstName(firstName)}
                 />
             </View>
@@ -50,7 +57,6 @@ const RegisterForm: FC<Props> = ({ requestSuccess }) => {
                     inputContainerStyle={{ borderBottomWidth: 0 }}
                     placeholder="Last Name"
                     value={lastName}
-                    secureTextEntry={true}
                     onChangeText={(lastName) => setLastName(lastName)}
                 />
             </View>
@@ -59,7 +65,6 @@ const RegisterForm: FC<Props> = ({ requestSuccess }) => {
                     inputStyle={AppStyle.StyleLogin.TextInput}
                     inputContainerStyle={{ borderBottomWidth: 0 }}
                     placeholder='Phone Number'
-                    secureTextEntry={true}
                     value={phoneNumber}
                     leftIcon={
                         <View><Text style={AppStyle.Base.label}>{countryCode} |</Text></View>
