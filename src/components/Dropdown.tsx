@@ -26,7 +26,6 @@ const Dropdown: FC<Props> = ({ value, label, items, onSelect }) => {
     };
 
     const onItemPress = (item: any): void => {
-        console.log(item);
         setSelected(item);
         onSelect(item);
         showBottomSheet(false);

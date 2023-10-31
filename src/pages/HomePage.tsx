@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const HomePage = () => {
 
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
     const [rates, setRates] = useState({});
     const [bottomSheetVisible, showBottomSheet] = useState(false);
     const navigation = useNavigation();
@@ -32,7 +32,7 @@ const HomePage = () => {
         }
     }
     useEffect(() => {
-        loadRates();
+        //loadRates();
     }, []);
     const goto = async (page: string) => {
         navigation.navigate(page as never)
@@ -40,8 +40,8 @@ const HomePage = () => {
     return (
         <SafeAreaView style={{ flex: 1, padding: 12, backgroundColor: "#ffffff" }}>
             {isLoading ? (
-                    <View style={{flex:1, justifyContent:"center"}}><ActivityIndicator style={{alignSelf:"center"}}/></View>
-                ) : (<><ScrollView>
+                <View style={{ flex: 1, justifyContent: "center" }}><ActivityIndicator style={{ alignSelf: "center" }} /></View>
+            ) : (<><ScrollView>
                 <View style={AppStyle.StyleMain.row}>
                     <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#816CEC', '#F4ABED']} style={AppStyle.StyleMain.panelContent}>
@@ -72,135 +72,135 @@ const HomePage = () => {
                         </LinearGradient>
                     </Card>
                 </View><View style={AppStyle.StyleMain.row}>
-                        <View style={AppStyle.StyleMain.sectionContainer}>
-                            <TouchableOpacity onPress={() => {
-                                goto("MortgageCalculatorPage");
-                            }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#fcdadb', '#f9f9fe']} style={AppStyle.StyleMain.sectionContent}>
-                                    <View style={sectionStyle.columns}>
-                                        <View style={sectionStyle.left}>
-                                            <View style={sectionStyle.content}>
-                                                <Text style={AppStyle.TextStyle.text3}>Mortgage Calculator</Text>
-                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-                                            </View>
-                                        </View>
-                                        <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image1.png")} />
+                    <View style={AppStyle.StyleMain.sectionContainer}>
+                        <TouchableOpacity onPress={() => {
+                            goto("MortgageCalculatorPage");
+                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#fcdadb', '#f9f9fe']} style={AppStyle.StyleMain.sectionContent}>
+                                <View style={sectionStyle.columns}>
+                                    <View style={sectionStyle.left}>
+                                        <View style={sectionStyle.content}>
+                                            <Text style={AppStyle.TextStyle.text3}>Mortgage Calculator</Text>
+                                            <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
-                                </LinearGradient></TouchableOpacity>
+                                    <View style={sectionStyle.right}>
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/image1.png")} />
+                                    </View>
+                                </View>
+                            </LinearGradient></TouchableOpacity>
 
-                        </View>
-                        <View style={AppStyle.StyleMain.sectionContainer}>
-                            <TouchableOpacity onPress={() => {
-                                goto("PurchasePage");
-                            }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#fef1e1', '#f8fcfb']} style={AppStyle.StyleMain.sectionContent}>
-                                    <View style={sectionStyle.columns}>
-                                        <View style={sectionStyle.left}>
-                                            <View style={sectionStyle.content}>
-                                                <Text style={AppStyle.TextStyle.text3}>Purchase</Text>
-                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-                                            </View>
-                                        </View>
-                                        <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image2.png")} />
-                                        </View>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={AppStyle.StyleMain.sectionContainer}>
-                            <TouchableOpacity onPress={() => {
-                                goto("RefinancePage");
-                            }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#b2d5fe', '#f7faff']} style={AppStyle.StyleMain.sectionContent}>
-                                    <View style={sectionStyle.columns}>
-                                        <View style={sectionStyle.left}>
-                                            <View style={sectionStyle.content}>
-                                                <Text style={AppStyle.TextStyle.text3}>Refinance</Text>
-                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-                                            </View>
-                                        </View>
-                                        <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image3.png")} />
-                                        </View>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={AppStyle.StyleMain.sectionContainer}>
-                            <TouchableOpacity onPress={() => {
-                                goto("ConsolidationPage");
-                            }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#e2d7f8', '#f7f5fd']} style={AppStyle.StyleMain.sectionContent}>
-                                    <View style={sectionStyle.columns}>
-                                        <View style={sectionStyle.left}>
-                                            <View style={sectionStyle.content}>
-                                                <Text style={AppStyle.TextStyle.text3}>Consolidation</Text>
-                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-                                            </View>
-                                        </View>
-                                        <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image4.png")} />
-                                        </View>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={AppStyle.StyleMain.sectionContainer}>
-                            <TouchableOpacity onPress={() => {
-                                goto("PreQualifierPage");
-                            }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#bfeeef', '#f4f8fd']} style={AppStyle.StyleMain.sectionContent}>
-                                    <View style={sectionStyle.columns}>
-                                        <View style={sectionStyle.left}>
-                                            <View style={sectionStyle.content}>
-                                                <Text style={AppStyle.TextStyle.text3}>Pre-Qualifier</Text>
-                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-                                            </View>
-                                        </View>
-                                        <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image5.png")} />
-                                        </View>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={AppStyle.StyleMain.sectionContainer}>
-                            <TouchableOpacity onPress={() => {
-                                goto("EnquityPage");
-                            }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#bfeeef', '#f4f8fd']} style={AppStyle.StyleMain.sectionContent}>
-                                    <View style={sectionStyle.columns}>
-                                        <View style={sectionStyle.left}>
-                                            <View style={sectionStyle.content}>
-                                                <Text style={AppStyle.TextStyle.text3}>Enquity</Text>
-                                                <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-                                            </View>
-                                        </View>
-                                        <View style={sectionStyle.right}>
-                                            <Image style={sectionStyle.image} source={require("../../assets/images/image6.png")} />
-                                        </View>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ height: 80, width: "100%" }}>
-                        </View>
                     </View>
+                    <View style={AppStyle.StyleMain.sectionContainer}>
+                        <TouchableOpacity onPress={() => {
+                            goto("PurchasePage");
+                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#fef1e1', '#f8fcfb']} style={AppStyle.StyleMain.sectionContent}>
+                                <View style={sectionStyle.columns}>
+                                    <View style={sectionStyle.left}>
+                                        <View style={sectionStyle.content}>
+                                            <Text style={AppStyle.TextStyle.text3}>Purchase</Text>
+                                            <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                        </View>
+                                    </View>
+                                    <View style={sectionStyle.right}>
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/image2.png")} />
+                                    </View>
+                                </View>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={AppStyle.StyleMain.sectionContainer}>
+                        <TouchableOpacity onPress={() => {
+                            goto("RefinancePage");
+                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#b2d5fe', '#f7faff']} style={AppStyle.StyleMain.sectionContent}>
+                                <View style={sectionStyle.columns}>
+                                    <View style={sectionStyle.left}>
+                                        <View style={sectionStyle.content}>
+                                            <Text style={AppStyle.TextStyle.text3}>Refinance</Text>
+                                            <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                        </View>
+                                    </View>
+                                    <View style={sectionStyle.right}>
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/image3.png")} />
+                                    </View>
+                                </View>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={AppStyle.StyleMain.sectionContainer}>
+                        <TouchableOpacity onPress={() => {
+                            goto("ConsolidationPage");
+                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#e2d7f8', '#f7f5fd']} style={AppStyle.StyleMain.sectionContent}>
+                                <View style={sectionStyle.columns}>
+                                    <View style={sectionStyle.left}>
+                                        <View style={sectionStyle.content}>
+                                            <Text style={AppStyle.TextStyle.text3}>Consolidation</Text>
+                                            <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                        </View>
+                                    </View>
+                                    <View style={sectionStyle.right}>
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/image4.png")} />
+                                    </View>
+                                </View>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={AppStyle.StyleMain.sectionContainer}>
+                        <TouchableOpacity onPress={() => {
+                            goto("PreQualifierPage");
+                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#bfeeef', '#f4f8fd']} style={AppStyle.StyleMain.sectionContent}>
+                                <View style={sectionStyle.columns}>
+                                    <View style={sectionStyle.left}>
+                                        <View style={sectionStyle.content}>
+                                            <Text style={AppStyle.TextStyle.text3}>Pre-Qualifier</Text>
+                                            <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                        </View>
+                                    </View>
+                                    <View style={sectionStyle.right}>
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/image5.png")} />
+                                    </View>
+                                </View>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={AppStyle.StyleMain.sectionContainer}>
+                        <TouchableOpacity onPress={() => {
+                            goto("EnquityPage");
+                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#bfeeef', '#f4f8fd']} style={AppStyle.StyleMain.sectionContent}>
+                                <View style={sectionStyle.columns}>
+                                    <View style={sectionStyle.left}>
+                                        <View style={sectionStyle.content}>
+                                            <Text style={AppStyle.TextStyle.text3}>Enquity</Text>
+                                            <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                                        </View>
+                                    </View>
+                                    <View style={sectionStyle.right}>
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/image6.png")} />
+                                    </View>
+                                </View>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ height: 80, width: "100%" }}>
+                    </View>
+                </View>
             </ScrollView>
-            <View style={AppStyle.StyleMain.bottomContainer}>
-                <View style={AppStyle.StyleMain.stretch}>
-                    <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
-                        title="Contact"
-                        onPress={() => showBottomSheet(true)} />
-                </View>
-            </View>
-            <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
-                <View>
-                    <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                        <Icon name={"close"} size={16}
-                            onPress={() => showBottomSheet(false)}
-                        />
+                <View style={AppStyle.StyleMain.bottomContainer}>
+                    <View style={AppStyle.StyleMain.stretch}>
+                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+                            title="Contact"
+                            onPress={() => showBottomSheet(true)} />
                     </View>
-                    <ContactForm />
                 </View>
-            </BottomSheet></>)}
+                <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
+                    <View>
+                        <View style={AppStyle.StyleMain.bottomSheetHeader}>
+                            <Icon name={"close"} size={16}
+                                onPress={() => showBottomSheet(false)}
+                            />
+                        </View>
+                        <ContactForm />
+                    </View>
+                </BottomSheet></>)}
         </SafeAreaView>
     );
 };

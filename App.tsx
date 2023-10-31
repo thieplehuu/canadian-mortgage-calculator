@@ -11,7 +11,7 @@ import React from 'react';
 import LoginPage from './src/pages/LoginPage';
 import OTPVerifyPage from './src/pages/OTPVerifyPage';
 import HomePage from './src/pages/HomePage';
-import MortgageCalculatorPage from './src/pages/MortgageCalculatorPage';
+import MortgagePage from './src/pages/MortgagePage';
 import PurchasePage from './src/pages/PurchasePage';
 import RefinancePage from './src/pages/RefinancePage';
 import ConsolidationPage from './src/pages/ConsolidationPage';
@@ -33,7 +33,7 @@ function App(): JSX.Element {
         }} name="HomePage" component={HomePage} />
         <Stack.Screen
           name="MortgageCalculatorPage"
-          component={MortgageCalculatorPage}
+          component={MortgagePage}
           options={{ title: 'Mortgage Calculator' }} />
         <Stack.Screen
           name="PurchasePage"

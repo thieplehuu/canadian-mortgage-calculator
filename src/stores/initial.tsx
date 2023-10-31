@@ -2,22 +2,22 @@ const minQuota = 25000;
 const inititalQuota = 1000000;
 const maxQuota = 2000000;
 const paymentPeriods = [{
-    value: 'weekly',
-    label: 'Weekly Payment',
+    value: 'monthly',
+    label: 'Monthly Payment',
 }, {
     value: 'biweekly',
     label: 'Bi-weekly Paymen',
 }, {
-    value: 'monthly',
-    label: 'Monthly Payment',
-}
+    value: 'weekly',
+    label: 'Weekly Payment',
+},
 ];
 const amortizations = [
     {
-        value: '25',
+        value: 25,
         label: '25 Years',
     }, {
-        value: '30',
+        value: 35,
         label: '35 Years',
     }
 ]

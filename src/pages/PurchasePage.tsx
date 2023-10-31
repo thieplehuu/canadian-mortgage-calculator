@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
     ScrollView,
@@ -9,44 +9,58 @@ import { OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedIn
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { moneyFormat, moneyToNumber, rateToString, moneyRound } from "../utils";
+import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
+import { API_URL } from "../constants/urls";
 
 export default function PurchasePage() {
-    const [rate, setRate] = useState("1,75");
-    const [mortgateAmount, setMortgateAmount] = useState(0);
+    const [amount, setAmount] = useState(800000);
+    const [dPayment, setDPayment] = useState([
+        { rate: 0, perc: 20 },
+        { rate: 0, perc: 25 },
+        { rate: 0, perc: 30 },
+        { rate: 0, perc: 35 },
+    ]);
     const [amortization, setAmotization] = useState(amortizations[0]);
     const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
+    const [paymentPerYear, setPaymentPerYear] = useState("monthly");
+    const [year, setYear] = useState(25);
+    const [rate, setRate] = useState(5.50);
+    const [DminAmount, setDMinAmount] = useState(null);
+    const [dPerc, setDPerc] = useState(0);
+    const [insurance, setInsurance] = useState(0);
+    const [result, setResult] = useState(0);
+    const [loaded, setLoaded] = useState(false);
+    const loadRates = async () => {
+        try {
+            const response = await fetch(API_URL + '/rate', {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const json = await response.json();
+            setRate(json.rate.fixedrate5years);
+            setResult(
+                calculateMortgage(amount, json.rate.fixedrate5years, amortization.value, paymentPeriod.value)
+            );
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        loadRates();
 
-    const data = [
-        { label: 'One', value: '1' },
-        { label: 'Two', value: '2' },
-        { label: 'Three', value: '3' },
-        { label: 'Four', value: '4' },
-        { label: 'Five', value: '5' },
-    ];
+    }, []);
 
-    const currentDownPayment = { percent: '20', value: '200000' };
 
-    const downPayments = [
-        { percent: '20', value: '200000' },
-        { percent: '25', value: '250000' },
-        { percent: '30', value: '300000' },
-        { percent: '35', value: '350000' },
-        { percent: '40', value: '400000' },
-        { percent: '45', value: '450000' },
-        { percent: '50', value: '500000' },
-        { percent: '55', value: '550000' },
-        { percent: '60', value: '600000' },
-        { percent: '65', value: '650000' },
-        { percent: '70', value: '700000' },
-        { percent: '75', value: '750000' },
-        { percent: '80', value: '800000' },
-        { percent: '85', value: '850000' },
-        { percent: '90', value: '900000' },
-        { percent: '95', value: '950000' },
-        { percent: '100', value: '1000000' },
-    ];
+    const onChangeMortgate = (value: any) => {
+        setAmount(value)
+        setResult(
+            calculateMortgage(value, rate, amortization.value, paymentPeriod.value)
+        );
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
@@ -54,11 +68,10 @@ export default function PurchasePage() {
                 <View style={AppStyle.StyleMain.container}>
                     <OutlinedTextInput
                         label="Purchase Price"
-                        value={moneyFormat(mortgateAmount)}
-                        onTextChange={(text) => setMortgateAmount(moneyToNumber(text))} />
+                        value={moneyFormat(amount)}
+                        onTextChange={(text) => setAmount(moneyToNumber(text))} />
                     <Slider
-                        value={mortgateAmount}
-                        onValueChange={(value) => setMortgateAmount(value)}
+                        value={amount}
                         thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
                         trackStyle={{ height: 4, backgroundColor: 'transparent' }}
                         minimumTrackTintColor="#816CEC"
@@ -73,6 +86,7 @@ export default function PurchasePage() {
                                 </View>
                             ),
                         }}
+                        onValueChange={(value) => onChangeMortgate(value)}
                     />
                     <View style={AppStyle.Base.sliderLabelContainer}>
                         <View style={{ alignContent: "flex-start" }}><Text>{moneyRound(minQuota, true, true)}</Text></View>
@@ -85,24 +99,14 @@ export default function PurchasePage() {
                     <View style={styles.DownPaymentSection}>
                         <ScrollView horizontal={true}>
                             {
-                                downPayments.map((item: any) => {
-                                    if (item.value == currentDownPayment.value) {
-                                        return (
-                                            <View key={item.percent} style={styles.DownPaymentPanelActive}>
-                                                <Text style={styles.LabelPercentPanelActive}>{item.percent}{"%"}</Text>
-                                                <View style={styles.HrPanelActive}></View>
-                                                <Text style={styles.LabelPanelActive}>{"$"}{item.value}</Text>
-                                            </View>
-                                        );
-                                    } else {
-                                        return (
-                                            <View key={item.percent} style={styles.DownPaymentPanel}>
-                                                <Text style={styles.LabelPercentPanel}>{item.percent}{"%"}</Text>
-                                                <View style={styles.HrPanel}></View>
-                                                <Text style={styles.LabelPanel}>{"$"}{item.value}</Text>
-                                            </View>
-                                        )
-                                    }
+                                dPayment.map((item: any, index) => {
+                                    return (
+                                        <View key={item.percent} style={index == 0 ? styles.DownPaymentPanelActive : styles.DownPaymentPanel}>
+                                            <Text style={styles.LabelPercentPanelActive}>{item.percent}{"%"}</Text>
+                                            <View style={styles.HrPanelActive}></View>
+                                            <Text style={styles.LabelPanelActive}>{"$"}{item.value}</Text>
+                                        </View>
+                                    );
                                 })
                             }
                         </ScrollView>

@@ -9,17 +9,17 @@ import { OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedIn
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
-import { moneyFormat, moneyToNumber, rateToString, moneyRound } from "../utils";
+import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, inititalQuota, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
-export default function MortgageCalculatorPage() {
+export default function MortgagePage() {
 
-    const [rate, setRate] = useState(0);
+    const [rate, setRate] = useState(5.59);
     const [amortization, setAmotization] = useState(amortizations[0]);
     const [mortgateAmount, setMortgateAmount] = useState(inititalQuota);
-    const [mortgateQuota, setMortgateQuota] = useState(0);
     const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
-    const user = useSelector((state) => state.user);
+    const [result, setResult] = useState(0);
+    const user = useSelector((state: any) => state.user);
     const loadRates = async () => {
         try {
             const response = await fetch(API_URL + '/rate', {
@@ -31,17 +31,44 @@ export default function MortgageCalculatorPage() {
             });
             const json = await response.json();
             setRate(json.rate.fixedrate5years);
+            setResult(
+                calculateMortgage(inititalQuota, json.rate.fixedrate5years, amortization.value, paymentPeriod.value)
+            );
         } catch (error) {
             console.error(error);
         }
     }
     useEffect(() => {
-        loadRates();
+        //loadRates();
     }, []);
 
-    const calculatorMortgate = (value) => {
+    const onChangeMortgate = (value: any) => {
+        console.log(amortization)
         setMortgateAmount(value)
+        setResult(
+            calculateMortgage(value, rate, amortization.value, paymentPeriod.value)
+        );
+    }
 
+    const onChangeRate = (value: any) => {
+        setRate(value)
+        setResult(
+            calculateMortgage(mortgateAmount, value, amortization.value, paymentPeriod.value)
+        );
+    }
+
+    const onChangeAmortization = (item: any) => {
+        setAmotization(item);
+        setResult(
+            calculateMortgage(mortgateAmount, rate, item.value, paymentPeriod.value)
+        );
+    }
+
+    const onChangePaymentPeriod = (item: any) => {
+        setPaymentPeriod(item);
+        setResult(
+            calculateMortgage(mortgateAmount, rate, amortization.value, item.value)
+        );
     }
 
     return (
@@ -67,7 +94,7 @@ export default function MortgageCalculatorPage() {
                             </View>
                         ),
                     }}
-                    onValueChange={(value) => calculatorMortgate(value)}
+                    onValueChange={(value) => onChangeMortgate(value)}
                 />
                 <View style={AppStyle.Base.sliderLabelContainer}>
                     <View style={{ alignContent: "flex-start" }}><Text style={AppStyle.Base.label}>{moneyRound(minQuota, true, true)}</Text></View>
@@ -77,19 +104,19 @@ export default function MortgageCalculatorPage() {
                 <OutlinedTextInput
                     label="Rates"
                     value={rateToString(rate)}
-                    onTextChange={(text) => setRate(text)} />
+                    onTextChange={(text) => onChangeRate(text)} />
 
                 <OutlinedSelectInput
                     label="Amortization"
                     value={amortization}
                     items={amortizations}
-                    onSelect={(item) => setAmotization(item)} />
+                    onSelect={(item) => onChangeAmortization(item)} />
 
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => setPaymentPeriod(item)} />
-                            <Text style={AppStyle.TextStyle.text6}>{moneyFormat(mortgateQuota)}*</Text>
+                            <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} />
+                            <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}

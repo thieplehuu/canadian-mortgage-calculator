@@ -14,7 +14,7 @@ import { API_URL } from "../constants/urls";
 
 export default function LoginPage() {
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const [action, setAction] = useState('SIGNUP');
+    const [action, setAction] = useState('SIGNIN');
     const [step, setStep] = useState('INPUT_PHONE_NUMBER');
     const [confirm, setConfirm] = useState("");
 
@@ -78,6 +78,8 @@ export default function LoginPage() {
                         } catch (error) {
                             console.error(error);
                         }
+                    } else if (action == "SIGNIN") {
+                        navigation.navigate("HomePage" as never);
                     }
                     setStep('VERIFY_SUCCESS');
                 }} /></>
