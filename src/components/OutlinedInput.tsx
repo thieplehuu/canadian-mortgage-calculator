@@ -19,7 +19,9 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, onTextChang
         console.log(value);
         setEditing(edit)
         setEditValue(value)
-        refInput.current.focus();
+        setTimeout(() => {
+            refInput.current.focus();
+        }, 0)
     }
     return (
         <View style={AppStyle.Base.outlinedInputContainer}>
