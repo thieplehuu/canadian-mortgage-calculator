@@ -23,13 +23,18 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, onTextChang
             refInput.current.focus();
         }, 0)
     }
+
+    const onBlur = () => {
+        setEditing(false)
+    }
+
     return (
         <View style={AppStyle.Base.outlinedInputContainer}>
             <View style={AppStyle.Base.outlinedLabelContainer}>
                 <Text style={AppStyle.Base.label}>{label}</Text>
             </View>
             <View style={AppStyle.Base.outlinedTextInput}>
-                {editing ? (<TextInput ref={refInput} value={editValue} onChangeText={(text) => onTextChange(text)} />) : (<Text onPress={() => onSetEditing(true)}>{value}</Text>)}
+                {editing ? (<TextInput ref={refInput} value={editValue} onChangeText={(text) => onTextChange(text)} onBlur={() => onBlur()} />) : (<Text onPress={() => onSetEditing(true)}>{value}</Text>)}
             </View>
         </View>
     )
