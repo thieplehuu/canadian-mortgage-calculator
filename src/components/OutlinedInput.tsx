@@ -1,20 +1,25 @@
 import { Text, TextInput, View } from "react-native";
 import AppStyle from "../theme";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 
 interface TextInputProps {
     label: string;
     value: string;
+    type: string;
     onTextChange: (text: string) => void;
 }
 
-const OutlinedTextInput: FC<TextInputProps> = ({ label, value, onTextChange, ...props }) => {
+const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, onTextChange, ...props }) => {
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(value);
-
-    const onSetEditing = (value: boolean) => {
-        setEditing(value)
+    const refInput = useRef();
+    const onSetEditing = (edit: boolean) => {
+        value = value.replace(/%/g, "")
+        console.log(value);
+        setEditing(edit)
+        setEditValue(value)
+        refInput.current.focus();
     }
     return (
         <View style={AppStyle.Base.outlinedInputContainer}>
@@ -22,7 +27,7 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, onTextChange, ...
                 <Text style={AppStyle.Base.label}>{label}</Text>
             </View>
             <View style={AppStyle.Base.outlinedTextInput}>
-                {editing ? (<TextInput value={editValue} onChangeText={(text) => onTextChange(text)} />) : (<Text onPress={() => onSetEditing(true)}>{value}</Text>)}
+                {editing ? (<TextInput ref={refInput} value={editValue} onChangeText={(text) => onTextChange(text)} />) : (<Text onPress={() => onSetEditing(true)}>{value}</Text>)}
             </View>
         </View>
     )

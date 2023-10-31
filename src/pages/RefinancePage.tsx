@@ -31,6 +31,7 @@ export default function RefinancePage() {
             <View style={AppStyle.StyleMain.container}>
                 <OutlinedTextInput
                     label="Home Value"
+                    type="money"
                     value={moneyFormat(homeValue)}
                     onTextChange={(text) => setHomeValue(moneyToNumber(text))} />
                 <Slider
@@ -118,6 +119,7 @@ export default function RefinancePage() {
                 </View>
                 <OutlinedTextInput
                     label="Rates"
+                    type="rate"
                     value={rateToString(rate)}
                     onTextChange={(text) => setRate(text)} />
 

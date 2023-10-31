@@ -68,6 +68,7 @@ export default function PurchasePage() {
                 <View style={AppStyle.StyleMain.container}>
                     <OutlinedTextInput
                         label="Purchase Price"
+                        type="money"
                         value={moneyFormat(amount)}
                         onTextChange={(text) => setAmount(moneyToNumber(text))} />
                     <Slider
@@ -119,6 +120,7 @@ export default function PurchasePage() {
                     </View>
                     <OutlinedTextInput
                         label="Rates"
+                        type="rate"
                         value={rateToString(rate)}
                         onTextChange={(text) => setRate(text)} />
 

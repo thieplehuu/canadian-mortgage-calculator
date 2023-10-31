@@ -77,6 +77,7 @@ export default function MortgagePage() {
                 <OutlinedTextInput
                     label="Mortgage Amount"
                     value={moneyFormat(mortgateAmount)}
+                    type="money"
                     onTextChange={(text) => setMortgateAmount(moneyToNumber(text))} />
                 <Slider
                     thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
@@ -103,6 +104,7 @@ export default function MortgagePage() {
                 </View>
                 <OutlinedTextInput
                     label="Rates"
+                    type="rate"
                     value={rateToString(rate)}
                     onTextChange={(text) => onChangeRate(text)} />
 
