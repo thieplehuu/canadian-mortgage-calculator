@@ -75,7 +75,6 @@ export default function MortgagePage() {
                 <OutlinedCurrencyInput
                     label="Mortgage Amount"
                     value={mortgateAmount}
-                    type="money"
                     minimumValue={minQuota}
                     maximumValue={maxQuota}
                     precision={0}

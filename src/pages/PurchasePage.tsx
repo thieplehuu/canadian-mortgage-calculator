@@ -178,7 +178,6 @@ export default function PurchasePage() {
                 <View style={AppStyle.StyleMain.container}>
                     <OutlinedCurrencyInput
                         label="Purchase Price"
-                        type="money"
                         value={amount}
                         minimumValue={minQuota}
                         maximumValue={maxQuota}

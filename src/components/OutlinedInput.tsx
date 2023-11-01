@@ -62,20 +62,21 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, minimumValu
 interface CurrencyInputProps {
     label: string;
     value: number;
-    type: string;
-    minimumValue: number;
-    maximumValue: number;
+    minimumValue: number | null;
+    maximumValue: number | null;
     precision: number;
     onTextChange: (text: string) => void;
 }
 
-const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, type, minimumValue = 0, maximumValue = Number.POSITIVE_INFINITY, precision, onTextChange, ...props }) => {
+const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, minimumValue, maximumValue, precision, onTextChange, ...props }) => {
     const [newValue, setValue] = useState(value);
     const onBlur = () => {
-        if (newValue < minimumValue) {
+        if (minimumValue!= null && newValue < minimumValue) {
+            console.log('test');
             setValue(minimumValue);
         }
-        if (newValue > maximumValue) {
+        if (maximumValue!= null && newValue > maximumValue) {
+            console.log('test');
             setValue(maximumValue);
         }
     }

@@ -83,7 +83,6 @@ export default function RefinancePage() {
             <View style={AppStyle.StyleMain.container}>
                 <OutlinedCurrencyInput
                     label="Home Value"
-                    type="money"
                     minimumValue={minQuota}
                     maximumValue={maxQuota}
                     value={homeValue}

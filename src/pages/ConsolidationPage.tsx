@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
     StyleSheet,
-    TextInput,
     View,
 } from "react-native";
 import { Button, Text } from "@rneui/themed";
 import { API_URL } from "../constants/urls";
-import { Separator, calculateMortgage, moneyFormat } from "../utils";
+import { calculateMortgage, moneyFormat } from "../utils";
 import CurrencyInput from "react-native-currency-input";
 
 export default function ConsolidationPage() {
@@ -22,7 +21,7 @@ export default function ConsolidationPage() {
     const [totalDebt, setTotalDebt] = useState(0);
     const [monthlyPayment, setMonthlyPayment] = useState(0);
     const [newPayment, setNewPayment] = useState(0);
-    const [totalDebtCalc, setTotalDebtCalc] = useState(null);
+    const [totalDebtCalc, setTotalDebtCalc] = useState(0);
     const [rate, setRate] = useState(5.59);
     const [loaded, setLoaded] = useState(false);
 
@@ -45,24 +44,25 @@ export default function ConsolidationPage() {
 
     useEffect(() => {
         //loadRates();
-        const totalDebtCalculated = Object.keys(items).reduce((sum, key) => sum + parseFloat(items[key].amount || 0), 0);
+        const totalDebtCalculated = items.reduce((sum, item) => sum + item.amount, 0);
         setNewPayment(calculateMortgage(totalDebtCalculated, rate, 30, 'monthly'));
         setTotalDebt(totalDebtCalculated);
-        setMonthlyPayment(Object.keys(items).reduce((sum, key) => sum + parseFloat(items[key].payment || 0), 0));
+        setMonthlyPayment(items.reduce((sum, item) => sum + item.payment, 0));
     }, [rate])
 
-    const onChangeAmount = (key: string, value: any) => {
+    const onChangeAmount = (name: string, value: number | null) => {
+        if(value != null){
+            items.map((item, i) => {
+                if (item.key == name) {
+                    item.amount = value;
+                    items[i] = item;
+                }
+            });
+            setValue(items);
+        }
 
-        items.map((item, i) => {
-            if (item.key == key) {
-                item.amount = value;
-                items[i] = item;
-            }
-        });
-        console.log(items);
-        const totalDebtCalculated = Object.keys(items).reduce((sum, key) => sum + parseFloat(items[key].amount || 0), 0);
+        const totalDebtCalculated = items.reduce((sum, item) => sum + item.amount, 0);
         setTotalDebtCalc(totalDebtCalculated);
-        setValue(items);
         setNewPayment(calculateMortgage(totalDebtCalculated, rate, 30, 'monthly'));
         setTotalDebt(totalDebtCalculated);
         /*
@@ -77,12 +77,18 @@ export default function ConsolidationPage() {
         */
     }
 
-    const onChangePayment = (key: string, value: string) => {
-        const name = key;
-        const inValue = parseInt(Number(value.replace(/[^0-9.-]+/g, "")));
-        const temp = { ...monthly, [name]: inValue };
-        setMonthly(temp);
-        setMonthlyPayment(Object.keys(temp).reduce((sum, key) => sum + parseFloat(temp[key].payment || 0), 0));
+    const onChangePayment = (name: string, value: number | null) => {
+        if(value != null){
+            items.map((item, i) => {
+                if (item.key == name) {
+                    item.payment = value;
+                    items[i] = item;
+                }
+            });
+            setValue(items);
+        }
+        const totalMonthlyPayment = items.reduce((sum, item) => sum + item.payment, 0);
+        setMonthlyPayment(totalMonthlyPayment);
     }
 
 
@@ -114,7 +120,7 @@ export default function ConsolidationPage() {
                                     delimiter="."
                                     separator=","
                                     precision={2}
-                                    onChangeText={(text) => { onChangeAmount(item.key, text) }} />
+                                    onChangeValue={(text) => { onChangeAmount(item.key, text) }} />
                             </View>
                         </View>
                         <View style={styles.column}>
@@ -126,7 +132,7 @@ export default function ConsolidationPage() {
                                     delimiter="."
                                     separator=","
                                     precision={2}
-                                    onChangeText={(text) => { onChangePayment(item.key, text) }} />
+                                    onChangeValue={(text) => { onChangePayment(item.key, text) }} />
                             </View>
                         </View>
                     </View>)
