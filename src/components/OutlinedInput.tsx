@@ -2,23 +2,31 @@ import { Text, TextInput, View } from "react-native";
 import AppStyle from "../theme";
 import { FC, useRef, useState } from "react";
 import Dropdown from "./Dropdown";
+import { moneyToNumber, rateToNumber, rateToString } from "../utils";
+import CurrencyInput from "react-native-currency-input";
 
 interface TextInputProps {
     label: string;
     value: string;
     type: string;
+    minimumValue: number;
+    maximumValue: number;
     onTextChange: (text: string) => void;
 }
 
-const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, onTextChange, ...props }) => {
+const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, minimumValue = 0, maximumValue = Number.POSITIVE_INFINITY, onTextChange, ...props }) => {
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(value);
     const refInput = useRef();
     const onSetEditing = (edit: boolean) => {
-        value = value.replace(/%/g, "")
-        console.log(value);
-        setEditing(edit)
-        setEditValue(value)
+        if (type == "money") {
+            setEditing(edit);
+            setEditValue(moneyToNumber(value).toString());
+        }
+        if (type == "rate") {
+            setEditing(edit);
+            setEditValue(rateToNumber(value).toString());
+        }
         setTimeout(() => {
             refInput.current.focus();
         }, 0)
@@ -34,9 +42,16 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, onTextChang
                 <Text style={AppStyle.Base.label}>{label}</Text>
             </View>
             <View style={AppStyle.Base.outlinedTextInput}>
-                {editing ? (<TextInput ref={refInput} value={editValue} onChangeText={(text) => {
+                {editing ? (<TextInput ref={refInput} keyboardType='numeric' value={editValue} onChangeText={(text) => {
+                    if (parseInt(text) < minimumValue) {
+                        text = minimumValue.toString();
+                    }
+                    if (parseInt(text) > maximumValue) {
+                        text = maximumValue.toString();
+                    }
                     setEditValue(text)
                     onTextChange(text)
+
                 }} onBlur={() => onBlur()} />) : (<Text onPress={() => onSetEditing(true)}>{value}</Text>)}
             </View>
         </View>
@@ -44,6 +59,47 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, onTextChang
 };
 
 
+interface CurrencyInputProps {
+    label: string;
+    value: number;
+    type: string;
+    minimumValue: number;
+    maximumValue: number;
+    precision: number;
+    onTextChange: (text: string) => void;
+}
+
+const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, type, minimumValue = 0, maximumValue = Number.POSITIVE_INFINITY, precision, onTextChange, ...props }) => {
+    const [newValue, setValue] = useState(value);
+    const onBlur = () => {
+        if (newValue < minimumValue) {
+            setValue(minimumValue);
+        }
+        if (newValue > maximumValue) {
+            setValue(maximumValue);
+        }
+    }
+    return (
+        <View style={AppStyle.Base.outlinedInputContainer}>
+            <View style={AppStyle.Base.outlinedLabelContainer}>
+                <Text style={AppStyle.Base.label}>{label}</Text>
+            </View>
+            <View style={AppStyle.Base.outlinedTextInput}>
+                <CurrencyInput
+                    prefix="$"
+                    delimiter="."
+                    separator=","
+                    precision={precision}
+                    value={newValue}
+                    onChangeValue={(value) => {
+                        setValue(value);
+                        onTextChange(value);
+                    }}
+                    onBlur={() => onBlur()} />
+            </View>
+        </View>
+    )
+};
 
 interface SelectInputProps {
     label: string;
@@ -67,4 +123,4 @@ const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSele
     </View>
 );
 
-export { OutlinedTextInput, OutlinedSelectInput };
+export { OutlinedTextInput, OutlinedSelectInput, OutlinedCurrencyInput };

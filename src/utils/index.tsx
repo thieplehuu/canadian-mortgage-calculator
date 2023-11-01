@@ -12,10 +12,18 @@ const rateToString = (str: number) => {
 }
 
 const moneyToNumber = (str: string) => {
-    var regex = /[.,\s]/g;
+    var regex = /[%\$.,\s]/g;
 
     var result = str.replace(regex, '');
     return parseInt(result);
+}
+
+
+const rateToNumber = (str: string) => {
+    var regex = /[%]/g;
+
+    var result = str.replace(regex, '');
+    return parseFloat(result);
 }
 
 const roundMillionMoney = (money: number, prefix = true, suffix = true) => {
@@ -59,6 +67,13 @@ const moneyRound = (money: number, prefix = true, suffix = true) => {
 
     return '';
 }
+const Separator = (e: any, isFloat: boolean) => {
+    if (isFloat) {
+        return parseInt(e).toLocaleString("en");
+    } else {
+        return round2TwoDecimals(e).toLocaleString("en");
+    }
+};
 
 const round2TwoDecimals = (a: any) => {
     return Math.round(a * 100) / 100;
@@ -75,7 +90,6 @@ const calculateMortgage = (P: any, r: any, t: any, m: any) => {
     result = round2TwoDecimals(
         (P * monthlyInterestFactor) / (1 - Math.pow(1 + monthlyInterestFactor, -k))
     );
-    console.log(t);
     if (m === "weekly") {
         return (result * 12) / 52;
     } else if (m === "biweekly") {
@@ -85,4 +99,4 @@ const calculateMortgage = (P: any, r: any, t: any, m: any) => {
     }
 };
 
-export { moneyFormat, moneyToNumber, rateToString, moneyRound, round2TwoDecimals, calculateMortgage };
+export { moneyFormat, moneyToNumber, rateToString, rateToNumber, moneyRound, round2TwoDecimals, calculateMortgage, Separator };

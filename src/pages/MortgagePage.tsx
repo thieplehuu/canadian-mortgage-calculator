@@ -5,7 +5,7 @@ import {
     Text,
 } from "react-native";
 import { Button, Slider } from "@rneui/themed";
-import { OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
+import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
@@ -40,16 +40,14 @@ export default function MortgagePage() {
     }
     useEffect(() => {
         //loadRates();
-    }, []);
+    }, [rate]);
 
     const onChangeMortgate = (value: any) => {
-        console.log(amortization)
         setMortgateAmount(value)
         setResult(
             calculateMortgage(value, rate, amortization.value, paymentPeriod.value)
         );
     }
-
     const onChangeRate = (value: any) => {
         setRate(value)
         setResult(
@@ -74,11 +72,14 @@ export default function MortgagePage() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
             <View style={AppStyle.StyleMain.container}>
-                <OutlinedTextInput
+                <OutlinedCurrencyInput
                     label="Mortgage Amount"
-                    value={moneyFormat(mortgateAmount)}
+                    value={mortgateAmount}
                     type="money"
-                    onTextChange={(text) => setMortgateAmount(moneyToNumber(text))} />
+                    minimumValue={minQuota}
+                    maximumValue={maxQuota}
+                    precision={0}
+                    onTextChange={(text) => onChangeMortgate(text)} />
                 <Slider
                     thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
                     trackStyle={{ height: 4, backgroundColor: 'transparent' }}
@@ -106,6 +107,8 @@ export default function MortgagePage() {
                     label="Rates"
                     type="rate"
                     value={rateToString(rate)}
+                    minimumValue={0}
+                    maximumValue={100}
                     onTextChange={(text) => onChangeRate(text)} />
 
                 <OutlinedSelectInput
