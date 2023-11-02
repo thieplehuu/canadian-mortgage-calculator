@@ -11,6 +11,8 @@ import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
 import { DialogLoading } from "@rneui/base/dist/Dialog/Dialog.Loading";
+import { ApplyDialog } from "../components/ApplyModal";
+import { useToast } from "react-native-toast-notifications";
 
 export default function RefinancePage() {
 
@@ -21,8 +23,9 @@ export default function RefinancePage() {
     const [maxAmount, setMaxAmount] = useState(homeValue * 0.8);
     const [result, setResult] = useState(0);
     const [loan, setLoan] = useState(homeValue * 0.25);
-    const [loaded, setLoaded] = useState(false);
+    const [applyDialogVisible, showApplyDialog] = useState(false);
     const minAmount = 5000;
+    const toast = useToast();
     const loadRates = async () => {
         try {
             const response = await fetch(API_URL + '/rate', {
@@ -41,7 +44,7 @@ export default function RefinancePage() {
     }
 
     useEffect(() => {
-        //loadRates();
+        loadRates();
         setResult(calculateMortgage(maxAmount, rate, amortization.value, paymentPeriod.value));
     }, [rate]);
 
@@ -194,10 +197,35 @@ export default function RefinancePage() {
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                                 title="Take the Next Step"
-                                onPress={() => { }} />
+                                onPress={() => { showApplyDialog(true) }} />
                         </View>
                     </View>
                 </View>
+                <ApplyDialog title={""} data={{
+                    screen: "refinance",
+                    amount: homeValue,
+                    amortization: amortization.value,
+                    period: paymentPeriod.value,
+                    rate: rate,
+                    result: result,
+                    loan: loan
+                }}
+                    visible={applyDialogVisible}
+                    onConfirm={() => {
+                        showApplyDialog(false);
+                    }}
+                    onCancel={() => {
+                        showApplyDialog(false);
+                    }}
+                    onError={(error: any) => {
+                        showApplyDialog(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "center",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }} />
             </View>
         </ SafeAreaView>
     )

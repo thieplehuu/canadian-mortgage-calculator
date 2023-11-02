@@ -13,6 +13,8 @@ import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
 import DownPaymentRadio from "../components/DownPaymentRadio";
+import { ApplyDialog } from "../components/ApplyModal";
+import { useToast } from "react-native-toast-notifications";
 
 export default function PurchasePage() {
     const [amount, setAmount] = useState(800000);
@@ -29,7 +31,9 @@ export default function PurchasePage() {
     const [dPerc, setDPerc] = useState(0);
     const [insurance, setInsurance] = useState(0);
     const [result, setResult] = useState(0);
+    const [applyDialogVisible, showApplyDialog] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const toast = useToast();
     const loadRates = async () => {
         try {
             const response = await fetch(API_URL + '/rate', {
@@ -41,15 +45,15 @@ export default function PurchasePage() {
             });
             const json = await response.json();
             setRate(json.rate.fixedrate5years);
-            setResult(
-                calculateMortgage(amount, json.rate.fixedrate5years, amortization.value, paymentPeriod.value)
-            );
+            //setResult(
+            //    calculateMortgage(amount, json.rate.fixedrate5years, amortization.value, paymentPeriod.value)
+            //);
         } catch (error) {
             console.error(error);
         }
     }
     useEffect(() => {
-        //loadRates();
+        loadRates();
         setResult(
             calculateMortgage(
                 amount - amount * (dPayment[dPerc].percent / 100),
@@ -256,10 +260,35 @@ export default function PurchasePage() {
                     <View style={AppStyle.StyleMain.footerRightColumn}>
                         <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                             title="Begin Your Journey"
-                            onPress={() => { }} />
+                            onPress={() => { showApplyDialog(true) }} />
                     </View>
                 </View>
             </View>
+            <ApplyDialog title={""} data={{
+                screen: "purchase",
+                amount: amount,
+                amortization: amortization.value,
+                period: paymentPeriod.value,
+                rate: rate,
+                result: result,
+                dpayment: dPayment
+            }}
+                visible={applyDialogVisible}
+                onConfirm={() => {
+                    showApplyDialog(false);
+                }}
+                onCancel={() => {
+                    showApplyDialog(false);
+                }}
+                onError={(error: any) => {
+                    showApplyDialog(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} />
         </ SafeAreaView >
     )
 }

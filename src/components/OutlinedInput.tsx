@@ -42,7 +42,7 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, minimumValu
                 <Text style={AppStyle.Base.label}>{label}</Text>
             </View>
             <View style={AppStyle.Base.outlinedTextInput}>
-                {editing ? (<TextInput ref={refInput} keyboardType='numeric' value={editValue} onChangeText={(text) => {
+                {editing ? (<TextInput style={AppStyle.Base.label} ref={refInput} keyboardType='numeric' value={editValue} onChangeText={(text) => {
                     if (parseInt(text) < minimumValue) {
                         text = minimumValue.toString();
                     }
@@ -52,7 +52,7 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, minimumValu
                     setEditValue(text)
                     onTextChange(text)
 
-                }} onBlur={() => onBlur()} />) : (<Text onPress={() => onSetEditing(true)}>{value}</Text>)}
+                }} onBlur={() => onBlur()} />) : (<Text style={AppStyle.Base.label} onPress={() => onSetEditing(true)}>{value}</Text>)}
             </View>
         </View>
     )
@@ -69,16 +69,14 @@ interface CurrencyInputProps {
 }
 
 const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, minimumValue, maximumValue, precision, onTextChange, ...props }) => {
-    const [newValue, setValue] = useState(value);
+    //const [value, setValue] = useState(value);
     const onBlur = () => {
-        if (minimumValue!= null && newValue < minimumValue) {
-            console.log('test');
-            setValue(minimumValue);
-        }
-        if (maximumValue!= null && newValue > maximumValue) {
-            console.log('test');
-            setValue(maximumValue);
-        }
+        //if (minimumValue != null && newValue < minimumValue) {
+        //setValue(minimumValue);
+        //}
+        //if (maximumValue != null && newValue > maximumValue) {
+        //setValue(maximumValue);
+        //}
     }
     return (
         <View style={AppStyle.Base.outlinedInputContainer}>
@@ -87,13 +85,14 @@ const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, minimumVa
             </View>
             <View style={AppStyle.Base.outlinedTextInput}>
                 <CurrencyInput
+                    style={AppStyle.Base.label}
                     prefix="$"
                     delimiter="."
                     separator=","
                     precision={precision}
-                    value={newValue}
-                    onChangeValue={(value) => {
-                        setValue(value);
+                    value={value}
+                    onChangeValue={(value: any) => {
+                        //setValue(value);
                         onTextChange(value);
                     }}
                     onBlur={() => onBlur()} />

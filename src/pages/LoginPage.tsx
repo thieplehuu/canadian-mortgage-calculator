@@ -72,6 +72,7 @@ export default function LoginPage() {
                                 })
                             });
                             const data = await response.json();
+                            console.log(data);
                             if (data.status == "success") {
                                 navigation.navigate("HomePage" as never);
                             }

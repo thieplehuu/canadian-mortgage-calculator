@@ -2,35 +2,36 @@ import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
     View,
+    Text,
 } from "react-native";
-import { Button, Input, Slider, Text } from "@rneui/themed";
+import { Button, Slider } from "@rneui/themed";
 import { OutlinedCurrencyInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Separator, moneyRound, moneyToNumber } from "../utils";
-import { maxQuota, minQuota } from "../stores/initial";
 import { API_URL } from "../constants/urls";
+import { ApplyDialog } from "../components/ApplyModal";
+import { useToast } from "react-native-toast-notifications";
 
 export default function PreQualifierPage() {
 
     const [amount, setAmount] = useState(160000);
-    const [previewAmount, setPreviewAmount] = useState(0);
     const [year, setYear] = useState(30);
-    const [rate, setRate] = useState();
-    const [rates, setRates] = useState();
-    const [gdsv, setGdsv] = useState();
+    const [rate, setRate] = useState(9.14);
+    const [gdsv, setGdsv] = useState(50.00);
     const [loaded, setLoaded] = useState(false);
     const [minAmount] = useState(35000);
     const [maxAmount] = useState(300000);
-    const [MaxMonthlyPayment, setMaxMonthlyPayment] = useState();
     const [request, setRequest] = useState(0);
     const [style, setStyle] = useState();
-    const [dp, setDp] = useState();
-    const [pp, setPp] = useState();
+    const [dp, setDp] = useState(0);
+    const [pp, setPp] = useState(0);
     const [isInput, setIsInput] = useState(false);
-    const [tax, setTax] = useState(0);
+    const [tax, setTax] = useState(5.55);
     const [heatingCost, setHeatingCost] = useState(120);
     const [otherCost, setOtherCost] = useState(0);
     const [condoFee, setCondoFee] = useState(0);
+    const [applyDialogVisible, showApplyDialog] = useState(false);
+    const toast = useToast();
 
     const loadRates = async () => {
         try {
@@ -42,80 +43,57 @@ export default function PreQualifierPage() {
                 },
             });
             const json = await response.json();
-            setRate(json.rate);
-            setYear(json.mortization);
-            setGdsv(json.gds);
+            setRate(json.lender.rate);
+            setYear(json.lender.mortization);
+            setGdsv(json.lender.gds);
         } catch (error) {
             console.error(error);
         }
     }
 
     useEffect(() => {
-        //loadRates();
-        calculateMortgage(calcMaxMonthlyPayment(amount),rate, year);
-        updatePosition(amount);
-        preview(amount);
+        loadRates();
+        calculateMortgage(calcMaxMonthlyPayment(amount), rate, year);
     }, [tax, condoFee, heatingCost, otherCost]);
 
     useEffect(() => {
         let monthlyIncome = amount / 12;
         setTax(parseFloat((monthlyIncome * 0.04).toFixed(2)));
-      }, [amount]);
-    const updatePosition = (e: number) => {
-    let val;
-    setAmount(e);
-    val = e;
-    const min = minAmount ? minAmount : 0;
-    const max = maxAmount ? maxAmount : 100;
-    setStyle(Number(((val - min) * 100) / (max - min)));
+    }, [amount]);
+
+    const calculateMortgage = (mmp: any, r: any, t: any) => {
+        let irba = r / 2;
+        let irbaCan = Math.pow(1 + irba / 100, 2) - 1;
+        let monthlyRate = Math.pow(1 + irbaCan, 1 / 12) - 1;
+        let pvFactor = (1 - Math.pow(1 + monthlyRate, -12 * t)) / monthlyRate;
+        let maxmort = mmp * pvFactor;
+        let dp = (maxmort / 100) * 25;
+        setDp(dp);
+        setPp(dp + maxmort);
+        setRequest(maxmort);
     };
 
-    const calculateMortgage = (mmp, r, t) => {
-    let irba = r / 2;
-    let irbaCan = Math.pow(1 + irba / 100, 2) - 1;
-    let monthlyRate = Math.pow(1 + irbaCan, 1 / 12) - 1;
-    let pvFactor = (1 - Math.pow(1 + monthlyRate, -12 * t)) / monthlyRate;
-    let maxmort = mmp * pvFactor;
-    let dp = (maxmort/100)*25;
-    setDp(dp);
-    setPp(dp+maxmort);
-    setRequest(maxmort);
-    };
-
-    const preview = (e:any) => {
-    setPreviewAmount(parseFloat(Separator(e, false)));
-    };
-    const previewFunc = (e) => {
-    if (e.toString().length > 6) {
-        return e / 1000000 + " M";
-    } else {
-        return e / 1000 + " K";
+    const onChangeHouseHoldIncome = (value: any) => {
+        setAmount(value);
+        calculateMortgage(calcMaxMonthlyPayment(value), rate, year);
     }
-    };
 
-    const onChangeHouseHoldIncome = (value : any) => {
-    calculateMortgage(calcMaxMonthlyPayment(value), rate, year);
-    updatePosition(value);
-    setAmount(value);
-    preview(value);
-    };
-
-    const calcMaxMonthlyPayment = (value, newgds='') => {
-    if(newgds==''){
-        newgds = gdsv;
-    }
-    let monthlyIncome = value / 12;
-    let gds = monthlyIncome * (newgds / 100);
-    let newCondoFee = Number(condoFee / 2);
-    let newHeatingCost = Number(heatingCost);
-    let otherLoan = Number(otherCost);
-    let newtax : number;
-    if(typeof tax == "undefined"){
-        newtax = parseFloat((monthlyIncome * 0.04).toFixed(2));
-    }else{
-        newtax = tax;
-    }
-    return gds - newtax - newHeatingCost - otherLoan - newCondoFee;
+    const calcMaxMonthlyPayment = (value: any, newgds = -1) => {
+        if (newgds == -1) {
+            newgds = gdsv;
+        }
+        let monthlyIncome = value / 12;
+        let gds = monthlyIncome * (newgds / 100);
+        let newCondoFee = Number(condoFee / 2);
+        let newHeatingCost = Number(heatingCost);
+        let otherLoan = Number(otherCost);
+        let newtax: number;
+        if (tax == 0) {
+            newtax = parseFloat((monthlyIncome * 0.04).toFixed(2));
+        } else {
+            newtax = tax;
+        }
+        return gds - newtax - newHeatingCost - otherLoan - newCondoFee;
     };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
@@ -123,8 +101,8 @@ export default function PreQualifierPage() {
                 <OutlinedCurrencyInput
                     label="Household Income"
                     value={amount}
-                    minimumValue={minQuota}
-                    maximumValue={maxQuota}
+                    minimumValue={minAmount}
+                    maximumValue={maxAmount}
                     precision={0}
                     onTextChange={(text) => onChangeHouseHoldIncome(text)} />
 
@@ -148,16 +126,16 @@ export default function PreQualifierPage() {
                     label="Property Tax"
                     value={tax}
                     precision={2}
-                    onTextChange={(text) => setTax(moneyToNumber(text))} 
-                    minimumValue={null} maximumValue={null} 
+                    onTextChange={(text) => setTax(moneyToNumber(text))}
+                    minimumValue={null} maximumValue={null}
                 />
-                    
+
                 <OutlinedCurrencyInput
                     label="Code Fee"
                     value={condoFee}
                     precision={0}
                     onTextChange={(text) => setCondoFee(moneyToNumber(text))} minimumValue={null} maximumValue={null} />
-                
+
                 <OutlinedCurrencyInput
                     label="Hydro Fee"
                     value={heatingCost}
@@ -174,15 +152,40 @@ export default function PreQualifierPage() {
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
                             <Text style={AppStyle.TextStyle.text5}>Maximum Mortgage</Text>
-                            <Text style={AppStyle.TextStyle.text6}>$958,744*</Text>
+                            <Text style={AppStyle.TextStyle.text6}>${Separator(request, true)}*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                                 title="Get Pre-Qualified"
-                                onPress={() => { }} />
+                                onPress={() => { showApplyDialog(true) }} />
                         </View>
                     </View>
                 </View>
+
+                <ApplyDialog title={""} data={{
+                    screen: "pq",
+                    propertyTax: tax,
+                    heatingCost: heatingCost,
+                    otherCost: otherCost,
+                    condoFee: condoFee,
+                    requestAmount: request
+                }}
+                    visible={applyDialogVisible}
+                    onConfirm={() => {
+                        showApplyDialog(false);
+                    }}
+                    onCancel={() => {
+                        showApplyDialog(false);
+                    }}
+                    onError={(error: any) => {
+                        showApplyDialog(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "center",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }} />
             </View>
         </ SafeAreaView>
     )

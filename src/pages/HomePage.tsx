@@ -32,7 +32,7 @@ const HomePage = () => {
         }
     }
     useEffect(() => {
-        //loadRates();
+        loadRates();
     }, []);
     const goto = async (page: string) => {
         navigation.navigate(page as never)
@@ -165,7 +165,7 @@ const HomePage = () => {
                     <View style={AppStyle.StyleMain.sectionContainer}>
                         <TouchableOpacity onPress={() => {
                             goto("EnquityPage");
-                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#bfeeef', '#f4f8fd']} style={AppStyle.StyleMain.sectionContent}>
+                        }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#385A6447', '#F3D2F11F']} style={AppStyle.StyleMain.sectionContent}>
                                 <View style={sectionStyle.columns}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>

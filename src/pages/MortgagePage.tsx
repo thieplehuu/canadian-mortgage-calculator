@@ -8,18 +8,21 @@ import { Button, Slider } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
 import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, inititalQuota, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
+import { ApplyDialog } from "../components/ApplyModal";
+import { useToast } from "react-native-toast-notifications";
+
 export default function MortgagePage() {
 
     const [rate, setRate] = useState(5.59);
     const [amortization, setAmotization] = useState(amortizations[0]);
-    const [mortgateAmount, setMortgateAmount] = useState(inititalQuota);
+    const [amount, setAmount] = useState(inititalQuota);
     const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
     const [result, setResult] = useState(0);
-    const user = useSelector((state: any) => state.user);
+    const [applyDialogVisible, showApplyDialog] = useState(false);
+    const toast = useToast();
     const loadRates = async () => {
         try {
             const response = await fetch(API_URL + '/rate', {
@@ -31,19 +34,20 @@ export default function MortgagePage() {
             });
             const json = await response.json();
             setRate(json.rate.fixedrate5years);
-            setResult(
-                calculateMortgage(inititalQuota, json.rate.fixedrate5years, amortization.value, paymentPeriod.value)
-            );
         } catch (error) {
             console.error(error);
         }
     }
+
     useEffect(() => {
-        //loadRates();
+        loadRates();
+        setResult(
+            calculateMortgage(inititalQuota, rate, amortization.value, paymentPeriod.value)
+        );
     }, [rate]);
 
     const onChangeMortgate = (value: any) => {
-        setMortgateAmount(value)
+        setAmount(value)
         setResult(
             calculateMortgage(value, rate, amortization.value, paymentPeriod.value)
         );
@@ -51,21 +55,21 @@ export default function MortgagePage() {
     const onChangeRate = (value: any) => {
         setRate(value)
         setResult(
-            calculateMortgage(mortgateAmount, value, amortization.value, paymentPeriod.value)
+            calculateMortgage(amount, value, amortization.value, paymentPeriod.value)
         );
     }
 
     const onChangeAmortization = (item: any) => {
         setAmotization(item);
         setResult(
-            calculateMortgage(mortgateAmount, rate, item.value, paymentPeriod.value)
+            calculateMortgage(amount, rate, item.value, paymentPeriod.value)
         );
     }
 
     const onChangePaymentPeriod = (item: any) => {
         setPaymentPeriod(item);
         setResult(
-            calculateMortgage(mortgateAmount, rate, amortization.value, item.value)
+            calculateMortgage(amount, rate, amortization.value, item.value)
         );
     }
 
@@ -74,7 +78,7 @@ export default function MortgagePage() {
             <View style={AppStyle.StyleMain.container}>
                 <OutlinedCurrencyInput
                     label="Mortgage Amount"
-                    value={mortgateAmount}
+                    value={amount}
                     minimumValue={minQuota}
                     maximumValue={maxQuota}
                     precision={0}
@@ -84,7 +88,7 @@ export default function MortgagePage() {
                     trackStyle={{ height: 4, backgroundColor: 'transparent' }}
                     minimumTrackTintColor="#816CEC"
                     maximumTrackTintColor="#816CEC"
-                    value={mortgateAmount}
+                    value={amount}
                     step={maxQuota / 1000}
                     minimumValue={minQuota}
                     maximumValue={maxQuota}
@@ -125,10 +129,34 @@ export default function MortgagePage() {
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                                 title="Apply Now"
-                                onPress={() => { }} />
+                                onPress={() => { showApplyDialog(true) }} />
                         </View>
                     </View>
                 </View>
+                <ApplyDialog title={""} data={{
+                    screen: "mortgage",
+                    amount: amount,
+                    amortization: amortization.value,
+                    period: paymentPeriod.value,
+                    rate: rate,
+                    result: result
+                }}
+                    visible={applyDialogVisible}
+                    onConfirm={() => {
+                        showApplyDialog(false);
+                    }}
+                    onCancel={() => {
+                        showApplyDialog(false);
+                    }}
+                    onError={(error: any) => {
+                        showApplyDialog(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "top",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }} />
             </View>
         </ SafeAreaView>
     )

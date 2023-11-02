@@ -8,6 +8,8 @@ import { Button, Text } from "@rneui/themed";
 import { API_URL } from "../constants/urls";
 import { calculateMortgage, moneyFormat } from "../utils";
 import CurrencyInput from "react-native-currency-input";
+import { ApplyDialog } from "../components/ApplyModal";
+import { useToast } from "react-native-toast-notifications";
 
 export default function ConsolidationPage() {
 
@@ -23,6 +25,9 @@ export default function ConsolidationPage() {
     const [newPayment, setNewPayment] = useState(0);
     const [totalDebtCalc, setTotalDebtCalc] = useState(0);
     const [rate, setRate] = useState(5.59);
+    const [applyDialogVisible, showApplyDialog] = useState(false);
+    const toast = useToast();
+
     const [loaded, setLoaded] = useState(false);
 
 
@@ -43,7 +48,7 @@ export default function ConsolidationPage() {
     }
 
     useEffect(() => {
-        //loadRates();
+        loadRates();
         const totalDebtCalculated = items.reduce((sum, item) => sum + item.amount, 0);
         setNewPayment(calculateMortgage(totalDebtCalculated, rate, 30, 'monthly'));
         setTotalDebt(totalDebtCalculated);
@@ -51,7 +56,7 @@ export default function ConsolidationPage() {
     }, [rate])
 
     const onChangeAmount = (name: string, value: number | null) => {
-        if(value != null){
+        if (value != null) {
             items.map((item, i) => {
                 if (item.key == name) {
                     item.amount = value;
@@ -78,7 +83,7 @@ export default function ConsolidationPage() {
     }
 
     const onChangePayment = (name: string, value: number | null) => {
-        if(value != null){
+        if (value != null) {
             items.map((item, i) => {
                 if (item.key == name) {
                     item.payment = value;
@@ -114,7 +119,7 @@ export default function ConsolidationPage() {
                         <View style={styles.column}>
                             <View style={styles.inputContainer}>
                                 <CurrencyInput
-                                    style={styles.input}
+                                    style={[AppStyle.Base.label, styles.input]}
                                     value={item.amount}
                                     prefix="$"
                                     delimiter="."
@@ -126,7 +131,7 @@ export default function ConsolidationPage() {
                         <View style={styles.column}>
                             <View style={styles.inputContainer}>
                                 <CurrencyInput
-                                    style={styles.input}
+                                    style={[AppStyle.Base.label, styles.input]}
                                     value={item.payment}
                                     prefix="$"
                                     delimiter="."
@@ -164,10 +169,40 @@ export default function ConsolidationPage() {
                     <View style={AppStyle.StyleMain.footerRightColumn}>
                         <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                             title="Take Control"
-                            onPress={() => { }} />
+                            onPress={() => { showApplyDialog(true) }} />
                     </View>
                 </View>
             </View>
+            <ApplyDialog title={""} data={{
+                screen: "conso",
+                monthly: items.reduce((accumulator, item) => {
+                    return { ...accumulator, [item.key]: item.payment };
+                }, {}),
+                monthlypayment: "",
+                totaldebt: totalDebt,
+                rate: rate,
+                newpayment: newPayment,
+                savings: (monthlyPayment - newPayment)?.toFixed(2),
+                total: items.reduce((accumulator, item) => {
+                    return { ...accumulator, [item.key]: item.amount };
+                }, {}),
+            }}
+                visible={applyDialogVisible}
+                onConfirm={() => {
+                    showApplyDialog(false);
+                }}
+                onCancel={() => {
+                    showApplyDialog(false);
+                }}
+                onError={(error: any) => {
+                    showApplyDialog(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} />
         </View>
 
     );

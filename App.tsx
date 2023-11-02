@@ -19,40 +19,46 @@ import PreQualifierPage from './src/pages/PreQualifierPage';
 import EnquityPage from './src/pages/EnquityPage';
 import store from './src/stores';
 import { Provider } from 'react-redux';
+import { ToastProvider } from 'react-native-toast-notifications'
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
   return (
-    <Provider store={store}><NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginPage">
-        <Stack.Screen options={{
-          headerShown: false
-        }} name="LoginPage" component={LoginPage} />
-        <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage} />
-        <Stack.Screen options={{
-          headerShown: false
-        }} name="HomePage" component={HomePage} />
-        <Stack.Screen
-          name="MortgageCalculatorPage"
-          component={MortgagePage}
-          options={{ title: 'Mortgage Calculator' }} />
-        <Stack.Screen
-          name="PurchasePage"
-          component={PurchasePage}
-          options={{ title: 'Purchase' }} />
-        <Stack.Screen name="RefinancePage"
-          component={RefinancePage}
-          options={{ title: 'Refinance' }} />
-        <Stack.Screen name="ConsolidationPage"
-          component={ConsolidationPage}
-          options={{ title: 'Consolidation' }} />
-        <Stack.Screen name="PreQualifierPage"
-          component={PreQualifierPage}
-          options={{ title: 'Pre-Qualifier' }} />
-        <Stack.Screen name="EnquityPage"
-          component={EnquityPage}
-          options={{ title: 'Enquity' }} />
-      </Stack.Navigator>
-    </NavigationContainer></Provider>
+    <ToastProvider
+      offset={50}
+      textStyle={{ fontSize: 16 }}
+    >
+      <Provider store={store}><NavigationContainer>
+        <Stack.Navigator initialRouteName="LoginPage">
+          <Stack.Screen options={{
+            headerShown: false
+          }} name="LoginPage" component={LoginPage} />
+          <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage} />
+          <Stack.Screen options={{
+            headerShown: false
+          }} name="HomePage" component={HomePage} />
+          <Stack.Screen
+            name="MortgageCalculatorPage"
+            component={MortgagePage}
+            options={{ title: 'Mortgage Calculator' }} />
+          <Stack.Screen
+            name="PurchasePage"
+            component={PurchasePage}
+            options={{ title: 'Purchase' }} />
+          <Stack.Screen name="RefinancePage"
+            component={RefinancePage}
+            options={{ title: 'Refinance' }} />
+          <Stack.Screen name="ConsolidationPage"
+            component={ConsolidationPage}
+            options={{ title: 'Consolidation' }} />
+          <Stack.Screen name="PreQualifierPage"
+            component={PreQualifierPage}
+            options={{ title: 'Pre-Qualifier' }} />
+          <Stack.Screen name="EnquityPage"
+            component={EnquityPage}
+            options={{ title: 'Enquity' }} />
+        </Stack.Navigator>
+      </NavigationContainer></Provider>
+    </ToastProvider>
   );
 }
 
