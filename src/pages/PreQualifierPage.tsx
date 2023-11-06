@@ -4,13 +4,15 @@ import {
     View,
     Text,
 } from "react-native";
-import { Button, Slider } from "@rneui/themed";
+import { BottomSheet, Button, Slider, TooltipProps } from "@rneui/themed";
 import { OutlinedCurrencyInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Separator, moneyRound, moneyToNumber } from "../utils";
 import { API_URL } from "../constants/urls";
-import { ApplyDialog } from "../components/ApplyModal";
 import { useToast } from "react-native-toast-notifications";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import { ApplyDialog } from "../components/ApplyDialog";
+import Tooltip from 'rn-tooltip';
 
 export default function PreQualifierPage() {
 
@@ -30,8 +32,9 @@ export default function PreQualifierPage() {
     const [heatingCost, setHeatingCost] = useState(120);
     const [otherCost, setOtherCost] = useState(0);
     const [condoFee, setCondoFee] = useState(0);
-    const [applyDialogVisible, showApplyDialog] = useState(false);
+    const [bottomSheetVisible, showBottomSheet] = useState(false);
     const toast = useToast();
+
 
     const loadRates = async () => {
         try {
@@ -95,16 +98,25 @@ export default function PreQualifierPage() {
         }
         return gds - newtax - newHeatingCost - otherLoan - newCondoFee;
     };
+      
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
             <View style={AppStyle.StyleMain.container}>
                 <OutlinedCurrencyInput
                     label="Household Income"
                     value={amount}
-                    minimumValue={minAmount}
-                    maximumValue={maxAmount}
                     precision={0}
-                    onTextChange={(text) => onChangeHouseHoldIncome(text)} />
+                    onTextChange={(text) => onChangeHouseHoldIncome(text)}                      
+                    onLostFocus={(value) => {
+                        if(value < minAmount){
+                            setAmount(minAmount);
+                            calculateMortgage(calcMaxMonthlyPayment(minAmount), rate, year);
+                        }
+                        if(value > maxAmount){                            
+                            setAmount(maxAmount);
+                            calculateMortgage(calcMaxMonthlyPayment(maxAmount), rate, year);
+                        }
+                    }}/>
 
                 <Slider
                     thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
@@ -126,66 +138,86 @@ export default function PreQualifierPage() {
                     label="Property Tax"
                     value={tax}
                     precision={2}
-                    onTextChange={(text) => setTax(moneyToNumber(text))}
-                    minimumValue={null} maximumValue={null}
+                    onTextChange={(text) => setTax(moneyToNumber(text))} 
+                    onLostFocus={(value: number) => {} }
                 />
 
                 <OutlinedCurrencyInput
                     label="Code Fee"
                     value={condoFee}
                     precision={0}
-                    onTextChange={(text) => setCondoFee(moneyToNumber(text))} minimumValue={null} maximumValue={null} />
+                    onTextChange={(text) => setCondoFee(moneyToNumber(text))} 
+                    onLostFocus={(value: number) => {} }
+                />
 
                 <OutlinedCurrencyInput
                     label="Hydro Fee"
                     value={heatingCost}
                     precision={0}
-                    onTextChange={(text) => setHeatingCost(moneyToNumber(text))} minimumValue={null} maximumValue={null} />
+                    onTextChange={(text) => setHeatingCost(moneyToNumber(text))} 
+                    onLostFocus={(value: number) => {} }
+                />
 
                 <OutlinedCurrencyInput
                     label="Loan Payments"
                     value={otherCost}
                     precision={0}
-                    onTextChange={(text) => setOtherCost(moneyToNumber(text))} minimumValue={null} maximumValue={null} />
+                    onTextChange={(text) => setOtherCost(moneyToNumber(text))} 
+                    onLostFocus={(value: number) => {} }
+                />
 
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Text style={AppStyle.TextStyle.text5}>Maximum Mortgage</Text>
+                            <View style={{flexDirection:"row"}}>
+                                <Text style={[AppStyle.TextStyle.text5, {alignSelf:"flex-start"}]}>Maximum Mortgage</Text>
+                                <Tooltip 
+                                    width={250} height={60} withOverlay={false}
+                                    containerStyle={{left:50}}
+                                    popover={<View><Text style={{color:"white"}}>+ ${Separator(dp, true)} (20% Minimum Down Payment Required) = ${Separator(pp, true)}</Text></View>}>
+                                    <View style={{marginLeft:8}}><MaterialIcon name="info-outline" color={"black"} size={18}/></View>
+                                </Tooltip>
+                            </View>
                             <Text style={AppStyle.TextStyle.text6}>${Separator(request, true)}*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                                 title="Get Pre-Qualified"
-                                onPress={() => { showApplyDialog(true) }} />
+                                onPress={() => { showBottomSheet(true) }} />
                         </View>
                     </View>
                 </View>
-
-                <ApplyDialog title={""} data={{
-                    screen: "pq",
-                    propertyTax: tax,
-                    heatingCost: heatingCost,
-                    otherCost: otherCost,
-                    condoFee: condoFee,
-                    requestAmount: request
-                }}
-                    visible={applyDialogVisible}
-                    onConfirm={() => {
-                        showApplyDialog(false);
+                <ApplyDialog                
+                    visible={bottomSheetVisible}
+                    data={{
+                        screen: "pq",
+                        propertyTax: tax,
+                        heatingCost: heatingCost,
+                        otherCost: otherCost,
+                        condoFee: condoFee,
+                        requestAmount: request
                     }}
-                    onCancel={() => {
-                        showApplyDialog(false);
-                    }}
-                    onError={(error: any) => {
-                        showApplyDialog(false);
-                        toast.show(error, {
-                            type: "danger",
+                    onConfirm={(message : string) => {
+                        showBottomSheet(false);
+                        toast.show(message, {
+                            type: "success",
                             placement: "center",
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    }} />
+                    }}
+                    onClose={() => {
+                        showBottomSheet(false);
+                    }}
+                    onError={(error: any) => {
+                        showBottomSheet(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "top",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }}/>                
             </View>
         </ SafeAreaView>
     )

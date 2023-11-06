@@ -1,9 +1,12 @@
-import React, { FC, ReactElement, useRef, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useRef, useState } from 'react';
 import {
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
+    Animated,
+    Easing,
+    Dimensions
 } from 'react-native';
 import { BottomSheet } from '@rneui/themed';
 import AppStyle from '../theme';
@@ -13,13 +16,15 @@ interface Props {
     label: string;
     value: { label: string; value: string },
     items: Array<{ label: string; value: string }>;
+    carretAnimated : boolean,
     onSelect: (item: { label: string; value: string }) => void;
 }
-
-const Dropdown: FC<Props> = ({ value, label, items, onSelect }) => {
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+const Dropdown: FC<Props> = ({ value, label, items, carretAnimated = false, onSelect }) => {
     const DropdownButton = useRef(null);
     const [selected, setSelected] = useState(value);
     const [bottomSheetVisible, showBottomSheet] = useState(false);
+
 
     const toggleDropdown = (): void => {
         showBottomSheet(true);
@@ -31,6 +36,30 @@ const Dropdown: FC<Props> = ({ value, label, items, onSelect }) => {
         showBottomSheet(false);
     };
 
+    const animatedValue = useRef(new Animated.Value(0)).current;
+    const [isTop, setIsTop] = useState(true);
+
+    const startAnimation = (toValue : number) => {
+        Animated.timing(animatedValue, {
+            toValue,
+            duration: 1000,
+            easing: Easing.linear,
+            useNativeDriver: true
+        }).start(() => {
+            setIsTop(!isTop);
+        })
+    }
+
+    useEffect(() => {
+        startAnimation(isTop ? 1 : 0);
+    }, [isTop]);
+
+    const translateY = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 5],
+        extrapolate: 'clamp'
+    })
+
     return (
         <TouchableOpacity
             ref={DropdownButton}
@@ -41,9 +70,14 @@ const Dropdown: FC<Props> = ({ value, label, items, onSelect }) => {
                 {(selected && selected.label) || label}
             </Text>
 
-            <Icon name={"caretdown"} size={16} color="#4F4A45"
-                onPress={() => showBottomSheet(true)}
-            />
+            <View>
+                {carretAnimated ? <AnimatedIcon name={"caretdown"} size={16} color="#4F4A45"  
+                    style={[styles.animatedContainer, { transform: [{ translateY }] }]}
+                    onPress={() => showBottomSheet(true)}
+                /> : <Icon name={"caretdown"} size={16} color="#4F4A45" 
+                onPress={() => showBottomSheet(true)}/>
+            }
+            </View>
             <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
                 <View>
                     <View style={AppStyle.StyleMain.bottomSheetHeader}>
@@ -98,6 +132,8 @@ const styles = StyleSheet.create({
     item: {
         marginTop: 8,
         color: "#4F4A45"
+    },
+    animatedContainer: {
     }
 });
 

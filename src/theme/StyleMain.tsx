@@ -13,11 +13,19 @@ const StyleMain = StyleSheet.create({
   },
   input: {
     borderRadius: 5,
-    borderWidth: 1,
     width: "100%",
     height: 48,
     marginBottom: 12,
     alignItems: "center",
+    backgroundColor:"#F2F2F2"
+  },
+  multilineInput: {
+    borderRadius: 5,
+    width: "100%",
+    height: 90,
+    marginBottom: 12,
+    alignItems: "center",
+    backgroundColor:"#F2F2F2"
   },
   TextInput: {
     marginLeft: 12,
@@ -79,7 +87,7 @@ const StyleMain = StyleSheet.create({
     justifyContent: "center",
   },
   buttonStyle: {
-    borderRadius: 5,
+    borderRadius: 8,
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 12,
@@ -89,9 +97,9 @@ const StyleMain = StyleSheet.create({
   },
   buttonFullwidthStyle: {
     width: "100%",
-    borderRadius: 5,
-    paddingTop: 8,
-    paddingBottom: 8,
+    borderRadius: 8,
+    paddingTop: 12,
+    paddingBottom: 12,
     paddingLeft: 20,
     paddingRight: 20,
     color: "#ffffff",
@@ -103,7 +111,7 @@ const StyleMain = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     flexDirection: "row",
-    justifyContent: "flex-end"
+    justifyContent: "space-between"
   },
   footerContainer: {
     flex: 1,
@@ -119,5 +127,46 @@ const StyleMain = StyleSheet.create({
     textAlign: "right",
     alignItems: "flex-end"
   },
+  error:{
+    color:"red",
+    marginBottom: 12
+  },
+  DialogHeader:{
+    backgroundColor: "#ffffff",
+    paddingTop: 12,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  DialogTitle:{
+    fontSize:24,
+    color: "#4F4A45",
+    fontWeight:"700"
+  },
+  DialogSubmitButtonContainer:{    
+    width: "100%",
+    borderRadius: 8,
+    paddingTop: 4,
+    paddingBottom: 4,
+    paddingLeft: 12,
+    paddingRight: 12,
+    backgroundColor: "#816CEC",
+    marginBottom: 20
+  },
+  DialogSubmitButton:{    
+    width: "100%",
+    backgroundColor: "#816CEC"
+  },
+  phoneInputPrefixLabel:{
+    fontSize: 14,
+    color: "#000000",
+    alignSelf:"flex-start", 
+    marginTop: 3
+  },
+  InputSeparate:{
+    width: 2, 
+    height: 28, 
+    backgroundColor:"#CDCDCD", 
+    marginLeft: 8
+  }
 });
 export default StyleMain;

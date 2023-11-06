@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import LoginPage from './src/pages/LoginPage';
-import OTPVerifyPage from './src/pages/OTPVerifyPage';
+import {OTPVerifyPage} from './src/pages/OTPVerifyPage';
 import HomePage from './src/pages/HomePage';
 import MortgagePage from './src/pages/MortgagePage';
 import PurchasePage from './src/pages/PurchasePage';
@@ -28,11 +28,16 @@ function App(): JSX.Element {
       textStyle={{ fontSize: 16 }}
     >
       <Provider store={store}><NavigationContainer>
-        <Stack.Navigator initialRouteName="LoginPage">
+        <Stack.Navigator initialRouteName="LoginPage" screenOptions={{
+            contentStyle:{
+              backgroundColor:'#FFFFFF'
+            }
+        }}>
           <Stack.Screen options={{
             headerShown: false
           }} name="LoginPage" component={LoginPage} />
-          <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage} />
+          <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage}
+            options={{ title: 'Verification Code' }} />
           <Stack.Screen options={{
             headerShown: false
           }} name="HomePage" component={HomePage} />

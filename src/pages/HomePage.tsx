@@ -3,9 +3,11 @@ import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, Touchabl
 import { BottomSheet, Button, Card, Image, ListItem } from '@rneui/themed';
 import AppStyle from '../theme';
 import LinearGradient from 'react-native-linear-gradient';
-import ContactForm from '../components/ContactForm';
+import { ContactForm } from '../components/ContactForm';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import { useToast } from 'react-native-toast-notifications';
+import { ContactDialog } from '../components/ContactDialog';
 
 const HomePage = () => {
 
@@ -13,6 +15,7 @@ const HomePage = () => {
     const [rates, setRates] = useState({});
     const [bottomSheetVisible, showBottomSheet] = useState(false);
     const navigation = useNavigation();
+    const toast = useToast();
 
     const loadRates = async () => {
         try {
@@ -191,16 +194,31 @@ const HomePage = () => {
                             onPress={() => showBottomSheet(true)} />
                     </View>
                 </View>
-                <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
-                    <View>
-                        <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                            <Icon name={"close"} size={16}
-                                onPress={() => showBottomSheet(false)}
-                            />
-                        </View>
-                        <ContactForm />
-                    </View>
-                </BottomSheet></>)}
+                <ContactDialog
+                    visible={bottomSheetVisible}
+                    onConfirm={(message : string) => {
+                        showBottomSheet(false);
+                        toast.show(message, {
+                            type: "success",
+                            placement: "center",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }}
+                    onError={(error: any) => {
+                        showBottomSheet(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "top",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }}                    
+                    onClose={() => {
+                        showBottomSheet(false);
+                    }}
+                />
+            </>)}
         </SafeAreaView>
     );
 };

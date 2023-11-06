@@ -3,16 +3,17 @@ import AppStyle from '../theme';
 import {
     View,
 } from "react-native";
-import { Button, Input, Slider, Text } from "@rneui/themed";
+import { BottomSheet, Button, Input, Slider, Text } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage } from "../utils";
+import { moneyFormat, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
-import { DialogLoading } from "@rneui/base/dist/Dialog/Dialog.Loading";
-import { ApplyDialog } from "../components/ApplyModal";
+import { ApplyForm } from "../components/ApplyForm";
 import { useToast } from "react-native-toast-notifications";
+import Icon from "react-native-vector-icons/AntDesign";
+import { ApplyDialog } from "../components/ApplyDialog";
 
 export default function RefinancePage() {
 
@@ -23,7 +24,7 @@ export default function RefinancePage() {
     const [maxAmount, setMaxAmount] = useState(homeValue * 0.8);
     const [result, setResult] = useState(0);
     const [loan, setLoan] = useState(homeValue * 0.25);
-    const [applyDialogVisible, showApplyDialog] = useState(false);
+    const [bottomSheetVisible, showBottomSheet] = useState(false);
     const minAmount = 5000;
     const toast = useToast();
     const loadRates = async () => {
@@ -57,6 +58,7 @@ export default function RefinancePage() {
     }
 
     const onUpdateLoanRange = (value: any) => {
+        setLoan(value);
         setResult(calculateMortgage(value, rate, amortization.value, paymentPeriod.value));
     };
 
@@ -86,11 +88,25 @@ export default function RefinancePage() {
             <View style={AppStyle.StyleMain.container}>
                 <OutlinedCurrencyInput
                     label="Home Value"
-                    minimumValue={minQuota}
-                    maximumValue={maxQuota}
                     value={homeValue}
                     precision={0}
-                    onTextChange={(text) => onChangeHomeValue(text)} />
+                    onTextChange={(text) => onChangeHomeValue(text)}                     
+                    onLostFocus={(value) => {
+                        if(value < minQuota){
+                            setHomeValue(minQuota);
+                            setResult(
+                                calculateMortgage(minQuota * 0.8, rate, amortization.value, paymentPeriod.value)
+                            );
+                            setMaxAmount(minQuota * 0.8);
+                        }
+                        if(value > maxQuota){                            
+                            setHomeValue(maxQuota);
+                            setResult(
+                                calculateMortgage(maxQuota * 0.8, rate, amortization.value, paymentPeriod.value)
+                            );
+                            setMaxAmount(maxQuota * 0.8);
+                        }
+                    }}/>
                 <Slider
                     value={homeValue}
                     onValueChange={(value) => onChangeHomeValue(value)}
@@ -171,9 +187,6 @@ export default function RefinancePage() {
                     <View style={{ alignSelf: "stretch" }}></View>
                     <View style={{ alignContent: "flex-end" }}><Text>{moneyRound(homeValue * 0.8, true, true)}</Text></View>
                 </View>
-                <View style={AppStyle.TextStyle.Label}>
-                    <Text style={AppStyle.TextStyle.h1}>Total Mortgage (Insurance $0)</Text>
-                </View>
                 <OutlinedTextInput
                     label="Rates"
                     type="rate"
@@ -191,41 +204,48 @@ export default function RefinancePage() {
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} />
+                            <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} carretAnimated={true} />
                             <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                                 title="Take the Next Step"
-                                onPress={() => { showApplyDialog(true) }} />
+                                onPress={() => { showBottomSheet(true) }} />
                         </View>
                     </View>
                 </View>
-                <ApplyDialog title={""} data={{
-                    screen: "refinance",
-                    amount: homeValue,
-                    amortization: amortization.value,
-                    period: paymentPeriod.value,
-                    rate: rate,
-                    result: result,
-                    loan: loan
-                }}
-                    visible={applyDialogVisible}
-                    onConfirm={() => {
-                        showApplyDialog(false);
+                <ApplyDialog                
+                    visible={bottomSheetVisible}
+                    data={{
+                        screen: "refinance",
+                        amount: homeValue,
+                        amortization: amortization.value,
+                        period: paymentPeriod.value,
+                        rate: rate,
+                        result: result,
+                        loan: loan
                     }}
-                    onCancel={() => {
-                        showApplyDialog(false);
-                    }}
-                    onError={(error: any) => {
-                        showApplyDialog(false);
-                        toast.show(error, {
-                            type: "danger",
+                    onConfirm={(message : string) => {
+                        showBottomSheet(false);
+                        toast.show(message, {
+                            type: "success",
                             placement: "center",
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    }} />
+                    }}
+                    onClose={() => {
+                        showBottomSheet(false);
+                    }}
+                    onError={(error: any) => {
+                        showBottomSheet(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "top",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }}/>                
             </View>
         </ SafeAreaView>
     )

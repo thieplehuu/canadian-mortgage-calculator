@@ -1,26 +1,69 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import AppStyle from '../theme';
 import {
+    ScrollView,
     StyleSheet,
     View,
 } from "react-native";
 import { Input, Button, Text, Image } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
-export default function ContactForm() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+import { useSelector } from "react-redux";
+import { API_URL } from "../constants/urls";
+import { COUNTRY_CODE } from "../constants/const";
+import LoadingModal from "./loadingModal";
+import DropShadow from "react-native-drop-shadow";
+
+interface FormProps {
+    onConfirm: (message: string) => void;
+    onError: (error: any) => void;
+}
+
+const ContactForm : FC<FormProps> = ({onConfirm, onError, ...props }) => {
+    const user = useSelector((state: any) => state.user);
+    const [loading, setLoading] = useState(false);
+    const [firstName, setFirstName] = useState(user.firstName);
+    const [lastName, setLastName] = useState(user.lastName);
     const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
     const [message, setMessage] = useState("");
-
-    const countryCode = "+84";
-
-    const navigation = useNavigation();
-    const sendMessage = async () => {
-        navigation.navigate("MortgageCalculatorPage" as never)
+    const [error, setError] = useState("");
+    const onSubmit = async () => {
+        setLoading(true)
+        if(phoneNumber==""){
+            setError("Please enter your phone number");
+            return;
+        }
+        try {
+            let formData = {
+                uuid: user.uuid,
+                first_name: firstName,
+                last_name: lastName,
+                mobile: COUNTRY_CODE + phoneNumber,
+                email: email,
+                message: message,
+            };
+            const response = await fetch(API_URL + '/contact', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const json = await response.json();
+            console.log(json)
+            if (json.status == "success") {
+                onConfirm("Send message success");
+            } else {
+                onError(json.message);
+            }
+        } catch (error: any) {
+            onError(error);
+        }
+        setLoading(false)
     }
     return (
-        <View style={AppStyle.StyleMain.container}>
+        <ScrollView>
+            <View style={AppStyle.StyleMain.container}>
             <View style={styles.userSection}>
                 <Image style={styles.avatar} source={require("../../assets/images/person.png")} />
                 <View style={styles.userInfo}>
@@ -35,6 +78,7 @@ export default function ContactForm() {
                     <Text style={textStyle.text4}>11 Progress Av, Unit 5 Toronto ON M1P 4S7</Text>
                 </View>
             </View>
+            <Text style={AppStyle.StyleMain.error}>{error}</Text>
             <View style={AppStyle.StyleMain.input}>
                 <Input
                     inputStyle={AppStyle.StyleMain.TextInput}
@@ -67,19 +111,26 @@ export default function ContactForm() {
                     inputStyle={AppStyle.StyleLogin.TextInput}
                     inputContainerStyle={{ borderBottomWidth: 0 }}
                     placeholder='Phone Number'
+                    keyboardType="numeric"
                     value={phoneNumber}
                     leftIcon={
-                        <Text>{countryCode}</Text>
+                        <View style={{width:40, alignContent:"flex-start", alignItems:"center", justifyContent:"center"}}>
+                            <View style={{flexDirection: "row"}}>
+                                <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>{COUNTRY_CODE}</Text>
+                                <View style={AppStyle.StyleMain.InputSeparate}/>
+                            </View>
+                        </View>
                     }
                     onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
                 />
             </View>
-            <View style={AppStyle.StyleMain.input}>
+            <View style={AppStyle.StyleMain.multilineInput}>
                 <Input
-                    inputStyle={AppStyle.StyleMain.TextInput}
+                    inputStyle={[AppStyle.StyleMain.TextInput, {height: 90, justifyContent:"flex-start", textAlignVertical:"top"}]}
                     inputContainerStyle={{ borderBottomWidth: 0 }}
                     placeholder='Enter your message'
                     value={message}
+                    multiline={true}
                     onChangeText={(message) => setMessage(message)}
                 />
             </View>
@@ -87,9 +138,11 @@ export default function ContactForm() {
                 containerStyle={AppStyle.StyleMain.buttonContainer}
                 buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
                 title={"Submit Message"}
-                onPress={sendMessage} /></View>
+                onPress={onSubmit} /></View>
+            <LoadingModal modalVisible={loading} color={"#816CEC"} modalStyle={undefined} />
 
-        </View>)
+        </View>
+    </ScrollView>)
 
 }
 
@@ -135,3 +188,5 @@ const textStyle = StyleSheet.create({
         color: "#000000"
     },
 })
+
+export { ContactForm };

@@ -4,12 +4,14 @@ import {
     StyleSheet,
     View,
 } from "react-native";
-import { Button, Text } from "@rneui/themed";
+import { BottomSheet, Button, Text } from "@rneui/themed";
 import { API_URL } from "../constants/urls";
 import { calculateMortgage, moneyFormat } from "../utils";
 import CurrencyInput from "react-native-currency-input";
-import { ApplyDialog } from "../components/ApplyModal";
+import { ApplyForm } from "../components/ApplyForm";
 import { useToast } from "react-native-toast-notifications";
+import Icon from "react-native-vector-icons/AntDesign";
+import { ApplyDialog } from "../components/ApplyDialog";
 
 export default function ConsolidationPage() {
 
@@ -25,7 +27,7 @@ export default function ConsolidationPage() {
     const [newPayment, setNewPayment] = useState(0);
     const [totalDebtCalc, setTotalDebtCalc] = useState(0);
     const [rate, setRate] = useState(5.59);
-    const [applyDialogVisible, showApplyDialog] = useState(false);
+    const [bottomSheetVisible, showBottomSheet] = useState(false);
     const toast = useToast();
 
     const [loaded, setLoaded] = useState(false);
@@ -169,40 +171,47 @@ export default function ConsolidationPage() {
                     <View style={AppStyle.StyleMain.footerRightColumn}>
                         <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                             title="Take Control"
-                            onPress={() => { showApplyDialog(true) }} />
+                            onPress={() => { showBottomSheet(true) }} />
                     </View>
                 </View>
             </View>
-            <ApplyDialog title={""} data={{
-                screen: "conso",
-                monthly: items.reduce((accumulator, item) => {
-                    return { ...accumulator, [item.key]: item.payment };
-                }, {}),
-                monthlypayment: "",
-                totaldebt: totalDebt,
-                rate: rate,
-                newpayment: newPayment,
-                savings: (monthlyPayment - newPayment)?.toFixed(2),
-                total: items.reduce((accumulator, item) => {
-                    return { ...accumulator, [item.key]: item.amount };
-                }, {}),
-            }}
-                visible={applyDialogVisible}
-                onConfirm={() => {
-                    showApplyDialog(false);
+            <ApplyDialog                
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "conso",
+                    monthly: items.reduce((accumulator, item) => {
+                        return { ...accumulator, [item.key]: item.payment };
+                    }, {}),
+                    monthlypayment: monthlyPayment,
+                    totaldebt: totalDebt,
+                    rate: rate,
+                    newpayment: newPayment,
+                    savings: (monthlyPayment - newPayment)?.toFixed(2),
+                    total: items.reduce((accumulator, item) => {
+                        return { ...accumulator, [item.key]: item.amount };
+                    }, {}),
                 }}
-                onCancel={() => {
-                    showApplyDialog(false);
-                }}
-                onError={(error: any) => {
-                    showApplyDialog(false);
-                    toast.show(error, {
-                        type: "danger",
+                onConfirm={(message : string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
                         placement: "center",
                         duration: 2000,
                         animationType: "zoom-in",
                     });
-                }} />
+                }}
+                onClose={() => {
+                    showBottomSheet(false);
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}/>                      
         </View>
 
     );

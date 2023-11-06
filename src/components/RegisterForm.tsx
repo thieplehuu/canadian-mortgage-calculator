@@ -9,39 +9,49 @@ import {
 import { Button, Input } from "@rneui/themed";
 import auth from '@react-native-firebase/auth';
 import { useDispatch } from "react-redux";
-import { setUser } from "../actions/index";
+import { setUser } from "../actions/user";
+import LoadingModal from "./loadingModal";
+import { setConfirm } from "../actions/firebase";
+import { COUNTRY_CODE } from "../constants/const";
 
 
 interface Props {
-    requestSuccess: ({ }) => void;
+    requestSuccess: () => void;
 }
 
 const RegisterForm: FC<Props> = ({ requestSuccess }) => {
 
+    const [loading, setLoading] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const countryCode = "+84";
+    const [error, setError] = useState("");
 
     const dispatch = useDispatch();
     const requestOTP = async () => {
         try {
-            //const confirmation = await auth().signInWithPhoneNumber(countryCode + phoneNumber);
-            //requestSuccess(confirmation);
+            if(phoneNumber==""){
+                setError("Please enter your phone number");
+                return;
+            }
+            setLoading(true)
+            const confirmation = await auth().signInWithPhoneNumber(COUNTRY_CODE + phoneNumber);
             dispatch(setUser({
                 firstName: firstName,
                 lastName: lastName,
                 phoneNumber: phoneNumber
             }))
-            requestSuccess('confirmation');
+            dispatch(setConfirm(confirmation))
+            requestSuccess();
+            setLoading(false)
         } catch (error) {
-            console.log('error');
+            setLoading(false)
             console.log(error)
         }
     }
     return (
 
-        <View style={AppStyle.StyleLogin.container}>
+        <View style={AppStyle.StyleLogin.form}>
             <View style={AppStyle.StyleLogin.input}>
                 <Input
                     style={AppStyle.StyleLogin.TextInput}
@@ -66,13 +76,21 @@ const RegisterForm: FC<Props> = ({ requestSuccess }) => {
                     inputContainerStyle={{ borderBottomWidth: 0 }}
                     placeholder='Phone Number'
                     value={phoneNumber}
+                    keyboardType="numeric"
                     leftIcon={
-                        <View><Text style={AppStyle.Base.label}>{countryCode} |</Text></View>
+                        <View style={{width:40, alignContent:"flex-start", alignItems:"center", justifyContent:"center"}}>
+                            <View style={{flexDirection: "row"}}>
+                                <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>{COUNTRY_CODE}</Text>
+                                <View style={AppStyle.StyleMain.InputSeparate}/>
+                            </View>
+                        </View>
                     }
                     onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
                 />
-            </View>
+            </View>            
+            <Text style={AppStyle.StyleMain.error}>{error}</Text>
             <View style={AppStyle.StyleMain.stretch}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={requestOTP} title={"Get OTP"} /></View>
+            <LoadingModal modalVisible={loading} />
         </View>)
 }
 

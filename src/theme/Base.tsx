@@ -75,6 +75,6 @@ const Base = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: "#816CEC",
     alignSelf: "center"
-  }
+  },
 });
 export default Base;

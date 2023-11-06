@@ -1,7 +1,12 @@
 import { StyleSheet } from 'react-native';
 const StyleLogin = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 20,
+    marginTop: 150,
+    backgroundColor: "#ffffff"
+  },
+  form: {
+    marginTop: 20,
     alignSelf: 'stretch',
     alignItems: "center",
     justifyContent: "center",
@@ -11,11 +16,11 @@ const StyleLogin = StyleSheet.create({
     width: "60%"
   },
   input: {
-    borderRadius: 5,
+    borderRadius: 8,
     width: "100%",
     height: 48,
     marginBottom: 12,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#EEEEEE",
   },
   TextInput: {
     marginLeft: 12,

@@ -1,6 +1,6 @@
 import { Text, TextInput, View } from "react-native";
 import AppStyle from "../theme";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 import { moneyToNumber, rateToNumber, rateToString } from "../utils";
 import CurrencyInput from "react-native-currency-input";
@@ -62,21 +62,15 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, minimumValu
 interface CurrencyInputProps {
     label: string;
     value: number;
-    minimumValue: number | null;
-    maximumValue: number | null;
     precision: number;
     onTextChange: (text: string) => void;
+    onLostFocus: (value: number) => void;
 }
 
-const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, minimumValue, maximumValue, precision, onTextChange, ...props }) => {
-    //const [value, setValue] = useState(value);
+const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, precision, onTextChange, onLostFocus, ...props }) => { 
+    const [editValue, setEditValue] = useState(value);
     const onBlur = () => {
-        //if (minimumValue != null && newValue < minimumValue) {
-        //setValue(minimumValue);
-        //}
-        //if (maximumValue != null && newValue > maximumValue) {
-        //setValue(maximumValue);
-        //}
+        onLostFocus(editValue);
     }
     return (
         <View style={AppStyle.Base.outlinedInputContainer}>
@@ -90,9 +84,12 @@ const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, minimumVa
                     delimiter="."
                     separator=","
                     precision={precision}
+                    //minValue={minimumValue}
+                    //maxValue={maximumValue}
                     value={value}
                     onChangeValue={(value: any) => {
                         //setValue(value);
+                        setEditValue(value)
                         onTextChange(value);
                     }}
                     onBlur={() => onBlur()} />
@@ -118,7 +115,7 @@ const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSele
                 label={label}
                 value={value}
                 items={items}
-                onSelect={(item) => onSelect(item)} />
+                onSelect={(item) => onSelect(item)} carretAnimated={false} />
         </View>
     </View>
 );

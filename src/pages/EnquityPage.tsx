@@ -3,15 +3,15 @@ import AppStyle from '../theme';
 import {
     View,
 } from "react-native";
-import { Button, Input, Slider, Text } from "@rneui/themed";
+import { BottomSheet, Button, Input, Slider, Text } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedTextInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Dropdown from "../components/Dropdown";
 import { moneyFormat, moneyToNumber, moneyRound, round2TwoDecimals } from "../utils";
-import { paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
-import { ApplyDialog } from "../components/ApplyModal";
 import { useToast } from "react-native-toast-notifications";
+import { ApplyForm } from "../components/ApplyForm";
+import Icon from "react-native-vector-icons/AntDesign";
+import { ApplyDialog } from "../components/ApplyDialog";
 
 export default function EnquityPage() {
 
@@ -23,7 +23,7 @@ export default function EnquityPage() {
     const [mortgatePercent, setMortgatePercent] = useState(0);
     const [reMortgatePercent, setReMortgatePercent] = useState(0);
     const [result, setResult] = useState(0);
-    const [applyDialogVisible, showApplyDialog] = useState(false);
+    const [bottomSheetVisible, showBottomSheet] = useState(false);
     const toast = useToast();
 
     const remortgagemax = property * 0.8;
@@ -118,18 +118,16 @@ export default function EnquityPage() {
                 <OutlinedCurrencyInput
                     label="Property Value"
                     value={property}
-                    minimumValue={mortgage}
-                    maximumValue={2000000}
                     precision={0}
-                    onTextChange={(text) => onChangeProperty(text)} />
+                    onTextChange={(text) => onChangeProperty(text)} 
+                    onLostFocus={(value: number) => {} } />
 
                 <OutlinedCurrencyInput
                     label="Current Mortgage Balance"
                     value={mortgage}
-                    minimumValue={100000}
-                    maximumValue={property * 0.8}
                     precision={0}
-                    onTextChange={(text) => onChangeMortgate(text)} />
+                    onTextChange={(text) => onChangeMortgate(text)} 
+                    onLostFocus={(value: number) => {} } />
 
                 <View style={{
                     flexDirection: 'row',
@@ -220,33 +218,41 @@ export default function EnquityPage() {
                         <View style={AppStyle.StyleMain.footerRightColumn}>
                             <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                                 title="Secure Your Loan"
-                                onPress={() => { showApplyDialog(true) }} />
+                                onPress={() => { showBottomSheet(true) }} />
                         </View>
                     </View>
                 </View>
-                <ApplyDialog title={""} data={{
-                    screen: "equity",
-                    property: property,
-                    currentMortgage: mortgage,
-                    loan: remortgage,
-                    monthly: (remortgage * ratev) / 12
-                }}
-                    visible={applyDialogVisible}
-                    onConfirm={() => {
-                        showApplyDialog(false);
+                <ApplyDialog                
+                    visible={bottomSheetVisible}
+                    data={{
+                        screen: "equity",
+                        property: property,
+                        currentmortgage: mortgage,
+                        loan: remortgage,
+                        monthly: (remortgage * ratev) / 12
                     }}
-                    onCancel={() => {
-                        showApplyDialog(false);
-                    }}
-                    onError={(error: any) => {
-                        showApplyDialog(false);
-                        toast.show(error, {
-                            type: "danger",
+                    onConfirm={(message : string) => {
+                        showBottomSheet(false);
+                        toast.show(message, {
+                            type: "success",
                             placement: "center",
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    }} />
+                    }}
+                    onClose={() => {
+                        showBottomSheet(false);
+                    }}
+                    onError={(error: any) => {
+                        showBottomSheet(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "top",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }}/>
+                
             </View>
         </ SafeAreaView>
     )

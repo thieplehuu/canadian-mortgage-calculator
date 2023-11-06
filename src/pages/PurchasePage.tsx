@@ -4,17 +4,19 @@ import {
     ScrollView,
     View,
 } from "react-native";
-import { Button, Input, Slider, Text } from "@rneui/themed";
+import { BottomSheet, Button, Slider, Text } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
 import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage, Separator, round2TwoDecimals } from "../utils";
+import { moneyFormat, rateToString, moneyRound, calculateMortgage, Separator, round2TwoDecimals } from "../utils";
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
 import DownPaymentRadio from "../components/DownPaymentRadio";
-import { ApplyDialog } from "../components/ApplyModal";
 import { useToast } from "react-native-toast-notifications";
+import Icon from 'react-native-vector-icons/AntDesign';
+import { ApplyForm } from "../components/ApplyForm";
+import { ApplyDialog } from "../components/ApplyDialog";
 
 export default function PurchasePage() {
     const [amount, setAmount] = useState(800000);
@@ -31,8 +33,7 @@ export default function PurchasePage() {
     const [dPerc, setDPerc] = useState(0);
     const [insurance, setInsurance] = useState(0);
     const [result, setResult] = useState(0);
-    const [applyDialogVisible, showApplyDialog] = useState(false);
-    const [loaded, setLoaded] = useState(false);
+    const [bottomSheetVisible, showBottomSheet] = useState(false);
     const toast = useToast();
     const loadRates = async () => {
         try {
@@ -183,10 +184,26 @@ export default function PurchasePage() {
                     <OutlinedCurrencyInput
                         label="Purchase Price"
                         value={amount}
-                        minimumValue={minQuota}
-                        maximumValue={maxQuota}
                         precision={0}
-                        onTextChange={(text) => onChangeMortgate(text)} />
+                        onTextChange={(text) => onChangeMortgate(text)}
+                        onLostFocus={(value) => {
+                            if(value < minQuota){
+                                setAmount(minQuota)
+                                setResult(
+                                    calculateMortgage(minQuota -
+                                        minQuota * (dPayment[dPerc].percent / 100) +
+                                        (amount - DminAmount) * insurance, rate, amortization.value, paymentPeriod.value)
+                                );
+                            }
+                            if(value > maxQuota){                            
+                                setAmount(maxQuota)
+                                setResult(
+                                    calculateMortgage(maxQuota -
+                                        maxQuota * (dPayment[dPerc].percent / 100) +
+                                        (amount - DminAmount) * insurance, rate, amortization.value, paymentPeriod.value)
+                                );
+                            }
+                        }}/>
                     <Slider
                         value={amount}
                         thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
@@ -254,41 +271,48 @@ export default function PurchasePage() {
             <View style={AppStyle.StyleMain.bottomContainer}>
                 <View style={AppStyle.StyleMain.footerContainer}>
                     <View style={AppStyle.StyleMain.footerLeftColumn}>
-                        <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} />
+                        <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} carretAnimated={true} />
                         <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
                     </View>
                     <View style={AppStyle.StyleMain.footerRightColumn}>
                         <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
                             title="Begin Your Journey"
-                            onPress={() => { showApplyDialog(true) }} />
+                            onPress={() => { showBottomSheet(true) }} />
                     </View>
                 </View>
             </View>
-            <ApplyDialog title={""} data={{
-                screen: "purchase",
-                amount: amount,
-                amortization: amortization.value,
-                period: paymentPeriod.value,
-                rate: rate,
-                result: result,
-                dpayment: dPayment
-            }}
-                visible={applyDialogVisible}
-                onConfirm={() => {
-                    showApplyDialog(false);
+            <ApplyDialog                
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "purchase",
+                    amount: amount,
+                    amortization: amortization.value,
+                    period: paymentPeriod.value,
+                    rate: rate,
+                    result: result,
+                    dpayment: dPayment
                 }}
-                onCancel={() => {
-                    showApplyDialog(false);
-                }}
-                onError={(error: any) => {
-                    showApplyDialog(false);
-                    toast.show(error, {
-                        type: "danger",
+                onConfirm={(message : string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
                         placement: "center",
                         duration: 2000,
                         animationType: "zoom-in",
                     });
-                }} />
+                }}
+                onClose={() => {
+                    showBottomSheet(false);
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}/>            
         </ SafeAreaView >
     )
 }
