@@ -16,21 +16,22 @@ import { COUNTRY_CODE } from "../constants/const";
 
 
 interface Props {
+    loginResult: any,
     requestSuccess: () => void;
 }
 
-const RegisterForm: FC<Props> = ({ requestSuccess }) => {
+const RegisterForm: FC<Props> = ({ loginResult, requestSuccess }) => {
 
     const [loading, setLoading] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState(loginResult != null && loginResult.status == "error" ? loginResult.phoneNumber : "");
     const [error, setError] = useState("");
 
     const dispatch = useDispatch();
     const requestOTP = async () => {
         try {
-            if(phoneNumber==""){
+            if (phoneNumber == "") {
                 setError("Please enter your phone number");
                 return;
             }
@@ -52,6 +53,7 @@ const RegisterForm: FC<Props> = ({ requestSuccess }) => {
     return (
 
         <View style={AppStyle.StyleLogin.form}>
+            {loginResult != null && loginResult.status == "error" ? <Text style={AppStyle.StyleMain.error}>{loginResult.message}</Text> : <View></View>}
             <View style={AppStyle.StyleLogin.input}>
                 <Input
                     style={AppStyle.StyleLogin.TextInput}
@@ -78,19 +80,19 @@ const RegisterForm: FC<Props> = ({ requestSuccess }) => {
                     value={phoneNumber}
                     keyboardType="numeric"
                     leftIcon={
-                        <View style={{width:40, alignContent:"flex-start", alignItems:"center", justifyContent:"center"}}>
-                            <View style={{flexDirection: "row"}}>
+                        <View style={{ width: 40, alignContent: "flex-start", alignItems: "center", justifyContent: "center" }}>
+                            <View style={{ flexDirection: "row" }}>
                                 <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>{COUNTRY_CODE}</Text>
-                                <View style={AppStyle.StyleMain.InputSeparate}/>
+                                <View style={AppStyle.StyleMain.InputSeparate} />
                             </View>
                         </View>
                     }
                     onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
                 />
-            </View>            
+            </View>
             <Text style={AppStyle.StyleMain.error}>{error}</Text>
             <View style={AppStyle.StyleMain.stretch}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={requestOTP} title={"Get OTP"} /></View>
-            <LoadingModal modalVisible={loading} />
+            <LoadingModal modalVisible={loading} color={""} modalStyle={undefined} />
         </View>)
 }
 

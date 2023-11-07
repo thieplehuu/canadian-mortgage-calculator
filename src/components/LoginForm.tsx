@@ -15,9 +15,10 @@ import { setUser } from "../actions/user";
 import { API_URL } from "../constants/urls";
 interface Props {
     requestSuccess: () => void;
+    onLoginFailed: (result: any) => void;
 }
 
-const LoginForm: FC<Props> = ({ requestSuccess }) => {
+const LoginForm: FC<Props> = ({ requestSuccess, onLoginFailed }) => {
 
     const [loading, setLoading] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -27,7 +28,7 @@ const LoginForm: FC<Props> = ({ requestSuccess }) => {
 
     const requestOTP = async () => {
         try {
-            if(phoneNumber==""){
+            if (phoneNumber == "") {
                 setError("Please enter your phone number");
                 return;
             }
@@ -50,17 +51,20 @@ const LoginForm: FC<Props> = ({ requestSuccess }) => {
                         lastName: data.user.last_name,
                         phoneNumber: data.user.mobile.substring(COUNTRY_CODE.length),
                         uuid: data.user.uuid
-                    }));                    
+                    }));
                     const confirmation = await auth().signInWithPhoneNumber(COUNTRY_CODE + phoneNumber);
                     dispatch(setConfirm(confirmation))
-                }
-                if (data.status == "error") {
-                    setError(data.message);
+                    requestSuccess()
+                } else if (data.status == "error") {
+                    onLoginFailed({
+                        status: 'error',
+                        phoneNumber: phoneNumber,
+                        message: data.message
+                    });
                 }
             } catch (error) {
                 console.error(error);
-            }            
-            requestSuccess()
+            }
             setLoading(false)
         } catch (error) {
             setLoading(false)
@@ -77,10 +81,10 @@ const LoginForm: FC<Props> = ({ requestSuccess }) => {
                     value={phoneNumber}
                     keyboardType="numeric"
                     leftIcon={
-                        <View style={{width:40, alignContent:"flex-start", alignItems:"center", justifyContent:"center"}}>
-                            <View style={{flexDirection: "row"}}>
+                        <View style={{ width: 40, alignContent: "flex-start", alignItems: "center", justifyContent: "center" }}>
+                            <View style={{ flexDirection: "row" }}>
                                 <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>{COUNTRY_CODE}</Text>
-                                <View style={AppStyle.StyleMain.InputSeparate}/>
+                                <View style={AppStyle.StyleMain.InputSeparate} />
                             </View>
                         </View>
                     }
