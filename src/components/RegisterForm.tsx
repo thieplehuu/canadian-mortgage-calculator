@@ -37,6 +37,7 @@ const RegisterForm: FC<Props> = ({ loginResult, requestSuccess }) => {
             }
             setLoading(true)
             const confirmation = await auth().signInWithPhoneNumber(COUNTRY_CODE + phoneNumber);
+            console.log(confirmation)
             dispatch(setUser({
                 firstName: firstName,
                 lastName: lastName,
