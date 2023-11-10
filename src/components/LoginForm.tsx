@@ -93,7 +93,7 @@ const LoginForm: FC<Props> = ({ requestSuccess, onLoginFailed }) => {
             </View>
             <Text style={AppStyle.StyleMain.error}>{error}</Text>
             <View style={AppStyle.StyleMain.stretch}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={requestOTP} title={"Get OTP"} /></View>
-            <LoadingModal modalVisible={loading} />
+            <LoadingModal modalVisible={loading} color={"#816CEC"} modalStyle={undefined} />
         </View>)
 }
 

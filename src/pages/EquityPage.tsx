@@ -85,7 +85,7 @@ export default function EquityPage() {
             { rate: 11.99, perc: 85 },
             { rate: 12.99, perc: 90 },
         ];
-        let arr = [];
+        let arr: any[] = [];
         rates.forEach((rate) => {
             let value = calculateEquity(property, mortgage, rate.rate, rate.perc);
             if (value && arr.length < 6) {

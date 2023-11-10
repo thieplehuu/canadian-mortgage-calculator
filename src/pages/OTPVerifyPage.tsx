@@ -13,9 +13,8 @@ import { COUNTRY_CODE } from "../constants/const";
 import { setUser } from "../actions/user";
 
 interface Props {
-    confirm: ({});
-    action: string,
-    verifySuccess: ({ }) => void;
+    route: any,
+    navigation: any
 }
 
 const OTPVerifyPage: FC<Props> = ({ route, navigation }) => {
@@ -94,7 +93,7 @@ const OTPVerifyPage: FC<Props> = ({ route, navigation }) => {
                 </View>
                 <Text style={AppStyle.StyleMain.error}>{error}</Text>
                 <View style={[AppStyle.StyleMain.stretch, { marginTop: 32 }]}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={verifyOtp} title={"Verify Code"} /></View>
-                <LoadingModal modalVisible={loading} />
+                <LoadingModal modalVisible={loading} color={"#816CEC"} modalStyle={undefined} />
             </View>
         </View>)
 }

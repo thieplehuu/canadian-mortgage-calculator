@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
-import { BottomSheet, Button, Card, Image, ListItem } from '@rneui/themed';
+import { Button, Card, Image } from '@rneui/themed';
 import AppStyle from '../theme';
 import LinearGradient from 'react-native-linear-gradient';
-import { ContactForm } from '../components/ContactForm';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { useToast } from 'react-native-toast-notifications';
 import { ContactDialog } from '../components/ContactDialog';
@@ -12,7 +10,7 @@ import { ContactDialog } from '../components/ContactDialog';
 const HomePage = () => {
 
     const [isLoading, setLoading] = useState(false);
-    const [rates, setRates] = useState({});
+    const [rates, setRates] = useState({ fixedrate5years: "5.59", fixedrate3years: "6.29", variablerate: "6.30", primerate: "7.20" });
     const [bottomSheetVisible, showBottomSheet] = useState(false);
     const navigation = useNavigation();
     const toast = useToast();
