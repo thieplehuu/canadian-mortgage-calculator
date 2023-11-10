@@ -3,17 +3,15 @@ import AppStyle from '../theme';
 import {
     View,
 } from "react-native";
-import { BottomSheet, Button, Input, Slider, Text } from "@rneui/themed";
-import { OutlinedCurrencyInput, OutlinedTextInput } from "../components/OutlinedInput";
+import { Button, Slider, Text } from "@rneui/themed";
+import { OutlinedCurrencyInput } from "../components/OutlinedInput";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { moneyFormat, moneyToNumber, moneyRound, round2TwoDecimals } from "../utils";
+import { moneyFormat, moneyRound, round2TwoDecimals } from "../utils";
 import { API_URL } from "../constants/urls";
 import { useToast } from "react-native-toast-notifications";
-import { ApplyForm } from "../components/ApplyForm";
-import Icon from "react-native-vector-icons/AntDesign";
 import { ApplyDialog } from "../components/ApplyDialog";
 
-export default function EnquityPage() {
+export default function EquityPage() {
 
     const [property, setProperty] = useState(1000000);
     const [mortgage, setMortgate] = useState(200000);
@@ -119,15 +117,15 @@ export default function EnquityPage() {
                     label="Property Value"
                     value={property}
                     precision={0}
-                    onTextChange={(text) => onChangeProperty(text)} 
-                    onLostFocus={(value: number) => {} } />
+                    onTextChange={(text) => onChangeProperty(text)}
+                    onLostFocus={(value: number) => { }} />
 
                 <OutlinedCurrencyInput
                     label="Current Mortgage Balance"
                     value={mortgage}
                     precision={0}
-                    onTextChange={(text) => onChangeMortgate(text)} 
-                    onLostFocus={(value: number) => {} } />
+                    onTextChange={(text) => onChangeMortgate(text)}
+                    onLostFocus={(value: number) => { }} />
 
                 <View style={{
                     flexDirection: 'row',
@@ -222,7 +220,7 @@ export default function EnquityPage() {
                         </View>
                     </View>
                 </View>
-                <ApplyDialog                
+                <ApplyDialog
                     visible={bottomSheetVisible}
                     data={{
                         screen: "equity",
@@ -231,7 +229,7 @@ export default function EnquityPage() {
                         loan: remortgage,
                         monthly: (remortgage * ratev) / 12
                     }}
-                    onConfirm={(message : string) => {
+                    onConfirm={(message: string) => {
                         showBottomSheet(false);
                         toast.show(message, {
                             type: "success",
@@ -251,8 +249,8 @@ export default function EnquityPage() {
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    }}/>
-                
+                    }} />
+
             </View>
         </ SafeAreaView>
     )
