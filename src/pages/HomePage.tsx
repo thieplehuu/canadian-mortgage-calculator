@@ -167,12 +167,12 @@ const HomePage = () => {
                     </View>
                     <View style={AppStyle.StyleMain.sectionContainer}>
                         <TouchableOpacity onPress={() => {
-                            goto("EnquityPage");
+                            goto("EquityPage");
                         }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#385A6447', '#F3D2F11F']} style={AppStyle.StyleMain.sectionContent}>
                                 <View style={sectionStyle.columns}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>
-                                            <Text style={AppStyle.TextStyle.text3}>Enquity</Text>
+                                            <Text style={AppStyle.TextStyle.text3}>Equity</Text>
                                             <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
@@ -196,7 +196,7 @@ const HomePage = () => {
                 </View>
                 <ContactDialog
                     visible={bottomSheetVisible}
-                    onConfirm={(message : string) => {
+                    onConfirm={(message: string) => {
                         showBottomSheet(false);
                         toast.show(message, {
                             type: "success",
@@ -213,7 +213,7 @@ const HomePage = () => {
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    }}                    
+                    }}
                     onClose={() => {
                         showBottomSheet(false);
                     }}
