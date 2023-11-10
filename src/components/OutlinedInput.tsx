@@ -1,9 +1,10 @@
-import { Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import AppStyle from "../theme";
-import { FC, useEffect, useRef, useState } from "react";
-import Dropdown from "./Dropdown";
+import { FC, useRef, useState } from "react";
 import { moneyToNumber, rateToNumber, rateToString } from "../utils";
 import CurrencyInput from "react-native-currency-input";
+import { Dropdown } from "react-native-element-dropdown";
+import Icon from 'react-native-vector-icons/AntDesign';
 
 interface TextInputProps {
     label: string;
@@ -67,7 +68,7 @@ interface CurrencyInputProps {
     onLostFocus: (value: number) => void;
 }
 
-const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, precision, onTextChange, onLostFocus, ...props }) => { 
+const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, precision, onTextChange, onLostFocus, ...props }) => {
     const [editValue, setEditValue] = useState(value);
     const onBlur = () => {
         onLostFocus(editValue);
@@ -105,19 +106,39 @@ interface SelectInputProps {
     onSelect: (item: { label: string; value: any }) => void;
 }
 
-const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSelect, ...props }) => (
-    <View style={AppStyle.Base.outlinedInputContainer}>
-        <View style={AppStyle.Base.outlinedLabelContainer}>
-            <Text style={AppStyle.Base.label}>{label}</Text>
+const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSelect, ...props }) => {
+    return (
+        <View style={AppStyle.Base.outlinedInputContainer}>
+            <View style={AppStyle.Base.outlinedLabelContainer}>
+                <Text style={AppStyle.Base.label}>{label}</Text>
+            </View>
+            <View style={AppStyle.Base.outlinedTextInput}>
+                <Dropdown
+                    iconStyle={{
+                        width: 20,
+                        height: 20,
+                    }}
+                    selectedTextStyle={AppStyle.Base.label}
+                    itemTextStyle={AppStyle.Base.label}
+                    data={items}
+                    search={false}
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    value={value}
+                    renderRightIcon={() => (
+                        <Icon
+                            size={16} color="#4F4A45"
+                            name="caretdown"
+                        />
+                    )}
+                    onChange={item => {
+                        onSelect(item)
+                    }}
+                />
+            </View>
         </View>
-        <View style={AppStyle.Base.outlinedTextInput}>
-            <Dropdown
-                label={label}
-                value={value}
-                items={items}
-                onSelect={(item) => onSelect(item)} carretAnimated={false} />
-        </View>
-    </View>
-);
+    )
+};
 
 export { OutlinedTextInput, OutlinedSelectInput, OutlinedCurrencyInput };

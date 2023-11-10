@@ -11,16 +11,17 @@ import {
 import { BottomSheet } from '@rneui/themed';
 import AppStyle from '../theme';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { Dropdown } from 'react-native-element-dropdown';
 
 interface Props {
     label: string;
     value: { label: string; value: string },
     items: Array<{ label: string; value: string }>;
-    carretAnimated : boolean,
+    carretAnimated: boolean,
     onSelect: (item: { label: string; value: string }) => void;
 }
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
-const Dropdown: FC<Props> = ({ value, label, items, carretAnimated = false, onSelect }) => {
+const PaymentDropdown: FC<Props> = ({ value, label, items, carretAnimated = false, onSelect }) => {
     const DropdownButton = useRef(null);
     const [selected, setSelected] = useState(value);
     const [bottomSheetVisible, showBottomSheet] = useState(false);
@@ -39,7 +40,7 @@ const Dropdown: FC<Props> = ({ value, label, items, carretAnimated = false, onSe
     const animatedValue = useRef(new Animated.Value(0)).current;
     const [isTop, setIsTop] = useState(true);
 
-    const startAnimation = (toValue : number) => {
+    const startAnimation = (toValue: number) => {
         Animated.timing(animatedValue, {
             toValue,
             duration: 1000,
@@ -61,44 +62,32 @@ const Dropdown: FC<Props> = ({ value, label, items, carretAnimated = false, onSe
     })
 
     return (
-        <TouchableOpacity
-            ref={DropdownButton}
-            style={styles.button}
-            onPress={toggleDropdown}
-        >
-            <Text style={styles.buttonText}>
-                {(selected && selected.label) || label}
-            </Text>
-
-            <View>
-                {carretAnimated ? <AnimatedIcon name={"caretdown"} size={16} color="#4F4A45"  
-                    style={[styles.animatedContainer, { transform: [{ translateY }] }]}
-                    onPress={() => showBottomSheet(true)}
-                /> : <Icon name={"caretdown"} size={16} color="#4F4A45" 
-                onPress={() => showBottomSheet(true)}/>
-            }
-            </View>
-            <BottomSheet modalProps={{}} isVisible={bottomSheetVisible}>
+        <Dropdown
+            selectedTextStyle={AppStyle.Base.label}
+            itemTextStyle={AppStyle.Base.label}
+            iconStyle={{
+                width: 20,
+                height: 20,
+            }}
+            data={items}
+            search={false}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            value={value}
+            renderRightIcon={() => (
                 <View>
-                    <View style={AppStyle.StyleMain.bottomSheetHeader}>
-                        <Icon name={"close"} size={16} style={styles.icon} color="#4F4A45"
-                            onPress={() => showBottomSheet(false)}
-                        />
-                    </View>
-                    <View style={styles.dropdownContent}>
-                        {
-                            items.map((item: any) => {
-                                return (
-                                    <View key={item.value}><TouchableOpacity onPress={() => onItemPress(item)} style={styles.item}>
-                                        <Text style={AppStyle.Base.label}>{item.label}</Text>
-                                    </TouchableOpacity></View>
-                                );
-                            })
-                        }
-                    </View>
+                    {carretAnimated ? <AnimatedIcon name={"caretdown"} size={16} color="#4F4A45"
+                        style={[styles.animatedContainer, { transform: [{ translateY }] }]}
+                    /> : <Icon name={"caretdown"} size={16} color="#4F4A45"
+                    />
+                    }
                 </View>
-            </BottomSheet>
-        </TouchableOpacity>
+            )}
+            onChange={item => {
+                onSelect(item)
+            }}
+        />
     );
 };
 
@@ -137,4 +126,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Dropdown;
+export default PaymentDropdown;

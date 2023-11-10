@@ -6,7 +6,6 @@ import {
 } from "react-native";
 import { BottomSheet, Button, Slider } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
-import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, inititalQuota, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
@@ -16,6 +15,7 @@ import { ApplyForm } from "../components/ApplyForm";
 import Icon from 'react-native-vector-icons/AntDesign';
 import DropShadow from "react-native-drop-shadow";
 import { ApplyDialog } from "../components/ApplyDialog";
+import PaymentDropdown from "../components/PaymentDropdown";
 
 export default function MortgagePage() {
 
@@ -83,21 +83,21 @@ export default function MortgagePage() {
                     label="Mortgage Amount"
                     value={amount}
                     precision={0}
-                    onTextChange={(text) => onChangeMortgate(text)} 
+                    onTextChange={(text) => onChangeMortgate(text)}
                     onLostFocus={(value) => {
-                        if(value < minQuota){
+                        if (value < minQuota) {
                             setAmount(minQuota)
                             setResult(
                                 calculateMortgage(minQuota, rate, amortization.value, paymentPeriod.value)
                             );
                         }
-                        if(value > maxQuota){                            
+                        if (value > maxQuota) {
                             setAmount(maxQuota)
                             setResult(
                                 calculateMortgage(maxQuota, rate, amortization.value, paymentPeriod.value)
                             );
                         }
-                    } } />
+                    }} />
                 <Slider
                     thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
                     trackStyle={{ height: 4, backgroundColor: 'transparent' }}
@@ -138,7 +138,7 @@ export default function MortgagePage() {
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} carretAnimated={true} />
+                            <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
                             <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
@@ -148,7 +148,7 @@ export default function MortgagePage() {
                         </View>
                     </View>
                 </View>
-                <ApplyDialog                
+                <ApplyDialog
                     visible={bottomSheetVisible}
                     data={{
                         screen: "mortgage",
@@ -166,7 +166,7 @@ export default function MortgagePage() {
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    } }
+                    }}
                     onError={(error: any) => {
                         showBottomSheet(false);
                         toast.show(error, {
@@ -175,9 +175,9 @@ export default function MortgagePage() {
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    } } onClose={() => {
+                    }} onClose={() => {
                         showBottomSheet(false);
-                    } }/>                            
+                    }} />
             </View>
         </ SafeAreaView>
     )

@@ -1,19 +1,17 @@
-import React, { Component, useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
     View,
 } from "react-native";
-import { BottomSheet, Button, Input, Slider, Text } from "@rneui/themed";
+import { Button, Slider, Text } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
-import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { moneyFormat, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
-import { ApplyForm } from "../components/ApplyForm";
 import { useToast } from "react-native-toast-notifications";
-import Icon from "react-native-vector-icons/AntDesign";
 import { ApplyDialog } from "../components/ApplyDialog";
+import PaymentDropdown from "../components/PaymentDropdown";
 
 export default function RefinancePage() {
 
@@ -90,23 +88,23 @@ export default function RefinancePage() {
                     label="Home Value"
                     value={homeValue}
                     precision={0}
-                    onTextChange={(text) => onChangeHomeValue(text)}                     
+                    onTextChange={(text) => onChangeHomeValue(text)}
                     onLostFocus={(value) => {
-                        if(value < minQuota){
+                        if (value < minQuota) {
                             setHomeValue(minQuota);
                             setResult(
                                 calculateMortgage(minQuota * 0.8, rate, amortization.value, paymentPeriod.value)
                             );
                             setMaxAmount(minQuota * 0.8);
                         }
-                        if(value > maxQuota){                            
+                        if (value > maxQuota) {
                             setHomeValue(maxQuota);
                             setResult(
                                 calculateMortgage(maxQuota * 0.8, rate, amortization.value, paymentPeriod.value)
                             );
                             setMaxAmount(maxQuota * 0.8);
                         }
-                    }}/>
+                    }} />
                 <Slider
                     value={homeValue}
                     onValueChange={(value) => onChangeHomeValue(value)}
@@ -204,7 +202,7 @@ export default function RefinancePage() {
                 <View style={AppStyle.StyleMain.bottomContainer}>
                     <View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} carretAnimated={true} />
+                            <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
                             <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
                         </View>
                         <View style={AppStyle.StyleMain.footerRightColumn}>
@@ -214,7 +212,7 @@ export default function RefinancePage() {
                         </View>
                     </View>
                 </View>
-                <ApplyDialog                
+                <ApplyDialog
                     visible={bottomSheetVisible}
                     data={{
                         screen: "refinance",
@@ -225,7 +223,7 @@ export default function RefinancePage() {
                         result: result,
                         loan: loan
                     }}
-                    onConfirm={(message : string) => {
+                    onConfirm={(message: string) => {
                         showBottomSheet(false);
                         toast.show(message, {
                             type: "success",
@@ -245,7 +243,7 @@ export default function RefinancePage() {
                             duration: 2000,
                             animationType: "zoom-in",
                         });
-                    }}/>                
+                    }} />
             </View>
         </ SafeAreaView>
     )

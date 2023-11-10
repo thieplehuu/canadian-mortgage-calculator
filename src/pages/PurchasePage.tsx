@@ -6,7 +6,6 @@ import {
 } from "react-native";
 import { BottomSheet, Button, Slider, Text } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
-import Dropdown from "../components/Dropdown";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
 import { moneyFormat, rateToString, moneyRound, calculateMortgage, Separator, round2TwoDecimals } from "../utils";
@@ -14,9 +13,8 @@ import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/ini
 import { API_URL } from "../constants/urls";
 import DownPaymentRadio from "../components/DownPaymentRadio";
 import { useToast } from "react-native-toast-notifications";
-import Icon from 'react-native-vector-icons/AntDesign';
-import { ApplyForm } from "../components/ApplyForm";
 import { ApplyDialog } from "../components/ApplyDialog";
+import PaymentDropdown from "../components/PaymentDropdown";
 
 export default function PurchasePage() {
     const [amount, setAmount] = useState(800000);
@@ -187,7 +185,7 @@ export default function PurchasePage() {
                         precision={0}
                         onTextChange={(text) => onChangeMortgate(text)}
                         onLostFocus={(value) => {
-                            if(value < minQuota){
+                            if (value < minQuota) {
                                 setAmount(minQuota)
                                 setResult(
                                     calculateMortgage(minQuota -
@@ -195,7 +193,7 @@ export default function PurchasePage() {
                                         (amount - DminAmount) * insurance, rate, amortization.value, paymentPeriod.value)
                                 );
                             }
-                            if(value > maxQuota){                            
+                            if (value > maxQuota) {
                                 setAmount(maxQuota)
                                 setResult(
                                     calculateMortgage(maxQuota -
@@ -203,7 +201,7 @@ export default function PurchasePage() {
                                         (amount - DminAmount) * insurance, rate, amortization.value, paymentPeriod.value)
                                 );
                             }
-                        }}/>
+                        }} />
                     <Slider
                         value={amount}
                         thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
@@ -271,7 +269,7 @@ export default function PurchasePage() {
             <View style={AppStyle.StyleMain.bottomContainer}>
                 <View style={AppStyle.StyleMain.footerContainer}>
                     <View style={AppStyle.StyleMain.footerLeftColumn}>
-                        <Dropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item) => onChangePaymentPeriod(item)} carretAnimated={true} />
+                        <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
                         <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
                     </View>
                     <View style={AppStyle.StyleMain.footerRightColumn}>
@@ -281,7 +279,7 @@ export default function PurchasePage() {
                     </View>
                 </View>
             </View>
-            <ApplyDialog                
+            <ApplyDialog
                 visible={bottomSheetVisible}
                 data={{
                     screen: "purchase",
@@ -292,7 +290,7 @@ export default function PurchasePage() {
                     result: result,
                     dpayment: dPayment
                 }}
-                onConfirm={(message : string) => {
+                onConfirm={(message: string) => {
                     showBottomSheet(false);
                     toast.show(message, {
                         type: "success",
@@ -312,7 +310,7 @@ export default function PurchasePage() {
                         duration: 2000,
                         animationType: "zoom-in",
                     });
-                }}/>            
+                }} />
         </ SafeAreaView >
     )
 }
