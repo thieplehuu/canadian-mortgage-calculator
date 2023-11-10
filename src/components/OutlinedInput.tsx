@@ -82,8 +82,8 @@ const OutlinedCurrencyInput: FC<CurrencyInputProps> = ({ label, value, precision
                 <CurrencyInput
                     style={AppStyle.Base.label}
                     prefix="$"
-                    delimiter="."
-                    separator=","
+                    delimiter=","
+                    separator="."
                     precision={precision}
                     //minValue={minimumValue}
                     //maxValue={maximumValue}

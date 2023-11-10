@@ -30,8 +30,6 @@ export default function ConsolidationPage() {
     const [bottomSheetVisible, showBottomSheet] = useState(false);
     const toast = useToast();
 
-    const [loaded, setLoaded] = useState(false);
-
 
     const loadRates = async () => {
         try {
@@ -124,8 +122,8 @@ export default function ConsolidationPage() {
                                     style={[AppStyle.Base.label, styles.input]}
                                     value={item.amount}
                                     prefix="$"
-                                    delimiter="."
-                                    separator=","
+                                    delimiter=","
+                                    separator="."
                                     precision={2}
                                     onChangeValue={(text) => { onChangeAmount(item.key, text) }} />
                             </View>
@@ -136,8 +134,8 @@ export default function ConsolidationPage() {
                                     style={[AppStyle.Base.label, styles.input]}
                                     value={item.payment}
                                     prefix="$"
-                                    delimiter="."
-                                    separator=","
+                                    delimiter=","
+                                    separator="."
                                     precision={2}
                                     onChangeValue={(text) => { onChangePayment(item.key, text) }} />
                             </View>
@@ -175,7 +173,7 @@ export default function ConsolidationPage() {
                     </View>
                 </View>
             </View>
-            <ApplyDialog                
+            <ApplyDialog
                 visible={bottomSheetVisible}
                 data={{
                     screen: "conso",
@@ -191,7 +189,7 @@ export default function ConsolidationPage() {
                         return { ...accumulator, [item.key]: item.amount };
                     }, {}),
                 }}
-                onConfirm={(message : string) => {
+                onConfirm={(message: string) => {
                     showBottomSheet(false);
                     toast.show(message, {
                         type: "success",
@@ -211,7 +209,7 @@ export default function ConsolidationPage() {
                         duration: 2000,
                         animationType: "zoom-in",
                     });
-                }}/>                      
+                }} />
         </View>
 
     );
