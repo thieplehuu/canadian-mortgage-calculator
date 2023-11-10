@@ -10,7 +10,7 @@ import { Button, Input } from "@rneui/themed";
 import auth from '@react-native-firebase/auth';
 import { useDispatch } from "react-redux";
 import { setUser } from "../actions/user";
-import LoadingModal from "./loadingModal";
+import LoadingModal from "./LoadingModal";
 import { setConfirm } from "../actions/firebase";
 import { COUNTRY_CODE } from "../constants/const";
 

@@ -9,7 +9,7 @@ import { Input, Button, Text, Image } from "@rneui/themed";
 import { useSelector } from "react-redux";
 import { API_URL } from "../constants/urls";
 import { COUNTRY_CODE } from "../constants/const";
-import LoadingModal from "./loadingModal";
+import LoadingModal from "./LoadingModal";
 import DropShadow from "react-native-drop-shadow";
 
 interface FormProps {
@@ -17,7 +17,7 @@ interface FormProps {
     onError: (error: any) => void;
 }
 
-const ContactForm : FC<FormProps> = ({onConfirm, onError, ...props }) => {
+const ContactForm: FC<FormProps> = ({ onConfirm, onError, ...props }) => {
     const user = useSelector((state: any) => state.user);
     const [loading, setLoading] = useState(false);
     const [firstName, setFirstName] = useState(user.firstName);
@@ -28,7 +28,7 @@ const ContactForm : FC<FormProps> = ({onConfirm, onError, ...props }) => {
     const [error, setError] = useState("");
     const onSubmit = async () => {
         setLoading(true)
-        if(phoneNumber==""){
+        if (phoneNumber == "") {
             setError("Please enter your phone number");
             return;
         }
@@ -64,85 +64,85 @@ const ContactForm : FC<FormProps> = ({onConfirm, onError, ...props }) => {
     return (
         <ScrollView>
             <View style={AppStyle.StyleMain.container}>
-            <View style={styles.userSection}>
-                <Image style={styles.avatar} source={require("../../assets/images/person.png")} />
-                <View style={styles.userInfo}>
-                    <Text style={textStyle.text3}>Suganthan Thavarajasingam</Text>
-                    <Text style={textStyle.text4}>Mortgage Broker</Text>
+                <View style={styles.userSection}>
+                    <Image style={styles.avatar} source={require("../../assets/images/person.png")} />
+                    <View style={styles.userInfo}>
+                        <Text style={textStyle.text3}>Suganthan Thavarajasingam</Text>
+                        <Text style={textStyle.text4}>Mortgage Broker</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.addressSection}>
-                <View>
-                    <Text style={textStyle.text4}>Mortgage Architects</Text>
-                    <Text style={textStyle.text4}>​FSRA 1272​8</Text>
-                    <Text style={textStyle.text4}>11 Progress Av, Unit 5 Toronto ON M1P 4S7</Text>
+                <View style={styles.addressSection}>
+                    <View>
+                        <Text style={textStyle.text4}>Mortgage Architects</Text>
+                        <Text style={textStyle.text4}>​FSRA 1272​8</Text>
+                        <Text style={textStyle.text4}>11 Progress Av, Unit 5 Toronto ON M1P 4S7</Text>
+                    </View>
                 </View>
-            </View>
-            <Text style={AppStyle.StyleMain.error}>{error}</Text>
-            <View style={AppStyle.StyleMain.input}>
-                <Input
-                    inputStyle={AppStyle.StyleMain.TextInput}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    placeholder='First Name'
-                    value={firstName}
-                    onChangeText={(firstName) => setFirstName(firstName)}
-                />
-            </View>
-            <View style={AppStyle.StyleMain.input}>
-                <Input
-                    inputStyle={AppStyle.StyleMain.TextInput}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    placeholder='Last Name'
-                    value={lastName}
-                    onChangeText={(lastName) => setLastName(lastName)}
-                />
-            </View>
-            <View style={AppStyle.StyleMain.input}>
-                <Input
-                    inputStyle={AppStyle.StyleMain.TextInput}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    placeholder='Email'
-                    value={email}
-                    onChangeText={(email) => setEmail(email)}
-                />
-            </View>
-            <View style={AppStyle.StyleMain.input}>
-                <Input
-                    inputStyle={AppStyle.StyleLogin.TextInput}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    placeholder='Phone Number'
-                    keyboardType="numeric"
-                    value={phoneNumber}
-                    leftIcon={
-                        <View style={{width:40, alignContent:"flex-start", alignItems:"center", justifyContent:"center"}}>
-                            <View style={{flexDirection: "row"}}>
-                                <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>{COUNTRY_CODE}</Text>
-                                <View style={AppStyle.StyleMain.InputSeparate}/>
+                <Text style={AppStyle.StyleMain.error}>{error}</Text>
+                <View style={AppStyle.StyleMain.input}>
+                    <Input
+                        inputStyle={AppStyle.StyleMain.TextInput}
+                        inputContainerStyle={{ borderBottomWidth: 0 }}
+                        placeholder='First Name'
+                        value={firstName}
+                        onChangeText={(firstName) => setFirstName(firstName)}
+                    />
+                </View>
+                <View style={AppStyle.StyleMain.input}>
+                    <Input
+                        inputStyle={AppStyle.StyleMain.TextInput}
+                        inputContainerStyle={{ borderBottomWidth: 0 }}
+                        placeholder='Last Name'
+                        value={lastName}
+                        onChangeText={(lastName) => setLastName(lastName)}
+                    />
+                </View>
+                <View style={AppStyle.StyleMain.input}>
+                    <Input
+                        inputStyle={AppStyle.StyleMain.TextInput}
+                        inputContainerStyle={{ borderBottomWidth: 0 }}
+                        placeholder='Email'
+                        value={email}
+                        onChangeText={(email) => setEmail(email)}
+                    />
+                </View>
+                <View style={AppStyle.StyleMain.input}>
+                    <Input
+                        inputStyle={AppStyle.StyleLogin.TextInput}
+                        inputContainerStyle={{ borderBottomWidth: 0 }}
+                        placeholder='Phone Number'
+                        keyboardType="numeric"
+                        value={phoneNumber}
+                        leftIcon={
+                            <View style={{ width: 40, alignContent: "flex-start", alignItems: "center", justifyContent: "center" }}>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>{COUNTRY_CODE}</Text>
+                                    <View style={AppStyle.StyleMain.InputSeparate} />
+                                </View>
                             </View>
-                        </View>
-                    }
-                    onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
-                />
-            </View>
-            <View style={AppStyle.StyleMain.multilineInput}>
-                <Input
-                    inputStyle={[AppStyle.StyleMain.TextInput, {height: 90, justifyContent:"flex-start", textAlignVertical:"top"}]}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    placeholder='Enter your message'
-                    value={message}
-                    multiline={true}
-                    onChangeText={(message) => setMessage(message)}
-                />
-            </View>
-            <View style={AppStyle.StyleMain.stretch}><Button
-                containerStyle={AppStyle.StyleMain.buttonContainer}
-                buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
-                title={"Submit Message"}
-                onPress={onSubmit} /></View>
-            <LoadingModal modalVisible={loading} color={"#816CEC"} modalStyle={undefined} />
+                        }
+                        onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+                    />
+                </View>
+                <View style={AppStyle.StyleMain.multilineInput}>
+                    <Input
+                        inputStyle={[AppStyle.StyleMain.TextInput, { height: 90, justifyContent: "flex-start", textAlignVertical: "top" }]}
+                        inputContainerStyle={{ borderBottomWidth: 0 }}
+                        placeholder='Enter your message'
+                        value={message}
+                        multiline={true}
+                        onChangeText={(message) => setMessage(message)}
+                    />
+                </View>
+                <View style={AppStyle.StyleMain.stretch}><Button
+                    containerStyle={AppStyle.StyleMain.buttonContainer}
+                    buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+                    title={"Submit Message"}
+                    onPress={onSubmit} /></View>
+                <LoadingModal modalVisible={loading} color={"#816CEC"} modalStyle={undefined} />
 
-        </View>
-    </ScrollView>)
+            </View>
+        </ScrollView>)
 
 }
 

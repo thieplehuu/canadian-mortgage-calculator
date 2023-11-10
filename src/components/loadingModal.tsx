@@ -18,30 +18,30 @@ interface Props {
      * Dark mode of the loading modal, default is false
      * @param boolean darkMode
     */
-   darkMode: boolean;
+    darkMode: boolean;
 
-   /**
-     * Style of the loading modal container
-     * @param string fontFamily
-    */
-   modalStyle: StyleProp<ViewStyle>;
+    /**
+      * Style of the loading modal container
+      * @param string fontFamily
+     */
+    modalStyle: StyleProp<ViewStyle>;
 
 }
 
-export default function LoadingModal(props:Props) {
+export default function LoadingModal(props: Props) {
 
 
-    
+
     return (
-        <Modal 
+        <Modal
             animationType="fade"
             transparent={true}
             visible={props.modalVisible}
             statusBarTranslucent={true}>
-                
+
             <View style={styles.centeredView}>
-                <View style={[styles.modalView , props.darkMode && {backgroundColor:'#121212'}, props.modalStyle]}>
-                    <ActivityIndicator size="large" color={props.color} style={{alignSelf:"center",}}/>
+                <View style={[styles.modalView, props.darkMode && { backgroundColor: '#121212' }, props.modalStyle]}>
+                    <ActivityIndicator size="large" color={props.color} style={{ alignSelf: "center", }} />
                 </View>
             </View>
         </Modal>
@@ -51,7 +51,7 @@ export default function LoadingModal(props:Props) {
 LoadingModal.defaultProps = {
     modalVisible: false,
     darkMode: false,
-    
+
 }
 
 

@@ -11,7 +11,7 @@ import { API_URL } from "../constants/urls";
 import { useSelector } from "react-redux";
 import { formatDate } from "../utils";
 import { COUNTRY_CODE } from "../constants/const";
-import LoadingModal from "./loadingModal";
+import LoadingModal from "./LoadingModal";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 interface TextInputProps {
@@ -46,7 +46,7 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
 
     const onSubmit = async () => {
         setLoading(true)
-        if(phoneNumber==""){
+        if (phoneNumber == "") {
             setError("Please enter your phone number");
             return;
         }
@@ -79,7 +79,7 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
         } catch (error: any) {
             onError(error);
         }
-        
+
         setLoading(false)
     }
 
@@ -117,10 +117,10 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
                     value={phoneNumber}
                     keyboardType="numeric"
                     leftIcon={
-                        <View style={{width:40, alignContent:"flex-start", alignItems:"center", justifyContent:"center"}}>
-                            <View style={{flexDirection: "row"}}>
+                        <View style={{ width: 40, alignContent: "flex-start", alignItems: "center", justifyContent: "center" }}>
+                            <View style={{ flexDirection: "row" }}>
                                 <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>{COUNTRY_CODE}</Text>
-                                <View style={AppStyle.StyleMain.InputSeparate}/>
+                                <View style={AppStyle.StyleMain.InputSeparate} />
                             </View>
                         </View>
                     }
@@ -143,7 +143,7 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
             </View>
             <View style={AppStyle.StyleMain.multilineInput}>
                 <Input
-                    inputStyle={[AppStyle.StyleMain.TextInput, {height: 90, justifyContent:"flex-start", textAlignVertical:"top"}]}
+                    inputStyle={[AppStyle.StyleMain.TextInput, { height: 90, justifyContent: "flex-start", textAlignVertical: "top" }]}
                     inputContainerStyle={{ borderBottomWidth: 0 }}
                     placeholder='Enter your message'
                     value={message}
@@ -152,9 +152,9 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
             </View>
             <LoadingModal modalVisible={loading} color={"#816CEC"} modalStyle={undefined} />
             <Button
-                containerStyle={AppStyle.StyleMain.DialogSubmitButtonContainer} 
-                buttonStyle={AppStyle.StyleMain.DialogSubmitButton} 
-                titleStyle={{ color: 'white'}}
+                containerStyle={AppStyle.StyleMain.DialogSubmitButtonContainer}
+                buttonStyle={AppStyle.StyleMain.DialogSubmitButton}
+                titleStyle={{ color: 'white' }}
                 title="Submit Message"
                 onPress={onSubmit}
             />

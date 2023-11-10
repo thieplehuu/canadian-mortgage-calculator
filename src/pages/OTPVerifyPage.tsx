@@ -8,7 +8,7 @@ import { Button, Input, Text } from "@rneui/themed";
 import { API_URL } from "../constants/urls";
 import { useDispatch, useSelector } from "react-redux";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
-import LoadingModal from "../components/loadingModal";
+import LoadingModal from "../components/LoadingModal";
 import { COUNTRY_CODE } from "../constants/const";
 import { setUser } from "../actions/user";
 

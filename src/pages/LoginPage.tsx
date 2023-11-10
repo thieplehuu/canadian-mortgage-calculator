@@ -4,7 +4,6 @@ import {
     View,
     Image,
     BackHandler,
-    Text,
 } from "react-native";
 import RegisterForm from "../components/RegisterForm";
 import { useNavigation } from "@react-navigation/native";
