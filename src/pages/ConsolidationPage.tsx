@@ -4,13 +4,11 @@ import {
     StyleSheet,
     View,
 } from "react-native";
-import { BottomSheet, Button, Text } from "@rneui/themed";
+import { Button, Text } from "@rneui/themed";
 import { API_URL } from "../constants/urls";
 import { calculateMortgage, moneyFormat } from "../utils";
 import CurrencyInput from "react-native-currency-input";
-import { ApplyForm } from "../components/ApplyForm";
 import { useToast } from "react-native-toast-notifications";
-import Icon from "react-native-vector-icons/AntDesign";
 import { ApplyDialog } from "../components/ApplyDialog";
 
 export default function ConsolidationPage() {
@@ -18,8 +16,8 @@ export default function ConsolidationPage() {
     const [items, setValue] = useState([
         { key: "mv", title: 'Mortgage', amount: 500000, payment: 2500 },
         { key: "cv", title: 'Credit Cards', amount: 20000, payment: 600 },
-        { key: "carv", title: 'Personal Loans', amount: 25000, payment: 750 },
-        { key: "otherv", title: 'Car Loans', amount: 30000, payment: 900 },
+        { key: "carv", title: 'Car Loans', amount: 25000, payment: 750 },
+        { key: "otherv", title: 'Other Loans', amount: 30000, payment: 900 },
     ]);
     const [monthly, setMonthly] = useState({ mm: 2500, cm: 600, carm: 750, otherm: 900 });
     const [totalDebt, setTotalDebt] = useState(0);
@@ -124,6 +122,7 @@ export default function ConsolidationPage() {
                                     prefix="$"
                                     delimiter=","
                                     separator="."
+                                    minValue={0}
                                     precision={2}
                                     onChangeValue={(text) => { onChangeAmount(item.key, text) }} />
                             </View>
@@ -136,6 +135,7 @@ export default function ConsolidationPage() {
                                     prefix="$"
                                     delimiter=","
                                     separator="."
+                                    minValue={0}
                                     precision={2}
                                     onChangeValue={(text) => { onChangePayment(item.key, text) }} />
                             </View>
