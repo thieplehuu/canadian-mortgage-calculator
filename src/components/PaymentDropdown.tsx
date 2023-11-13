@@ -75,6 +75,7 @@ const PaymentDropdown: FC<Props> = ({ value, label, items, carretAnimated = fals
             labelField="label"
             valueField="value"
             value={value}
+            keyboardAvoiding={true}
             renderRightIcon={() => (
                 <View>
                     {carretAnimated ? <AnimatedIcon name={"caretdown"} size={16} color="#4F4A45"

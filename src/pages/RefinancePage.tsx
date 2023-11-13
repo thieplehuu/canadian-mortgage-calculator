@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
+    SafeAreaView,
+    ScrollView,
     View,
 } from "react-native";
 import { Button, Slider, Text } from "@rneui/themed";
-import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput, PercentTextInput } from "../components/OutlinedInput";
 import { moneyFormat, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
@@ -78,12 +79,12 @@ export default function RefinancePage() {
 
     const onChangePaymentPeriod = (item: any) => {
         setPaymentPeriod(item);
-        setResult(calculateMortgage(maxAmount, rate, paymentPeriod.value, item.value));
+        setResult(calculateMortgage(maxAmount, rate, amortization.value, item.value));
     };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
-            <View style={AppStyle.StyleMain.container}>
+            <ScrollView><View style={AppStyle.StyleMain.container}>
                 <OutlinedCurrencyInput
                     label="Home Value"
                     value={homeValue}
@@ -185,9 +186,8 @@ export default function RefinancePage() {
                     <View style={{ alignSelf: "stretch" }}></View>
                     <View style={{ alignContent: "flex-end" }}><Text>{moneyRound(homeValue * 0.8, true, true)}</Text></View>
                 </View>
-                <OutlinedTextInput
+                <PercentTextInput
                     label="Rates"
-                    type="rate"
                     minimumValue={0}
                     maximumValue={100}
                     value={rateToString(rate)}
@@ -244,7 +244,7 @@ export default function RefinancePage() {
                             animationType: "zoom-in",
                         });
                     }} />
-            </View>
+            </View></ScrollView>
         </ SafeAreaView>
     )
 }

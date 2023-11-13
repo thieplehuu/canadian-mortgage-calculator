@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
+    SafeAreaView,
     ScrollView,
     View,
 } from "react-native";
-import { BottomSheet, Button, Slider, Text } from "@rneui/themed";
-import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput } from "../components/OutlinedInput";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Button, Slider, Text } from "@rneui/themed";
+import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput, PercentTextInput } from "../components/OutlinedInput";
 import { StyleSheet } from "react-native";
 import { moneyFormat, rateToString, moneyRound, calculateMortgage, Separator, round2TwoDecimals } from "../utils";
 import { amortizations, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
@@ -250,9 +250,8 @@ export default function PurchasePage() {
                             (amount - DminAmount) * insurance, true
                         )}</Text>
                     </View>
-                    <OutlinedTextInput
+                    <PercentTextInput
                         label="Rates"
-                        type="rate"
                         minimumValue={0}
                         maximumValue={100}
                         value={rateToString(rate)}

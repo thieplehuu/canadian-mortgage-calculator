@@ -6,7 +6,7 @@ const paymentPeriods = [{
     label: 'Monthly Payment',
 }, {
     value: 'biweekly',
-    label: 'Bi-weekly Paymen',
+    label: 'Bi-weekly Payment',
 }, {
     value: 'weekly',
     label: 'Weekly Payment',

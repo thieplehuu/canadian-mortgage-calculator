@@ -9,25 +9,16 @@ import Icon from 'react-native-vector-icons/AntDesign';
 interface TextInputProps {
     label: string;
     value: string;
-    type: string;
     minimumValue: number;
     maximumValue: number;
     onTextChange: (text: string) => void;
 }
 
-const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, minimumValue = 0, maximumValue = Number.POSITIVE_INFINITY, onTextChange, ...props }) => {
+const OutlinedTextInput: FC<TextInputProps> = ({ label, value, minimumValue = 0, maximumValue = Number.POSITIVE_INFINITY, onTextChange, ...props }) => {
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(value);
     const refInput = useRef();
     const onSetEditing = (edit: boolean) => {
-        if (type == "money") {
-            setEditing(edit);
-            setEditValue(moneyToNumber(value).toString());
-        }
-        if (type == "rate") {
-            setEditing(edit);
-            setEditValue(rateToNumber(value).toString());
-        }
         setTimeout(() => {
             refInput.current.focus();
         }, 0)
@@ -53,12 +44,59 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, type, minimumValu
                     setEditValue(text)
                     onTextChange(text)
 
-                }} onBlur={() => onBlur()} />) : (<Text style={AppStyle.Base.label} onPress={() => onSetEditing(true)}>{value}</Text>)}
+                }} onBlur={() => onBlur()} />) : (<Text style={[AppStyle.Base.label, , {lineHeight:30}]} onPress={() => onSetEditing(true)}>{value}</Text>)}
             </View>
         </View>
     )
 };
 
+interface PercentInputProps {
+    label: string;
+    value: string;
+    minimumValue: number;
+    maximumValue: number;
+    onTextChange: (text: string) => void;
+}
+
+const PercentTextInput: FC<PercentInputProps> = ({ label, value, minimumValue = 0, maximumValue = Number.POSITIVE_INFINITY, onTextChange, ...props }) => {
+    const [editing, setEditing] = useState(false);
+    const [editValue, setEditValue] = useState(value);
+    const refInput = useRef();
+    
+    const onBlur = () => {
+        setEditing(false)
+    }
+
+    const onSetEditing = (edit: boolean) => {
+        setEditing(edit);
+        setEditValue(rateToNumber(editValue).toString());
+        setTimeout(() => {
+            refInput.current.focus();
+        }, 0)
+    }
+    const onChangeText = (text: string) => {
+        setEditValue(text)
+        onTextChange(text)
+    }
+
+    const fullText = ()=>{
+        return rateToNumber(editValue) + "%";
+    }
+    return (
+        <View style={AppStyle.Base.outlinedInputContainer}>
+            <View style={AppStyle.Base.outlinedLabelContainer}>
+                <Text style={AppStyle.Base.label}>{label}</Text>
+            </View>
+            <View style={AppStyle.Base.outlinedTextInput}>
+                {editing ? (<TextInput style={AppStyle.Base.label} ref={refInput} 
+                            keyboardType='numeric' 
+                            value={editValue} 
+                            onChangeText={(text) => onChangeText(text)} 
+                            onBlur={() => onBlur()}/>) : (<Text style={[AppStyle.Base.label, {lineHeight:30}]} onPress={() => onSetEditing(true)}>{fullText()}</Text>)}
+            </View>
+        </View>
+    )
+};
 
 interface CurrencyInputProps {
     label: string;
@@ -141,4 +179,4 @@ const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSele
     )
 };
 
-export { OutlinedTextInput, OutlinedSelectInput, OutlinedCurrencyInput };
+export { OutlinedTextInput, PercentTextInput, OutlinedSelectInput, OutlinedCurrencyInput };
