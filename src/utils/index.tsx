@@ -14,7 +14,7 @@ const rateToString = (str: number) => {
 const moneyToNumber = (str: string) => {
     var regex = /[%\$.,\s]/g;
 
-    var result = str.replace(regex, '');
+    var result = str.toString().replace(regex, '');
     return parseInt(result);
 }
 

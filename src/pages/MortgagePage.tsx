@@ -7,8 +7,8 @@ import {
     SafeAreaView,
 } from "react-native";
 import { BottomSheet, Button, Slider } from "@rneui/themed";
-import { OutlinedCurrencyInput, OutlinedSelectInput, OutlinedTextInput, PercentTextInput } from "../components/OutlinedInput";
-import { moneyFormat, moneyToNumber, rateToString, moneyRound, calculateMortgage } from "../utils";
+import { OutlinedCurrencyInput, OutlinedSelectInput, PercentTextInput } from "../components/OutlinedInput";
+import { moneyFormat, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, inititalQuota, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
 import { API_URL } from "../constants/urls";
 import { useToast } from "react-native-toast-notifications";
@@ -133,51 +133,51 @@ export default function MortgagePage() {
                         items={amortizations}
                         onSelect={(item) => onChangeAmortization(item)} />
 
-                    <View style={AppStyle.StyleMain.bottomContainer}>
-                        <View style={AppStyle.StyleMain.footerContainer}>
-                            <View style={AppStyle.StyleMain.footerLeftColumn}>
-                                <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
-                                <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
-                            </View>
-                            <View style={AppStyle.StyleMain.footerRightColumn}>
-                                <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                    title="Apply Now"
-                                    onPress={() => { showBottomSheet(true) }} />
-                            </View>
-                        </View>
-                    </View>
-                    <ApplyDialog
-                        visible={bottomSheetVisible}
-                        data={{
-                            screen: "mortgage",
-                            amount: amount,
-                            amortization: amortization.value,
-                            period: paymentPeriod.value,
-                            rate: rate,
-                            result: result
-                        }}
-                        onConfirm={(message: string) => {
-                            showBottomSheet(false);
-                            toast.show(message, {
-                                type: "success",
-                                placement: "center",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }}
-                        onError={(error: any) => {
-                            showBottomSheet(false);
-                            toast.show(error, {
-                                type: "danger",
-                                placement: "top",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }} onClose={() => {
-                            showBottomSheet(false);
-                        }} />
                 </View>
             </ScrollView>
+            <View style={AppStyle.StyleMain.bottomContainer}>
+                <View style={AppStyle.StyleMain.footerContainer}>
+                    <View style={AppStyle.StyleMain.footerLeftColumn}>
+                        <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
+                        <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
+                    </View>
+                    <View style={AppStyle.StyleMain.footerRightColumn}>
+                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                            title="Apply Now"
+                            onPress={() => { showBottomSheet(true) }} />
+                    </View>
+                </View>
+            </View>
+            <ApplyDialog
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "mortgage",
+                    amount: amount,
+                    amortization: amortization.value,
+                    period: paymentPeriod.value,
+                    rate: rate,
+                    result: result
+                }}
+                onConfirm={(message: string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} onClose={() => {
+                    showBottomSheet(false);
+                }} />
         </ SafeAreaView>
     )
 }

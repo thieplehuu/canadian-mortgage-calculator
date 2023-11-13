@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import AppStyle from "../theme";
 import { FC, useRef, useState } from "react";
-import { moneyToNumber, rateToNumber, rateToString } from "../utils";
+import { rateToNumber } from "../utils";
 import CurrencyInput from "react-native-currency-input";
 import { Dropdown } from "react-native-element-dropdown";
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -44,7 +44,7 @@ const OutlinedTextInput: FC<TextInputProps> = ({ label, value, minimumValue = 0,
                     setEditValue(text)
                     onTextChange(text)
 
-                }} onBlur={() => onBlur()} />) : (<Text style={[AppStyle.Base.label, , {lineHeight:30}]} onPress={() => onSetEditing(true)}>{value}</Text>)}
+                }} onBlur={() => onBlur()} />) : (<Text style={[AppStyle.Base.label, , { lineHeight: 30 }]} onPress={() => onSetEditing(true)}>{value}</Text>)}
             </View>
         </View>
     )
@@ -62,7 +62,7 @@ const PercentTextInput: FC<PercentInputProps> = ({ label, value, minimumValue = 
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(value);
     const refInput = useRef();
-    
+
     const onBlur = () => {
         setEditing(false)
     }
@@ -79,7 +79,7 @@ const PercentTextInput: FC<PercentInputProps> = ({ label, value, minimumValue = 
         onTextChange(text)
     }
 
-    const fullText = ()=>{
+    const fullText = () => {
         return rateToNumber(editValue) + "%";
     }
     return (
@@ -88,11 +88,11 @@ const PercentTextInput: FC<PercentInputProps> = ({ label, value, minimumValue = 
                 <Text style={AppStyle.Base.label}>{label}</Text>
             </View>
             <View style={AppStyle.Base.outlinedTextInput}>
-                {editing ? (<TextInput style={AppStyle.Base.label} ref={refInput} 
-                            keyboardType='numeric' 
-                            value={editValue} 
-                            onChangeText={(text) => onChangeText(text)} 
-                            onBlur={() => onBlur()}/>) : (<Text style={[AppStyle.Base.label, {lineHeight:30}]} onPress={() => onSetEditing(true)}>{fullText()}</Text>)}
+                {editing ? (<TextInput style={AppStyle.Base.label} ref={refInput}
+                    keyboardType='numeric'
+                    value={editValue}
+                    onChangeText={(text) => onChangeText(text)}
+                    onBlur={() => onBlur()} />) : (<Text style={[AppStyle.Base.label, { lineHeight: 30 }]} onPress={() => onSetEditing(true)}>{fullText()}</Text>)}
             </View>
         </View>
     )

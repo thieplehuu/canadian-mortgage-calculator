@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { BottomSheet, Button, Slider, TooltipProps } from "@rneui/themed";
 import { OutlinedCurrencyInput } from "../components/OutlinedInput";
-import { Separator, moneyRound, moneyToNumber } from "../utils";
+import { Separator, moneyRound } from "../utils";
 import { API_URL } from "../constants/urls";
 import { useToast } from "react-native-toast-notifications";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
@@ -99,7 +99,39 @@ export default function PreQualifierPage() {
         }
         return gds - newtax - newHeatingCost - otherLoan - newCondoFee;
     };
-      
+
+    const onSetTax = (text: string) => {
+        let tax = 0;
+        if (text != null) {
+            tax = parseFloat(text);
+        }
+        setTax(tax)
+    }
+
+    const onSetCondoFee = (text: string) => {
+        let fee = 0;
+        if (text != null) {
+            fee = parseFloat(text);
+        }
+        setCondoFee(fee)
+    }
+
+    const onSetHeatingCost = (text: string) => {
+        let cost = 0;
+        if (text != null) {
+            cost = parseFloat(text);
+        }
+        setHeatingCost(cost)
+    }
+
+    const onSetOtherCost = (text: string) => {
+        let cost = 0;
+        if (text != null) {
+            cost = parseFloat(text);
+        }
+        setOtherCost(cost)
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
             <ScrollView>
@@ -108,17 +140,17 @@ export default function PreQualifierPage() {
                         label="Household Income"
                         value={amount}
                         precision={0}
-                        onTextChange={(text) => onChangeHouseHoldIncome(text)}                      
+                        onTextChange={(text) => onChangeHouseHoldIncome(text)}
                         onLostFocus={(value) => {
-                            if(value < minAmount){
+                            if (value < minAmount) {
                                 setAmount(minAmount);
                                 calculateMortgage(calcMaxMonthlyPayment(minAmount), rate, year);
                             }
-                            if(value > maxAmount){                            
+                            if (value > maxAmount) {
                                 setAmount(maxAmount);
                                 calculateMortgage(calcMaxMonthlyPayment(maxAmount), rate, year);
                             }
-                        }}/>
+                        }} />
 
                     <Slider
                         thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
@@ -140,88 +172,87 @@ export default function PreQualifierPage() {
                         label="Property Tax"
                         value={tax}
                         precision={2}
-                        onTextChange={(text) => setTax(moneyToNumber(text))} 
-                        onLostFocus={(value: number) => {} }
+                        onTextChange={(text) => onSetTax(text)}
+                        onLostFocus={(value: number) => { }}
                     />
 
                     <OutlinedCurrencyInput
-                        label="Code Fee"
+                        label="Condo Fee"
                         value={condoFee}
-                        precision={0}
-                        onTextChange={(text) => setCondoFee(moneyToNumber(text))} 
-                        onLostFocus={(value: number) => {} }
+                        precision={2}
+                        onTextChange={(text) => onSetCondoFee(text)}
+                        onLostFocus={(value: number) => { }}
                     />
 
                     <OutlinedCurrencyInput
                         label="Hydro Fee"
                         value={heatingCost}
-                        precision={0}
-                        onTextChange={(text) => setHeatingCost(moneyToNumber(text))} 
-                        onLostFocus={(value: number) => {} }
+                        precision={2}
+                        onTextChange={(text) => onSetHeatingCost(text)}
+                        onLostFocus={(value: number) => { }}
                     />
 
                     <OutlinedCurrencyInput
                         label="Loan Payments"
                         value={otherCost}
-                        precision={0}
-                        onTextChange={(text) => setOtherCost(moneyToNumber(text))} 
-                        onLostFocus={(value: number) => {} }
+                        precision={2}
+                        onTextChange={(text) => onSetOtherCost(text)}
+                        onLostFocus={(value: number) => { }}
                     />
-
-                    <View style={AppStyle.StyleMain.bottomContainer}>
-                        <View style={AppStyle.StyleMain.footerContainer}>
-                            <View style={AppStyle.StyleMain.footerLeftColumn}>
-                                <View style={{flexDirection:"row"}}>
-                                    <Text style={[AppStyle.TextStyle.text5, {alignSelf:"flex-start"}]}>Maximum Mortgage</Text>
-                                    <Tooltip 
-                                        width={250} height={60} withOverlay={false}
-                                        containerStyle={{left:50}}
-                                        popover={<View><Text style={{color:"white"}}>+ ${Separator(dp, true)} (20% Minimum Down Payment Required) = ${Separator(pp, true)}</Text></View>}>
-                                        <View style={{marginLeft:8}}><MaterialIcon name="info-outline" color={"black"} size={18}/></View>
-                                    </Tooltip>
-                                </View>
-                                <Text style={AppStyle.TextStyle.text6}>${Separator(request, true)}*</Text>
-                            </View>
-                            <View style={AppStyle.StyleMain.footerRightColumn}>
-                                <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                    title="Get Pre-Qualified"
-                                    onPress={() => { showBottomSheet(true) }} />
-                            </View>
-                        </View>
-                    </View>
-                    <ApplyDialog                
-                        visible={bottomSheetVisible}
-                        data={{
-                            screen: "pq",
-                            propertyTax: tax,
-                            heatingCost: heatingCost,
-                            otherCost: otherCost,
-                            condoFee: condoFee,
-                            requestAmount: request
-                        }}
-                        onConfirm={(message : string) => {
-                            showBottomSheet(false);
-                            toast.show(message, {
-                                type: "success",
-                                placement: "center",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }}
-                        onClose={() => {
-                            showBottomSheet(false);
-                        }}
-                        onError={(error: any) => {
-                            showBottomSheet(false);
-                            toast.show(error, {
-                                type: "danger",
-                                placement: "top",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }}/>                
                 </View>
             </ScrollView>
+            <View style={AppStyle.StyleMain.bottomContainer}>
+                <View style={AppStyle.StyleMain.footerContainer}>
+                    <View style={AppStyle.StyleMain.footerLeftColumn}>
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={[AppStyle.TextStyle.text5, { alignSelf: "flex-start" }]}>Maximum Mortgage</Text>
+                            <Tooltip
+                                width={250} height={60} withOverlay={false}
+                                containerStyle={{ left: 50 }}
+                                popover={<View><Text style={{ color: "white" }}>+ ${Separator(dp, true)} (20% Minimum Down Payment Required) = ${Separator(pp, true)}</Text></View>}>
+                                <View style={{ marginLeft: 8 }}><MaterialIcon name="info-outline" color={"black"} size={18} /></View>
+                            </Tooltip>
+                        </View>
+                        <Text style={AppStyle.TextStyle.text6}>${Separator(request, true)}*</Text>
+                    </View>
+                    <View style={AppStyle.StyleMain.footerRightColumn}>
+                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                            title="Get Pre-Qualified"
+                            onPress={() => { showBottomSheet(true) }} />
+                    </View>
+                </View>
+            </View>
+            <ApplyDialog
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "pq",
+                    propertyTax: tax,
+                    heatingCost: heatingCost,
+                    otherCost: otherCost,
+                    condoFee: condoFee,
+                    requestAmount: request
+                }}
+                onConfirm={(message: string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}
+                onClose={() => {
+                    showBottomSheet(false);
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} />
         </ SafeAreaView>
     )
 }

@@ -56,7 +56,7 @@ export default function ConsolidationPage() {
     }, [rate])
 
     const onChangeAmount = (name: string, value: number | null) => {
-        items.map((item : any, i) => {
+        items.map((item: any, i) => {
             if (item.key == name) {
                 item.amount = value;
                 items[i] = item;
@@ -161,58 +161,58 @@ export default function ConsolidationPage() {
                             <Text style={styles.totalSavingPanelTextValue}>{moneyFormat((monthlyPayment - newPayment)?.toFixed(2))}</Text>
                         </View>
                     </View>
-                    <View style={AppStyle.StyleMain.bottomContainer}>
-                        <View style={AppStyle.StyleMain.footerContainer}>
-                            <View style={AppStyle.StyleMain.footerLeftColumn}>
-                                <Text style={AppStyle.TextStyle.text5}>New Monthly Payment</Text>
-                                <Text style={AppStyle.TextStyle.text6}>{moneyFormat(newPayment)}</Text>
-                            </View>
-                            <View style={AppStyle.StyleMain.footerRightColumn}>
-                                <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                    title="Take Control"
-                                    onPress={() => { showBottomSheet(true) }} />
-                            </View>
-                        </View>
-                    </View>
-                    <ApplyDialog
-                        visible={bottomSheetVisible}
-                        data={{
-                            screen: "conso",
-                            monthly: items.reduce((accumulator, item) => {
-                                return { ...accumulator, [item.key]: item.payment };
-                            }, {}),
-                            monthlypayment: monthlyPayment,
-                            totaldebt: totalDebt,
-                            rate: rate,
-                            newpayment: newPayment,
-                            savings: (monthlyPayment - newPayment)?.toFixed(2),
-                            total: items.reduce((accumulator, item) => {
-                                return { ...accumulator, [item.key]: item.amount };
-                            }, {}),
-                        }}
-                        onConfirm={(message: string) => {
-                            showBottomSheet(false);
-                            toast.show(message, {
-                                type: "success",
-                                placement: "center",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }}
-                        onClose={() => {
-                            showBottomSheet(false);
-                        }}
-                        onError={(error: any) => {
-                            showBottomSheet(false);
-                            toast.show(error, {
-                                type: "danger",
-                                placement: "top",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }} />
                 </View>
             </ScrollView>
+            <View style={AppStyle.StyleMain.bottomContainer}>
+                <View style={AppStyle.StyleMain.footerContainer}>
+                    <View style={AppStyle.StyleMain.footerLeftColumn}>
+                        <Text style={AppStyle.TextStyle.text5}>New Monthly Payment</Text>
+                        <Text style={AppStyle.TextStyle.text6}>{moneyFormat(newPayment)}</Text>
+                    </View>
+                    <View style={AppStyle.StyleMain.footerRightColumn}>
+                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                            title="Take Control"
+                            onPress={() => { showBottomSheet(true) }} />
+                    </View>
+                </View>
+            </View>
+            <ApplyDialog
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "conso",
+                    monthly: items.reduce((accumulator, item) => {
+                        return { ...accumulator, [item.key]: item.payment };
+                    }, {}),
+                    monthlypayment: monthlyPayment,
+                    totaldebt: totalDebt,
+                    rate: rate,
+                    newpayment: newPayment,
+                    savings: (monthlyPayment - newPayment)?.toFixed(2),
+                    total: items.reduce((accumulator, item) => {
+                        return { ...accumulator, [item.key]: item.amount };
+                    }, {}),
+                }}
+                onConfirm={(message: string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}
+                onClose={() => {
+                    showBottomSheet(false);
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} />
         </SafeAreaView>
     );
 };

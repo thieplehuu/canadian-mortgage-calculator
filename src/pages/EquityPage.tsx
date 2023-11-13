@@ -208,53 +208,51 @@ export default function EquityPage() {
                             <Text style={AppStyle.TextStyle.text7}>{moneyFormat(remortgage)}</Text>
                         </View>
                     </View>
-
-                    <View style={AppStyle.StyleMain.bottomContainer}>
-                        <View style={AppStyle.StyleMain.footerContainer}>
-                            <View style={AppStyle.StyleMain.footerLeftColumn}>
-                                <Text style={AppStyle.TextStyle.text5}>Monthly Payment</Text>
-                                <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
-                            </View>
-                            <View style={AppStyle.StyleMain.footerRightColumn}>
-                                <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                    title="Secure Your Loan"
-                                    onPress={() => { showBottomSheet(true) }} />
-                            </View>
-                        </View>
-                    </View>
-                    <ApplyDialog
-                        visible={bottomSheetVisible}
-                        data={{
-                            screen: "equity",
-                            property: property,
-                            currentmortgage: mortgage,
-                            loan: remortgage,
-                            monthly: (remortgage * ratev) / 12
-                        }}
-                        onConfirm={(message: string) => {
-                            showBottomSheet(false);
-                            toast.show(message, {
-                                type: "success",
-                                placement: "center",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }}
-                        onClose={() => {
-                            showBottomSheet(false);
-                        }}
-                        onError={(error: any) => {
-                            showBottomSheet(false);
-                            toast.show(error, {
-                                type: "danger",
-                                placement: "top",
-                                duration: 2000,
-                                animationType: "zoom-in",
-                            });
-                        }} />
-
                 </View>
             </ScrollView>
+            <View style={AppStyle.StyleMain.bottomContainer}>
+                <View style={AppStyle.StyleMain.footerContainer}>
+                    <View style={AppStyle.StyleMain.footerLeftColumn}>
+                        <Text style={AppStyle.TextStyle.text5}>Monthly Payment</Text>
+                        <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
+                    </View>
+                    <View style={AppStyle.StyleMain.footerRightColumn}>
+                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                            title="Secure Your Loan"
+                            onPress={() => { showBottomSheet(true) }} />
+                    </View>
+                </View>
+            </View>
+            <ApplyDialog
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "equity",
+                    property: property,
+                    currentmortgage: mortgage,
+                    loan: remortgage,
+                    monthly: (remortgage * ratev) / 12
+                }}
+                onConfirm={(message: string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}
+                onClose={() => {
+                    showBottomSheet(false);
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} />
         </ SafeAreaView>
     )
 }

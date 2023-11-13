@@ -199,52 +199,52 @@ export default function RefinancePage() {
                     items={amortizations}
                     onSelect={(item) => onChangeAmortization(item)} />
 
-                <View style={AppStyle.StyleMain.bottomContainer}>
-                    <View style={AppStyle.StyleMain.footerContainer}>
-                        <View style={AppStyle.StyleMain.footerLeftColumn}>
-                            <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
-                            <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
-                        </View>
-                        <View style={AppStyle.StyleMain.footerRightColumn}>
-                            <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                title="Take the Next Step"
-                                onPress={() => { showBottomSheet(true) }} />
-                        </View>
+
+            </View></ScrollView><View style={AppStyle.StyleMain.bottomContainer}>
+                <View style={AppStyle.StyleMain.footerContainer}>
+                    <View style={AppStyle.StyleMain.footerLeftColumn}>
+                        <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
+                        <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
+                    </View>
+                    <View style={AppStyle.StyleMain.footerRightColumn}>
+                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                            title="Take the Next Step"
+                            onPress={() => { showBottomSheet(true) }} />
                     </View>
                 </View>
-                <ApplyDialog
-                    visible={bottomSheetVisible}
-                    data={{
-                        screen: "refinance",
-                        amount: homeValue,
-                        amortization: amortization.value,
-                        period: paymentPeriod.value,
-                        rate: rate,
-                        result: result,
-                        loan: loan
-                    }}
-                    onConfirm={(message: string) => {
-                        showBottomSheet(false);
-                        toast.show(message, {
-                            type: "success",
-                            placement: "center",
-                            duration: 2000,
-                            animationType: "zoom-in",
-                        });
-                    }}
-                    onClose={() => {
-                        showBottomSheet(false);
-                    }}
-                    onError={(error: any) => {
-                        showBottomSheet(false);
-                        toast.show(error, {
-                            type: "danger",
-                            placement: "top",
-                            duration: 2000,
-                            animationType: "zoom-in",
-                        });
-                    }} />
-            </View></ScrollView>
+            </View>
+            <ApplyDialog
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "refinance",
+                    amount: homeValue,
+                    amortization: amortization.value,
+                    period: paymentPeriod.value,
+                    rate: rate,
+                    result: result,
+                    loan: loan
+                }}
+                onConfirm={(message: string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}
+                onClose={() => {
+                    showBottomSheet(false);
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} />
         </ SafeAreaView>
     )
 }
