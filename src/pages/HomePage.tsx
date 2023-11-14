@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { useToast } from 'react-native-toast-notifications';
 import { ContactDialog } from '../components/ContactDialog';
+import DropShadow from 'react-native-drop-shadow';
 
 const HomePage = () => {
 
@@ -186,11 +187,21 @@ const HomePage = () => {
                 </View>
             </ScrollView>
                 <View style={AppStyle.StyleMain.bottomContainer}>
-                    <View style={AppStyle.StyleMain.stretch}>
-                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
-                            title="Contact"
-                            onPress={() => showBottomSheet(true)} />
-                    </View>
+                    <DropShadow style={{
+                        width: "100%",
+                        top: 0,
+                        shadowColor: "gray",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 1,
+                        shadowRadius: 4,
+                    }}><View style={AppStyle.StyleMain.footerContainer}>
+                            <Button containerStyle={[AppStyle.StyleMain.buttonContainer, { width: "100%", marginTop: 8, marginBottom: 8 }]} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+                                title="Contact"
+                                onPress={() => showBottomSheet(true)} />
+                        </View></DropShadow>
                 </View>
                 <ContactDialog
                     visible={bottomSheetVisible}

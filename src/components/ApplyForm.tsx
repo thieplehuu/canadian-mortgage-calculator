@@ -163,47 +163,4 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
 
 }
 
-const styles = StyleSheet.create({
-    userSection: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-        marginBottom: 12,
-    },
-    userInfo: {
-        flex: 1
-    },
-    avatar: {
-        width: 70,
-        height: 70,
-        marginRight: 12,
-        borderRadius: 35,
-        overflow: "hidden",
-    },
-    addressSection: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-        textAlign: "left",
-        alignSelf: "flex-start",
-        marginBottom: 12
-    },
-})
-
-
-const textStyle = StyleSheet.create({
-    text3: {
-        fontSize: 16,
-        fontWeight: "500",
-        color: "#000000"
-    },
-    text4: {
-        marginTop: 5,
-        fontSize: 14,
-        color: "#000000"
-    },
-})
-
 export { ApplyForm };

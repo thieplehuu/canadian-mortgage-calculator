@@ -1,17 +1,14 @@
-import React, { FC, ReactElement, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
     View,
     Animated,
     Easing,
-    Dimensions
+    Text,
 } from 'react-native';
-import { BottomSheet } from '@rneui/themed';
 import AppStyle from '../theme';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Dropdown } from 'react-native-element-dropdown';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
 interface Props {
     label: string;
@@ -21,21 +18,7 @@ interface Props {
     onSelect: (item: { label: string; value: string }) => void;
 }
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
-const PaymentDropdown: FC<Props> = ({ value, label, items, carretAnimated = false, onSelect }) => {
-    const DropdownButton = useRef(null);
-    const [selected, setSelected] = useState(value);
-    const [bottomSheetVisible, showBottomSheet] = useState(false);
-
-
-    const toggleDropdown = (): void => {
-        showBottomSheet(true);
-    };
-
-    const onItemPress = (item: any): void => {
-        setSelected(item);
-        onSelect(item);
-        showBottomSheet(false);
-    };
+const PaymentDropdown: FC<Props> = ({ value, items, carretAnimated = false, onSelect }) => {
 
     const animatedValue = useRef(new Animated.Value(0)).current;
     const [isTop, setIsTop] = useState(true);
@@ -62,69 +45,42 @@ const PaymentDropdown: FC<Props> = ({ value, label, items, carretAnimated = fals
     })
 
     return (
-        <Dropdown
-            selectedTextStyle={AppStyle.Base.label}
-            itemTextStyle={AppStyle.Base.label}
-            iconStyle={{
-                width: 20,
-                height: 20,
-            }}
-            data={items}
-            search={false}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            value={value}
-            keyboardAvoiding={true}
-            renderRightIcon={() => (
-                <View>
-                    {carretAnimated ? <AnimatedIcon name={"caretdown"} size={16} color="#4F4A45"
-                        style={[styles.animatedContainer, { transform: [{ translateY }] }]}
-                    /> : <Icon name={"caretdown"} size={16} color="#4F4A45"
-                    />
+        <View>
+            <Menu onSelect={value => console.log(`Selected number: ${value}`)}>
+                <MenuTrigger>
+                    <View style={{
+                        flexDirection: 'row',
+                        flex: 1
+                    }}>
+                        <Text style={AppStyle.Base.label}>{value.label}</Text>
+                        <View style={{ marginLeft: 12 }}>
+                            {carretAnimated ? <AnimatedIcon name={"caretdown"} size={16} color="#4F4A45"
+                                style={{ transform: [{ translateY }] }}
+                            /> : <Icon name={"caretdown"} size={16} color="#4F4A45"
+                            />
+                            }
+                        </View>
+                    </View>
+                </MenuTrigger>
+                <MenuOptions customStyles={{ optionsContainer: { padding: 0 } }}>
+                    {
+                        items.map((item: any) => {
+                            return (<MenuOption
+                                style={{ padding: 0 }}
+                                key={item.value}
+                                value={item}
+                                onSelect={() => {
+                                    {
+                                        onSelect(item);
+                                    }
+                                }}><View style={{ padding: 8, backgroundColor: item.value == value.value ? "#F1EFEF" : "white" }}><Text style={AppStyle.Base.label}>{item.label}</Text></View></MenuOption>)
+                        })
                     }
-                </View>
-            )}
-            onChange={item => {
-                onSelect(item)
-            }}
-        />
+                </MenuOptions>
+            </Menu>
+        </View>
+
     );
 };
-
-const styles = StyleSheet.create({
-    button: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 24,
-        zIndex: 1,
-        textAlign: "left",
-        alignContent: "flex-start"
-    },
-    buttonText: {
-        flex: 1,
-        textAlign: 'left',
-        fontSize: 13,
-        color: "#4F4A45",
-        textTransform: "uppercase",
-        opacity: 0.5
-    },
-    icon: {
-        marginRight: 10,
-    },
-    iconColor: {
-        color: "#4F4A45"
-    },
-    dropdownContent: {
-        backgroundColor: "#ffffff",
-        padding: 12
-    },
-    item: {
-        marginTop: 8,
-        color: "#4F4A45"
-    },
-    animatedContainer: {
-    }
-});
 
 export default PaymentDropdown;

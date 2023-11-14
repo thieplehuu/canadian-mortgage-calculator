@@ -20,6 +20,7 @@ import store from './src/stores';
 import { Provider } from 'react-redux';
 import { ToastProvider } from 'react-native-toast-notifications'
 import EquityPage from './src/pages/EquityPage';
+import { MenuProvider } from 'react-native-popup-menu';
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
   return (
@@ -27,42 +28,46 @@ function App(): JSX.Element {
       offset={50}
       textStyle={{ fontSize: 16 }}
     >
-      <Provider store={store}><NavigationContainer>
-        <Stack.Navigator initialRouteName="LoginPage" screenOptions={{
-          contentStyle: {
-            backgroundColor: '#FFFFFF'
-          }
-        }}>
-          <Stack.Screen options={{
-            headerShown: false
-          }} name="LoginPage" component={LoginPage} />
-          <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage}
-            options={{ title: 'Verification Code' }} />
-          <Stack.Screen options={{
-            headerShown: false
-          }} name="HomePage" component={HomePage} />
-          <Stack.Screen
-            name="MortgageCalculatorPage"
-            component={MortgagePage}
-            options={{ title: 'Mortgage Calculator' }} />
-          <Stack.Screen
-            name="PurchasePage"
-            component={PurchasePage}
-            options={{ title: 'Purchase' }} />
-          <Stack.Screen name="RefinancePage"
-            component={RefinancePage}
-            options={{ title: 'Refinance' }} />
-          <Stack.Screen name="ConsolidationPage"
-            component={ConsolidationPage}
-            options={{ title: 'Consolidation' }} />
-          <Stack.Screen name="PreQualifierPage"
-            component={PreQualifierPage}
-            options={{ title: 'Pre-Qualifier' }} />
-          <Stack.Screen name="EquityPage"
-            component={EquityPage}
-            options={{ title: 'Equity' }} />
-        </Stack.Navigator>
-      </NavigationContainer></Provider>
+      <Provider store={store}>
+        <MenuProvider>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="LoginPage" screenOptions={{
+              contentStyle: {
+                backgroundColor: '#FFFFFF'
+              }
+            }}>
+              <Stack.Screen options={{
+                headerShown: false
+              }} name="LoginPage" component={LoginPage} />
+              <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage}
+                options={{ title: 'Verification Code' }} />
+              <Stack.Screen options={{
+                headerShown: false
+              }} name="HomePage" component={HomePage} />
+              <Stack.Screen
+                name="MortgageCalculatorPage"
+                component={MortgagePage}
+                options={{ title: 'Mortgage Calculator' }} />
+              <Stack.Screen
+                name="PurchasePage"
+                component={PurchasePage}
+                options={{ title: 'Purchase' }} />
+              <Stack.Screen name="RefinancePage"
+                component={RefinancePage}
+                options={{ title: 'Refinance' }} />
+              <Stack.Screen name="ConsolidationPage"
+                component={ConsolidationPage}
+                options={{ title: 'Consolidation' }} />
+              <Stack.Screen name="PreQualifierPage"
+                component={PreQualifierPage}
+                options={{ title: 'Pre-Qualifier' }} />
+              <Stack.Screen name="EquityPage"
+                component={EquityPage}
+                options={{ title: 'Equity' }} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </MenuProvider>
+      </Provider>
     </ToastProvider>
   );
 }

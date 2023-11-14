@@ -17,7 +17,7 @@ const StyleMain = StyleSheet.create({
     height: 48,
     marginBottom: 12,
     alignItems: "center",
-    backgroundColor:"#F2F2F2"
+    backgroundColor: "#F2F2F2"
   },
   multilineInput: {
     borderRadius: 5,
@@ -25,7 +25,7 @@ const StyleMain = StyleSheet.create({
     height: 90,
     marginBottom: 12,
     alignItems: "center",
-    backgroundColor:"#F2F2F2"
+    backgroundColor: "#F2F2F2"
   },
   TextInput: {
     marginLeft: 12,
@@ -78,7 +78,6 @@ const StyleMain = StyleSheet.create({
     right: 0,
     left: 0,
     bottom: 0,
-    padding: 20,
     backgroundColor: "#ffffff"
   },
 
@@ -118,6 +117,11 @@ const StyleMain = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
+    backgroundColor: "white",
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 8,
+    paddingBottom: 8
   },
   footerLeftColumn: {
     flex: 1,
@@ -127,22 +131,22 @@ const StyleMain = StyleSheet.create({
     textAlign: "right",
     alignItems: "flex-end"
   },
-  error:{
-    color:"red",
+  error: {
+    color: "red",
     marginBottom: 12
   },
-  DialogHeader:{
+  DialogHeader: {
     backgroundColor: "#ffffff",
     paddingTop: 12,
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  DialogTitle:{
-    fontSize:24,
+  DialogTitle: {
+    fontSize: 24,
     color: "#4F4A45",
-    fontWeight:"700"
+    fontWeight: "700"
   },
-  DialogSubmitButtonContainer:{    
+  DialogSubmitButtonContainer: {
     width: "100%",
     borderRadius: 8,
     paddingTop: 4,
@@ -152,20 +156,20 @@ const StyleMain = StyleSheet.create({
     backgroundColor: "#816CEC",
     marginBottom: 20
   },
-  DialogSubmitButton:{    
+  DialogSubmitButton: {
     width: "100%",
     backgroundColor: "#816CEC"
   },
-  phoneInputPrefixLabel:{
+  phoneInputPrefixLabel: {
     fontSize: 14,
     color: "#000000",
-    alignSelf:"flex-start", 
+    alignSelf: "flex-start",
     marginTop: 3
   },
-  InputSeparate:{
-    width: 2, 
-    height: 28, 
-    backgroundColor:"#CDCDCD", 
+  InputSeparate: {
+    width: 2,
+    height: 28,
+    backgroundColor: "#CDCDCD",
     marginLeft: 8
   }
 });

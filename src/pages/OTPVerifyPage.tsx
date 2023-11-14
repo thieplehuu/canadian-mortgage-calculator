@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     },
 
     underlineStyleHighLighted: {
-        borderColor: "red",
+        borderColor: "#816CEC",
         color: "#4F4A45"
     },
 

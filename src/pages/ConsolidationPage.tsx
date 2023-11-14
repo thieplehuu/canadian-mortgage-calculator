@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
+    KeyboardAvoidingView,
     SafeAreaView,
     ScrollView,
     StyleSheet,
@@ -12,6 +13,7 @@ import { calculateMortgage, moneyFormat } from "../utils";
 import CurrencyInput from "react-native-currency-input";
 import { useToast } from "react-native-toast-notifications";
 import { ApplyDialog } from "../components/ApplyDialog";
+import DropShadow from "react-native-drop-shadow";
 
 export default function ConsolidationPage() {
 
@@ -96,123 +98,136 @@ export default function ConsolidationPage() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
-            <ScrollView>
-                <View style={AppStyle.StyleMain.container}>
-                    <View style={styles.row}>
-                        <View style={styles.column}>
-                            <Text style={AppStyle.TextStyle.text8}>Loans Total</Text>
+            <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
+                <ScrollView>
+                    <View style={AppStyle.StyleMain.container}>
+                        <View style={styles.row}>
+                            <View style={styles.column}>
+                                <Text style={AppStyle.TextStyle.text8}>Loans Total</Text>
+                            </View>
+                            <View style={styles.column}>
+                                <Text style={AppStyle.TextStyle.text8}>Amount</Text>
+                            </View>
+                            <View style={styles.column}>
+                                <Text style={AppStyle.TextStyle.text8}>Payment</Text>
+                            </View>
                         </View>
-                        <View style={styles.column}>
-                            <Text style={AppStyle.TextStyle.text8}>Amount</Text>
-                        </View>
-                        <View style={styles.column}>
-                            <Text style={AppStyle.TextStyle.text8}>Payment</Text>
-                        </View>
-                    </View>
-                    {
-                        items.map((item: any) => {
-                            return (<View style={styles.row} key={item.key}>
-                                <View style={styles.column}>
-                                    <Text>{item.title}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <View style={styles.inputContainer}>
-                                        <CurrencyInput
-                                            style={[AppStyle.Base.label, styles.input]}
-                                            value={item.amount}
-                                            prefix="$"
-                                            delimiter=","
-                                            separator="."
-                                            minValue={0}
-                                            precision={2}
-                                            onChangeValue={(text) => { onChangeAmount(item.key, text) }} />
+                        {
+                            items.map((item: any) => {
+                                return (<View style={styles.row} key={item.key}>
+                                    <View style={styles.column}>
+                                        <Text>{item.title}</Text>
                                     </View>
-                                </View>
-                                <View style={styles.column}>
-                                    <View style={styles.inputContainer}>
-                                        <CurrencyInput
-                                            style={[AppStyle.Base.label, styles.input]}
-                                            value={item.payment}
-                                            prefix="$"
-                                            delimiter=","
-                                            separator="."
-                                            minValue={0}
-                                            precision={2}
-                                            onChangeValue={(text) => { onChangePayment(item.key, text) }} />
+                                    <View style={styles.column}>
+                                        <View style={styles.inputContainer}>
+                                            <CurrencyInput
+                                                style={[AppStyle.Base.label, styles.input]}
+                                                value={item.amount}
+                                                prefix="$"
+                                                delimiter=","
+                                                separator="."
+                                                minValue={0}
+                                                precision={2}
+                                                onChangeValue={(text) => { onChangeAmount(item.key, text) }} />
+                                        </View>
                                     </View>
-                                </View>
-                            </View>)
-                        })
-                    }
-                    <View style={styles.row}>
-                        <View style={styles.column}>
+                                    <View style={styles.column}>
+                                        <View style={styles.inputContainer}>
+                                            <CurrencyInput
+                                                style={[AppStyle.Base.label, styles.input]}
+                                                value={item.payment}
+                                                prefix="$"
+                                                delimiter=","
+                                                separator="."
+                                                minValue={0}
+                                                precision={2}
+                                                onChangeValue={(text) => { onChangePayment(item.key, text) }} />
+                                        </View>
+                                    </View>
+                                </View>)
+                            })
+                        }
+                        <View style={styles.row}>
+                            <View style={styles.column}>
 
+                            </View>
+                            <View style={styles.column}>
+                                <Text style={AppStyle.TextStyle.text9}>{moneyFormat(totalDebt)}</Text>
+                            </View>
+                            <View style={styles.column}>
+                                <Text style={AppStyle.TextStyle.text9}>{moneyFormat(monthlyPayment)}</Text>
+                            </View>
                         </View>
-                        <View style={styles.column}>
-                            <Text style={AppStyle.TextStyle.text9}>{moneyFormat(totalDebt)}</Text>
-                        </View>
-                        <View style={styles.column}>
-                            <Text style={AppStyle.TextStyle.text9}>{moneyFormat(monthlyPayment)}</Text>
+                        <View>
+                            <View style={styles.totalSavingPanel}>
+                                <Text style={styles.totalSavingPanelTextLabel}>Monthly Savings of</Text>
+                                <Text style={styles.totalSavingPanelTextValue}>{moneyFormat((monthlyPayment - newPayment)?.toFixed(2))}</Text>
+                            </View>
                         </View>
                     </View>
-                    <View>
-                        <View style={styles.totalSavingPanel}>
-                            <Text style={styles.totalSavingPanelTextLabel}>Monthly Savings of</Text>
-                            <Text style={styles.totalSavingPanelTextValue}>{moneyFormat((monthlyPayment - newPayment)?.toFixed(2))}</Text>
+                </ScrollView>
+                <View style={AppStyle.StyleMain.bottomContainer}>
+                    <DropShadow style={{
+                        width: "100%",
+                        top: 0,
+                        shadowColor: "gray",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 1,
+                        shadowRadius: 4,
+                    }}><View style={AppStyle.StyleMain.footerContainer}>
+                            <View style={AppStyle.StyleMain.footerLeftColumn}>
+                                <Text style={AppStyle.TextStyle.text5}>New Monthly Payment</Text>
+                                <Text style={AppStyle.TextStyle.text6}>{moneyFormat(newPayment)}</Text>
+                            </View>
+                            <View style={AppStyle.StyleMain.footerRightColumn}>
+                                <Button containerStyle={[AppStyle.StyleMain.buttonContainer, { flex: 1 }]} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                                    title="Take Control"
+                                    onPress={() => { showBottomSheet(true) }} />
+                            </View>
                         </View>
-                    </View>
+                    </DropShadow>
                 </View>
-            </ScrollView>
-            <View style={AppStyle.StyleMain.bottomContainer}>
-                <View style={AppStyle.StyleMain.footerContainer}>
-                    <View style={AppStyle.StyleMain.footerLeftColumn}>
-                        <Text style={AppStyle.TextStyle.text5}>New Monthly Payment</Text>
-                        <Text style={AppStyle.TextStyle.text6}>{moneyFormat(newPayment)}</Text>
-                    </View>
-                    <View style={AppStyle.StyleMain.footerRightColumn}>
-                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                            title="Take Control"
-                            onPress={() => { showBottomSheet(true) }} />
-                    </View>
-                </View>
-            </View>
-            <ApplyDialog
-                visible={bottomSheetVisible}
-                data={{
-                    screen: "conso",
-                    monthly: items.reduce((accumulator, item) => {
-                        return { ...accumulator, [item.key]: item.payment };
-                    }, {}),
-                    monthlypayment: monthlyPayment,
-                    totaldebt: totalDebt,
-                    rate: rate,
-                    newpayment: newPayment,
-                    savings: (monthlyPayment - newPayment)?.toFixed(2),
-                    total: items.reduce((accumulator, item) => {
-                        return { ...accumulator, [item.key]: item.amount };
-                    }, {}),
-                }}
-                onConfirm={(message: string) => {
-                    showBottomSheet(false);
-                    toast.show(message, {
-                        type: "success",
-                        placement: "center",
-                        duration: 2000,
-                        animationType: "zoom-in",
-                    });
-                }}
-                onClose={() => {
-                    showBottomSheet(false);
-                }}
-                onError={(error: any) => {
-                    showBottomSheet(false);
-                    toast.show(error, {
-                        type: "danger",
-                        placement: "top",
-                        duration: 2000,
-                        animationType: "zoom-in",
-                    });
-                }} />
+                <ApplyDialog
+                    visible={bottomSheetVisible}
+                    data={{
+                        screen: "conso",
+                        monthly: items.reduce((accumulator, item) => {
+                            return { ...accumulator, [item.key]: item.payment };
+                        }, {}),
+                        monthlypayment: monthlyPayment,
+                        totaldebt: totalDebt,
+                        rate: rate,
+                        newpayment: newPayment,
+                        savings: (monthlyPayment - newPayment)?.toFixed(2),
+                        total: items.reduce((accumulator, item) => {
+                            return { ...accumulator, [item.key]: item.amount };
+                        }, {}),
+                    }}
+                    onConfirm={(message: string) => {
+                        showBottomSheet(false);
+                        toast.show(message, {
+                            type: "success",
+                            placement: "center",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }}
+                    onClose={() => {
+                        showBottomSheet(false);
+                    }}
+                    onError={(error: any) => {
+                        showBottomSheet(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "top",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }} />
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };

@@ -1,10 +1,8 @@
-import React, { Component, FC, useState } from "react";
+import React, { FC, useState } from "react";
 import AppStyle from '../theme';
 import {
     Text,
     View,
-    TextInput,
-    TouchableOpacity,
 } from "react-native";
 import { Button, Input } from "@rneui/themed";
 import auth from '@react-native-firebase/auth';

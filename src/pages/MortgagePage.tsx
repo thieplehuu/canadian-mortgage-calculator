@@ -5,8 +5,9 @@ import {
     Text,
     ScrollView,
     SafeAreaView,
+    KeyboardAvoidingView,
 } from "react-native";
-import { BottomSheet, Button, Slider } from "@rneui/themed";
+import { Button, Slider } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, PercentTextInput } from "../components/OutlinedInput";
 import { moneyFormat, rateToString, moneyRound, calculateMortgage } from "../utils";
 import { amortizations, inititalQuota, maxQuota, minQuota, paymentPeriods } from "../stores/initial";
@@ -14,6 +15,7 @@ import { API_URL } from "../constants/urls";
 import { useToast } from "react-native-toast-notifications";
 import { ApplyDialog } from "../components/ApplyDialog";
 import PaymentDropdown from "../components/PaymentDropdown";
+import DropShadow from "react-native-drop-shadow";
 
 export default function MortgagePage() {
 
@@ -76,108 +78,121 @@ export default function MortgagePage() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
-            <ScrollView>
-                <View style={AppStyle.StyleMain.container}>
-                    <OutlinedCurrencyInput
-                        label="Mortgage Amount"
-                        value={amount}
-                        precision={0}
-                        onTextChange={(text) => onChangeMortgate(text)}
-                        onLostFocus={(value) => {
-                            if (value < minQuota) {
-                                setAmount(minQuota)
-                                setResult(
-                                    calculateMortgage(minQuota, rate, amortization.value, paymentPeriod.value)
-                                );
-                            }
-                            if (value > maxQuota) {
-                                setAmount(maxQuota)
-                                setResult(
-                                    calculateMortgage(maxQuota, rate, amortization.value, paymentPeriod.value)
-                                );
-                            }
-                        }} />
-                    <Slider
-                        thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
-                        trackStyle={{ height: 4, backgroundColor: 'transparent' }}
-                        minimumTrackTintColor="#816CEC"
-                        maximumTrackTintColor="#816CEC"
-                        value={amount}
-                        step={maxQuota / 1000}
-                        minimumValue={minQuota}
-                        maximumValue={maxQuota}
-                        thumbProps={{
-                            children: (
-                                <View style={AppStyle.Base.sliderThumbContainer}>
-                                    <View style={AppStyle.Base.sliderThumb} />
-                                </View>
-                            ),
-                        }}
-                        onValueChange={(value) => onChangeMortgate(value)}
-                    />
-                    <View style={AppStyle.Base.sliderLabelContainer}>
-                        <View style={{ alignContent: "flex-start" }}><Text style={AppStyle.Base.label}>{moneyRound(minQuota, true, true)}</Text></View>
-                        <View style={{ alignSelf: "stretch" }}></View>
-                        <View style={{ alignContent: "flex-end" }}><Text style={AppStyle.Base.label}>{moneyRound(maxQuota, true, true)}</Text></View>
-                    </View>
-                    <PercentTextInput
-                        label="Rates"
-                        value={rateToString(rate)}
-                        minimumValue={0}
-                        maximumValue={100}
-                        onTextChange={(text) => onChangeRate(text)} />
+            <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
+                <ScrollView>
+                    <View style={AppStyle.StyleMain.container}>
+                        <OutlinedCurrencyInput
+                            label="Mortgage Amount"
+                            value={amount}
+                            precision={0}
+                            onTextChange={(text) => onChangeMortgate(text)}
+                            onLostFocus={(value) => {
+                                if (value < minQuota) {
+                                    setAmount(minQuota)
+                                    setResult(
+                                        calculateMortgage(minQuota, rate, amortization.value, paymentPeriod.value)
+                                    );
+                                }
+                                if (value > maxQuota) {
+                                    setAmount(maxQuota)
+                                    setResult(
+                                        calculateMortgage(maxQuota, rate, amortization.value, paymentPeriod.value)
+                                    );
+                                }
+                            }} />
+                        <Slider
+                            thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
+                            trackStyle={{ height: 4, backgroundColor: 'transparent' }}
+                            minimumTrackTintColor="#816CEC"
+                            maximumTrackTintColor="#816CEC"
+                            value={amount}
+                            step={maxQuota / 1000}
+                            minimumValue={minQuota}
+                            maximumValue={maxQuota}
+                            thumbProps={{
+                                children: (
+                                    <View style={AppStyle.Base.sliderThumbContainer}>
+                                        <View style={AppStyle.Base.sliderThumb} />
+                                    </View>
+                                ),
+                            }}
+                            onValueChange={(value) => onChangeMortgate(value)}
+                        />
+                        <View style={AppStyle.Base.sliderLabelContainer}>
+                            <View style={{ alignContent: "flex-start" }}><Text style={AppStyle.Base.label}>{moneyRound(minQuota, true, true)}</Text></View>
+                            <View style={{ alignSelf: "stretch" }}></View>
+                            <View style={{ alignContent: "flex-end" }}><Text style={AppStyle.Base.label}>{moneyRound(maxQuota, true, true)}</Text></View>
+                        </View>
+                        <PercentTextInput
+                            label="Rates"
+                            value={rateToString(rate)}
+                            minimumValue={0}
+                            maximumValue={100}
+                            onTextChange={(text) => onChangeRate(text)} />
 
-                    <OutlinedSelectInput
-                        label="Amortization"
-                        value={amortization}
-                        items={amortizations}
-                        onSelect={(item) => onChangeAmortization(item)} />
+                        <OutlinedSelectInput
+                            label="Amortization"
+                            value={amortization}
+                            items={amortizations}
+                            onSelect={(item) => onChangeAmortization(item)} />
 
-                </View>
-            </ScrollView>
-            <View style={AppStyle.StyleMain.bottomContainer}>
-                <View style={AppStyle.StyleMain.footerContainer}>
-                    <View style={AppStyle.StyleMain.footerLeftColumn}>
-                        <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
-                        <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
                     </View>
-                    <View style={AppStyle.StyleMain.footerRightColumn}>
-                        <Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                            title="Apply Now"
-                            onPress={() => { showBottomSheet(true) }} />
-                    </View>
+                </ScrollView>
+                <View style={AppStyle.StyleMain.bottomContainer}>
+                    <DropShadow style={{
+                        width: "100%",
+                        top: 0,
+                        shadowColor: "gray",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 1,
+                        shadowRadius: 4,
+                    }}><View style={AppStyle.StyleMain.footerContainer}>
+                            <View style={AppStyle.StyleMain.footerLeftColumn}>
+                                <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />
+                                <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
+                            </View>
+                            <View style={AppStyle.StyleMain.footerRightColumn}>
+                                <Button containerStyle={[AppStyle.StyleMain.buttonContainer, { flex: 1 }]} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                                    title="Apply Now"
+                                    onPress={() => { showBottomSheet(true) }} />
+                            </View>
+                        </View>
+                    </DropShadow>
                 </View>
-            </View>
-            <ApplyDialog
-                visible={bottomSheetVisible}
-                data={{
-                    screen: "mortgage",
-                    amount: amount,
-                    amortization: amortization.value,
-                    period: paymentPeriod.value,
-                    rate: rate,
-                    result: result
-                }}
-                onConfirm={(message: string) => {
-                    showBottomSheet(false);
-                    toast.show(message, {
-                        type: "success",
-                        placement: "center",
-                        duration: 2000,
-                        animationType: "zoom-in",
-                    });
-                }}
-                onError={(error: any) => {
-                    showBottomSheet(false);
-                    toast.show(error, {
-                        type: "danger",
-                        placement: "top",
-                        duration: 2000,
-                        animationType: "zoom-in",
-                    });
-                }} onClose={() => {
-                    showBottomSheet(false);
-                }} />
+                <ApplyDialog
+                    visible={bottomSheetVisible}
+                    data={{
+                        screen: "mortgage",
+                        amount: amount,
+                        amortization: amortization.value,
+                        period: paymentPeriod.value,
+                        rate: rate,
+                        result: result
+                    }}
+                    onConfirm={(message: string) => {
+                        showBottomSheet(false);
+                        toast.show(message, {
+                            type: "success",
+                            placement: "center",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }}
+                    onError={(error: any) => {
+                        showBottomSheet(false);
+                        toast.show(error, {
+                            type: "danger",
+                            placement: "top",
+                            duration: 2000,
+                            animationType: "zoom-in",
+                        });
+                    }} onClose={() => {
+                        showBottomSheet(false);
+                    }} />
+            </KeyboardAvoidingView>
         </ SafeAreaView>
     )
 }

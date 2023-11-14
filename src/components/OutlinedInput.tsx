@@ -92,7 +92,7 @@ const PercentTextInput: FC<PercentInputProps> = ({ label, value, minimumValue = 
                     keyboardType='numeric'
                     value={editValue}
                     onChangeText={(text) => onChangeText(text)}
-                    onBlur={() => onBlur()} />) : (<Text style={[AppStyle.Base.label, { lineHeight: 30 }]} onPress={() => onSetEditing(true)}>{fullText()}</Text>)}
+                    onBlur={() => onBlur()} />) : (<Text style={[AppStyle.Base.label, { lineHeight: 30, width: "100%" }]} onPress={() => onSetEditing(true)}>{fullText()}</Text>)}
             </View>
         </View>
     )
