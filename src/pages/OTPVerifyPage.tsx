@@ -9,8 +9,9 @@ import { API_URL } from "../constants/urls";
 import { useDispatch, useSelector } from "react-redux";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import LoadingModal from "../components/LoadingModal";
-import { COUNTRY_CODE } from "../constants/const";
+import { AUTHENTICATE_KEY, COUNTRY_CODE } from "../constants/consts";
 import { setUser } from "../actions/user";
+import { storeData } from "../stores/store";
 
 interface Props {
     route: any,
@@ -29,7 +30,7 @@ const OTPVerifyPage: FC<Props> = ({ route, navigation }) => {
     const verifyOtp = async () => {
         try {
             setLoading(true)
-            var result = await firebase.confirm(otp);
+            await firebase.confirm(otp);
             console.log(action);
             if (action == "REGISTER") {
                 try {
@@ -47,13 +48,14 @@ const OTPVerifyPage: FC<Props> = ({ route, navigation }) => {
                     });
                     const data = await response.json();
                     if (data.status == "success") {
-                        console.log(data.uuid);
-                        dispatch(setUser({
+                        let auth = {
                             firstName: user.firstName,
                             lastName: user.lastName,
                             phoneNumber: user.phoneNumber,
                             uuid: data.uuid
-                        }))
+                        }
+                        dispatch(setUser(auth))
+                        storeData(AUTHENTICATE_KEY, auth);
                         navigation.navigate("HomePage" as never);
                     }
                     if (data.status == "error") {
@@ -63,6 +65,8 @@ const OTPVerifyPage: FC<Props> = ({ route, navigation }) => {
                     console.error(error);
                 }
             } else if (action == "SIGNIN") {
+                let auth = user;
+                storeData(AUTHENTICATE_KEY, auth);
                 navigation.navigate("HomePage" as never);
             }
             setLoading(false)

@@ -1,6 +1,6 @@
 import { SET_CONFIRM } from "../constants/action-type";
 
-export const userReducer = (state = 0, action) => {
+export const userReducer = (state = 0, action: { type: any; payload: any; }) => {
     switch (action.type) {
         case SET_CONFIRM:
             return action.payload;

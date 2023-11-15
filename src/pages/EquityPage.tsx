@@ -13,6 +13,7 @@ import { API_URL } from "../constants/urls";
 import { useToast } from "react-native-toast-notifications";
 import { ApplyDialog } from "../components/ApplyDialog";
 import DropShadow from "react-native-drop-shadow";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function EquityPage() {
 
@@ -25,6 +26,7 @@ export default function EquityPage() {
     const [reMortgatePercent, setReMortgatePercent] = useState(0);
     const [result, setResult] = useState(0);
     const [bottomSheetVisible, showBottomSheet] = useState(false);
+    const [keyboardStatus, setKeyboardStatus] = useState('KEYBOARD_HIDE');
     const toast = useToast();
 
     const remortgagemax = property * 0.8;
@@ -115,159 +117,166 @@ export default function EquityPage() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }} >
-            <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
-                <ScrollView>
-                    <View style={AppStyle.StyleMain.container}>
-                        <OutlinedCurrencyInput
-                            label="Property Value"
-                            value={property}
-                            precision={0}
-                            onTextChange={(text) => onChangeProperty(text)}
-                            onLostFocus={(value: number) => { }} />
+            <KeyboardAwareScrollView
+                onKeyboardWillShow={(frames: Object) => {
+                    setKeyboardStatus('KEYBOARD_SHOW');
+                }} onKeyboardWillHide={(frames: Object) => {
+                    setKeyboardStatus('KEYBOARD_HIDE');
+                }} onKeyboardDidShow={(frames: Object) => {
+                    setKeyboardStatus('KEYBOARD_SHOW');
+                }} onKeyboardDidHide={(frames: Object) => {
+                    setKeyboardStatus('KEYBOARD_HIDE');
+                }}>
+                <View style={AppStyle.StyleMain.container}>
+                    <OutlinedCurrencyInput
+                        label="Property Value"
+                        value={property}
+                        precision={0}
+                        onTextChange={(text) => onChangeProperty(text)}
+                        onLostFocus={(value: number) => { }} />
 
-                        <OutlinedCurrencyInput
-                            label="Current Mortgage Balance"
-                            value={mortgage}
-                            precision={0}
-                            onTextChange={(text) => onChangeMortgate(text)}
-                            onLostFocus={(value: number) => { }} />
+                    <OutlinedCurrencyInput
+                        label="Current Mortgage Balance"
+                        value={mortgage}
+                        precision={0}
+                        onTextChange={(text) => onChangeMortgate(text)}
+                        onLostFocus={(value: number) => { }} />
 
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
                         <View style={{
-                            flexDirection: 'row',
+                            width: mortgatePercent.toString() + "%",
+                            alignItems: 'stretch',
+                            alignContent: "center",
+                            justifyContent: "center"
                         }}>
                             <View style={{
-                                width: mortgatePercent.toString() + "%",
-                                alignItems: 'stretch',
-                                alignContent: "center",
-                                justifyContent: "center"
-                            }}>
-                                <View style={{
-                                    width: "100%", backgroundColor: "yellow",
-                                    height: 4,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}></View>
-                            </View>
+                                width: "100%", backgroundColor: "yellow",
+                                height: 4,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}></View>
+                        </View>
 
-                            <View style={{
-                                width: reMortgatePercent.toString() + "%",
-                                alignItems: 'stretch',
-                            }}>
-                                <Slider
-                                    thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
-                                    trackStyle={{ height: 4, backgroundColor: 'transparent', borderRadius: 0 }}
-                                    minimumTrackTintColor="#57D9A3"
-                                    maximumTrackTintColor="#57D9A3"
-                                    value={remortgage}
-                                    onValueChange={(value) => onChangeReMortgate(value)}
-                                    minimumValue={0}
-                                    maximumValue={remortgagemax}
-                                    step={5000}
-                                    thumbProps={{
-                                        children: (
-                                            <View style={AppStyle.Base.sliderThumbContainer}>
-                                                <View style={AppStyle.Base.sliderThumb} />
-                                            </View>
-                                        ),
-                                    }}
-                                />
-                            </View>
-                            <View style={{
-                                width: "20%",
-                                alignItems: 'stretch',
-                                alignContent: "center",
-                                justifyContent: "center"
-                            }}>
-                                <View style={{
-                                    width: "100%", backgroundColor: "red",
-                                    height: 4,
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}></View>
-                            </View>
-
+                        <View style={{
+                            width: reMortgatePercent.toString() + "%",
+                            alignItems: 'stretch',
+                        }}>
+                            <Slider
+                                thumbStyle={{ height: 16, width: 16, backgroundColor: '#816CEC' }}
+                                trackStyle={{ height: 4, backgroundColor: 'transparent', borderRadius: 0 }}
+                                minimumTrackTintColor="#57D9A3"
+                                maximumTrackTintColor="#57D9A3"
+                                value={remortgage}
+                                onValueChange={(value) => onChangeReMortgate(value)}
+                                minimumValue={0}
+                                maximumValue={remortgagemax}
+                                step={5000}
+                                thumbProps={{
+                                    children: (
+                                        <View style={AppStyle.Base.sliderThumbContainer}>
+                                            <View style={AppStyle.Base.sliderThumb} />
+                                        </View>
+                                    ),
+                                }}
+                            />
                         </View>
                         <View style={{
-                            flexDirection: 'row',
+                            width: "20%",
+                            alignItems: 'stretch',
+                            alignContent: "center",
+                            justifyContent: "center"
                         }}>
                             <View style={{
-                                width: (mortgatePercent + 7).toString() + "%",
-                                alignItems: 'flex-end',
-                                alignContent: "center",
-                                justifyContent: "center"
-                            }}><Text>{moneyRound(mortgage, true, true)}</Text></View>
-                            <View style={{
-                                width: reMortgatePercent.toString() + "%",
-                                alignItems: 'flex-end',
-                                alignContent: "center",
-                                justifyContent: "center"
-                            }}><Text>{moneyRound(remortgagemax, true, true)}</Text></View>
+                                width: "100%", backgroundColor: "red",
+                                height: 4,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}></View>
                         </View>
 
-                        <View style={AppStyle.StyleMain.row}>
-                            <View style={AppStyle.TextStyle.Label}>
-                                <Text style={{ lineHeight: 30 }}>Borrow:</Text></View>
-                            <View style={[AppStyle.TextStyle.Label, { marginLeft: 12 }]}>
-                                <Text style={AppStyle.TextStyle.text7}>{moneyFormat(remortgage)}</Text>
-                            </View>
+                    </View>
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <View style={{
+                            width: (mortgatePercent + 7).toString() + "%",
+                            alignItems: 'flex-end',
+                            alignContent: "center",
+                            justifyContent: "center"
+                        }}><Text>{moneyRound(mortgage, true, true)}</Text></View>
+                        <View style={{
+                            width: reMortgatePercent.toString() + "%",
+                            alignItems: 'flex-end',
+                            alignContent: "center",
+                            justifyContent: "center"
+                        }}><Text>{moneyRound(remortgagemax, true, true)}</Text></View>
+                    </View>
+
+                    <View style={AppStyle.StyleMain.row}>
+                        <View style={AppStyle.TextStyle.Label}>
+                            <Text style={{ lineHeight: 30 }}>Borrow:</Text></View>
+                        <View style={[AppStyle.TextStyle.Label, { marginLeft: 12 }]}>
+                            <Text style={AppStyle.TextStyle.text7}>{moneyFormat(remortgage)}</Text>
                         </View>
                     </View>
-                </ScrollView>
-                <View style={AppStyle.StyleMain.bottomContainer}>
-                    <DropShadow style={{
-                        width: "100%",
-                        top: 0,
-                        shadowColor: "gray",
-                        shadowOffset: {
-                            width: 0,
-                            height: 2,
-                        },
-                        shadowOpacity: 1,
-                        shadowRadius: 4,
-                    }}><View style={AppStyle.StyleMain.footerContainer}>
-                            <View style={AppStyle.StyleMain.footerLeftColumn}>
-                                <Text style={AppStyle.TextStyle.text5}>Monthly Payment</Text>
-                                <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
-                            </View>
-                            <View style={AppStyle.StyleMain.footerRightColumn}>
-                                <Button containerStyle={[AppStyle.StyleMain.buttonContainer, { flex: 1 }]} buttonStyle={AppStyle.StyleMain.buttonStyle}
-                                    title="Secure Your Loan"
-                                    onPress={() => { showBottomSheet(true) }} />
-                            </View>
-                        </View>
-                    </DropShadow>
                 </View>
-                <ApplyDialog
-                    visible={bottomSheetVisible}
-                    data={{
-                        screen: "equity",
-                        property: property,
-                        currentmortgage: mortgage,
-                        loan: remortgage,
-                        monthly: (remortgage * ratev) / 12
-                    }}
-                    onConfirm={(message: string) => {
-                        showBottomSheet(false);
-                        toast.show(message, {
-                            type: "success",
-                            placement: "center",
-                            duration: 2000,
-                            animationType: "zoom-in",
-                        });
-                    }}
-                    onClose={() => {
-                        showBottomSheet(false);
-                    }}
-                    onError={(error: any) => {
-                        showBottomSheet(false);
-                        toast.show(error, {
-                            type: "danger",
-                            placement: "top",
-                            duration: 2000,
-                            animationType: "zoom-in",
-                        });
-                    }} />
-            </KeyboardAvoidingView>
+            </KeyboardAwareScrollView>
+            {(keyboardStatus == "KEYBOARD_HIDE") ? (<View style={AppStyle.StyleMain.bottomContainer}>
+                <DropShadow style={{
+                    width: "100%",
+                    top: 0,
+                    shadowColor: "gray",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 1,
+                    shadowRadius: 4,
+                }}><View style={AppStyle.StyleMain.footerContainer}>
+                        <View style={AppStyle.StyleMain.footerLeftColumn}>
+                            <Text style={AppStyle.TextStyle.text5}>Monthly Payment</Text>
+                            <Text style={AppStyle.TextStyle.text6}>{moneyFormat(result)}*</Text>
+                        </View>
+                        <View style={AppStyle.StyleMain.footerRightColumn}>
+                            <Button containerStyle={[AppStyle.StyleMain.buttonContainer, { flex: 1 }]} buttonStyle={AppStyle.StyleMain.buttonStyle}
+                                title="Secure Your Loan"
+                                onPress={() => { showBottomSheet(true) }} />
+                        </View>
+                    </View>
+                </DropShadow>
+            </View>) : (<View></View>)}
+            <ApplyDialog
+                visible={bottomSheetVisible}
+                data={{
+                    screen: "equity",
+                    property: property,
+                    currentmortgage: mortgage,
+                    loan: remortgage,
+                    monthly: (remortgage * ratev) / 12
+                }}
+                onConfirm={(message: string) => {
+                    showBottomSheet(false);
+                    toast.show(message, {
+                        type: "success",
+                        placement: "center",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }}
+                onClose={() => {
+                    showBottomSheet(false);
+                }}
+                onError={(error: any) => {
+                    showBottomSheet(false);
+                    toast.show(error, {
+                        type: "danger",
+                        placement: "top",
+                        duration: 2000,
+                        animationType: "zoom-in",
+                    });
+                }} />
         </ SafeAreaView>
     )
 }

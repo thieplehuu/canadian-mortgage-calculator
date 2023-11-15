@@ -2,36 +2,36 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/images/image1.png",
-      "sha1": "fd6c9e6d78129bbbf4dd229b21cd8be10b0dc411"
+      "path": "assets/images/consolidation.png",
+      "sha1": "1554642d7f8ad71d11b738b868c0d3dd73297ff5"
     },
     {
-      "path": "assets/images/image2.png",
-      "sha1": "a79a41d97a454b7d191210616e4a1019c997df93"
-    },
-    {
-      "path": "assets/images/image3.png",
-      "sha1": "60392d95052d5ec732e3c5bdd0e74113f58d9e3c"
-    },
-    {
-      "path": "assets/images/image4.png",
-      "sha1": "b7ca96b97140601cc03a0d68cb0715bf4a97720b"
-    },
-    {
-      "path": "assets/images/image5.png",
-      "sha1": "b2b80a22f33afe614823f54e8055b67c8c222efc"
-    },
-    {
-      "path": "assets/images/image6.png",
-      "sha1": "b5fd27aad60c825dca364173598421e30c5fc393"
+      "path": "assets/images/equity.png",
+      "sha1": "8a3ee082308bed1d0ac3566baf2830d8d2d57ea5"
     },
     {
       "path": "assets/images/logo.png",
       "sha1": "1402f19bc34a0d42b9d6c8afb4499f18764a6f52"
     },
     {
+      "path": "assets/images/mortgage_calculator.png",
+      "sha1": "e31538199f7d9dd738be1e20783f5d36c8a12a70"
+    },
+    {
       "path": "assets/images/person.png",
       "sha1": "89f5d9a1ee2fa1d5753fbe6e310eea70c935fadf"
+    },
+    {
+      "path": "assets/images/pre_qualifier.png",
+      "sha1": "e2d7e916775f9f353cdc4956aad84bd22e32cdb0"
+    },
+    {
+      "path": "assets/images/purchase.png",
+      "sha1": "96afde935bec252b84a86fa6ea4e27168e688c45"
+    },
+    {
+      "path": "assets/images/refinance.png",
+      "sha1": "b592d7e09dc3eec5ba35f9f77cf890596ad9dc79"
     },
     {
       "path": "assets/fonts/SFPRODISPLAYBLACKITALIC.OTF",

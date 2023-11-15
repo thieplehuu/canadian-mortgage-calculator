@@ -21,8 +21,10 @@ import { Provider } from 'react-redux';
 import { ToastProvider } from 'react-native-toast-notifications'
 import EquityPage from './src/pages/EquityPage';
 import { MenuProvider } from 'react-native-popup-menu';
+import SplashPage from './src/pages/SplashPage';
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
+
   return (
     <ToastProvider
       offset={50}
@@ -31,11 +33,15 @@ function App(): JSX.Element {
       <Provider store={store}>
         <MenuProvider>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName="LoginPage" screenOptions={{
+            <Stack.Navigator initialRouteName="SplashPage" screenOptions={{
               contentStyle: {
                 backgroundColor: '#FFFFFF'
               }
             }}>
+              <Stack.Screen options={{
+                headerShown: false
+              }} name="SplashPage" component={SplashPage} />
+
               <Stack.Screen options={{
                 headerShown: false
               }} name="LoginPage" component={LoginPage} />

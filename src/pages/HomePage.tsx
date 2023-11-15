@@ -33,6 +33,7 @@ const HomePage = () => {
             setLoading(false);
         }
     }
+
     useEffect(() => {
         loadRates();
     }, []);
@@ -86,7 +87,7 @@ const HomePage = () => {
                                         </View>
                                     </View>
                                     <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/image1.png")} />
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/mortgage_calculator.png")} />
                                     </View>
                                 </View>
                             </LinearGradient></TouchableOpacity>
@@ -104,7 +105,7 @@ const HomePage = () => {
                                         </View>
                                     </View>
                                     <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/image2.png")} />
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/purchase.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -122,7 +123,7 @@ const HomePage = () => {
                                         </View>
                                     </View>
                                     <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/image3.png")} />
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/refinance.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -140,7 +141,7 @@ const HomePage = () => {
                                         </View>
                                     </View>
                                     <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/image4.png")} />
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/consolidation.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -158,7 +159,7 @@ const HomePage = () => {
                                         </View>
                                     </View>
                                     <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/image5.png")} />
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/pre_qualifier.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -176,7 +177,7 @@ const HomePage = () => {
                                         </View>
                                     </View>
                                     <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/image6.png")} />
+                                        <Image style={sectionStyle.image} source={require("../../assets/images/equity.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>

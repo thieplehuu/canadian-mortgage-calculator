@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../actions/user";
 import LoadingModal from "./LoadingModal";
 import { setConfirm } from "../actions/firebase";
-import { COUNTRY_CODE } from "../constants/const";
+import { COUNTRY_CODE } from "../constants/consts";
 
 
 interface Props {
@@ -33,24 +33,22 @@ const RegisterForm: FC<Props> = ({ loginResult, requestSuccess }) => {
                 setError("Please enter your phone number");
                 return;
             }
-            setLoading(true)
+            setLoading(true);
             const confirmation = await auth().signInWithPhoneNumber(COUNTRY_CODE + phoneNumber);
-            console.log(confirmation)
             dispatch(setUser({
                 firstName: firstName,
                 lastName: lastName,
                 phoneNumber: phoneNumber
-            }))
-            dispatch(setConfirm(confirmation))
+            }));
+            dispatch(setConfirm(confirmation));
             requestSuccess();
-            setLoading(false)
+            setLoading(false);
         } catch (error) {
-            setLoading(false)
-            console.log(error)
+            setLoading(false);
+            console.log(error);
         }
     }
     return (
-
         <View style={AppStyle.StyleLogin.form}>
             {loginResult != null && loginResult.status == "error" ? <Text style={AppStyle.StyleMain.error}>{loginResult.message}</Text> : <View></View>}
             <View style={AppStyle.StyleLogin.input}>

@@ -10,9 +10,10 @@ import auth from '@react-native-firebase/auth';
 import LoadingModal from "./LoadingModal";
 import { setConfirm } from "../actions/firebase";
 import { useDispatch } from "react-redux";
-import { COUNTRY_CODE } from "../constants/const";
+import { AUTHENTICATE_KEY, COUNTRY_CODE } from "../constants/consts";
 import { setUser } from "../actions/user";
 import { API_URL } from "../constants/urls";
+import { storeData } from "../stores/store";
 interface Props {
     requestSuccess: () => void;
     onLoginFailed: (result: any) => void;
@@ -46,12 +47,13 @@ const LoginForm: FC<Props> = ({ requestSuccess, onLoginFailed }) => {
                 });
                 const data = await response.json();
                 if (data.status == "success") {
-                    dispatch(setUser({
+                    let user = {
                         firstName: data.user.first_name,
                         lastName: data.user.last_name,
                         phoneNumber: data.user.mobile.substring(COUNTRY_CODE.length),
                         uuid: data.user.uuid
-                    }));
+                    };
+                    dispatch(setUser(user));
                     const confirmation = await auth().signInWithPhoneNumber(COUNTRY_CODE + phoneNumber);
                     dispatch(setConfirm(confirmation))
                     requestSuccess()

@@ -9,6 +9,7 @@ import RegisterForm from "../components/RegisterForm";
 import { useNavigation } from "@react-navigation/native";
 import SwitchSelector from "react-native-switch-selector";
 import LoginForm from "../components/LoginForm";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 export default function LoginPage() {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [step, setStep] = useState('INPUT_PHONE_NUMBER');
@@ -33,52 +34,53 @@ export default function LoginPage() {
     }, []);
 
     return (
+        <KeyboardAwareScrollView>
+            <View style={[AppStyle.StyleLogin.container, {
+                alignItems: "center",
+                justifyContent: "center",
+            }]}>
+                {(step === 'INPUT_PHONE_NUMBER' || step === 'VERIFY_SUCCESS') &&
+                    <>
+                        <Image style={AppStyle.StyleLogin.logo} source={require("../../assets/images/logo.png")} />
+                        <SwitchSelector
+                            initial={0}
+                            value={selectedIndex}
+                            onPress={(value: any) => setSelectedIndex(value)}
+                            textColor={"#000000"} //'#7a44cf'
+                            selectedColor={"#000000"}
+                            buttonColor={"#ffffff"}
+                            borderColor={"#EEEEEF"}
+                            borderRadius={8}
+                            hasPadding
+                            valuePadding={2}
+                            height={48}
+                            backgroundColor={"#EEEEEF"}
+                            options={[
+                                { label: "Sign In", value: 0 },
+                                { label: "Sign up", value: 1 }
+                            ]}
+                            testID="gender-switch-selector"
+                            accessibilityLabel="gender-switch-selector"
+                        />
 
-        <View style={[AppStyle.StyleLogin.container, {
-            alignItems: "center",
-            justifyContent: "center",
-        }]}>
-            {(step === 'INPUT_PHONE_NUMBER' || step === 'VERIFY_SUCCESS') &&
-                <>
-                    <Image style={AppStyle.StyleLogin.logo} source={require("../../assets/images/logo.png")} />
-                    <SwitchSelector
-                        initial={0}
-                        value={selectedIndex}
-                        onPress={(value: any) => setSelectedIndex(value)}
-                        textColor={"#000000"} //'#7a44cf'
-                        selectedColor={"#000000"}
-                        buttonColor={"#ffffff"}
-                        borderColor={"#EEEEEF"}
-                        borderRadius={8}
-                        hasPadding
-                        valuePadding={2}
-                        height={48}
-                        backgroundColor={"#EEEEEF"}
-                        options={[
-                            { label: "Sign In", value: 0 },
-                            { label: "Sign up", value: 1 }
-                        ]}
-                        testID="gender-switch-selector"
-                        accessibilityLabel="gender-switch-selector"
-                    />
-
-                    {selectedIndex == 0 ?
-                        <LoginForm requestSuccess={() => {
-                            navigation.navigate("OTPVerifyPage", { action: 'SIGNIN' });
-                        }} onLoginFailed={(result: any) => {
-                            setLoginResult(result);
-                            setSelectedIndex(1);
-                        }} />
-                        :
-                        <RegisterForm
-                            loginResult={loginResult}
-                            requestSuccess={() => {
-                                navigation.navigate("OTPVerifyPage", {
-                                    action: 'REGISTER'
-                                });
+                        {selectedIndex == 0 ?
+                            <LoginForm requestSuccess={() => {
+                                navigation.navigate("OTPVerifyPage", { action: 'SIGNIN' });
+                            }} onLoginFailed={(result: any) => {
+                                setLoginResult(result);
+                                setSelectedIndex(1);
                             }} />
-                    }
-                </>
-            }
-        </View>)
+                            :
+                            <RegisterForm
+                                loginResult={loginResult}
+                                requestSuccess={() => {
+                                    navigation.navigate("OTPVerifyPage", {
+                                        action: 'REGISTER'
+                                    });
+                                }} />
+                        }
+                    </>
+                }
+            </View>
+        </KeyboardAwareScrollView>)
 }

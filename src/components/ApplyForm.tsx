@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
     StyleSheet,
@@ -10,9 +10,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { API_URL } from "../constants/urls";
 import { useSelector } from "react-redux";
 import { formatDate } from "../utils";
-import { COUNTRY_CODE } from "../constants/const";
+import { AUTHENTICATE_KEY, COUNTRY_CODE } from "../constants/consts";
 import LoadingModal from "./LoadingModal";
 import Icon from 'react-native-vector-icons/AntDesign';
+import { getData } from "../stores/store";
 
 interface TextInputProps {
     title: string;
@@ -22,17 +23,33 @@ interface TextInputProps {
 }
 
 const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...props }) => {
-    const user = useSelector((state: any) => state.user);
     const [loading, setLoading] = useState(false);
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [lastName, setLastName] = useState(user.lastName);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [uuid, setUUID] = useState("");
     const [date, setDate] = useState(new Date());
     const [dateString, setDateString] = useState("");
     const [message, setMessage] = useState("");
     const [datePickerVisible, showDatePicker] = useState(false);
     const [error, setError] = useState("");
+
+    const getAuthenticate = async () => {
+        let user = await getData(AUTHENTICATE_KEY, null);
+        if (user != null) {
+            setFirstName(user.firstName);
+            setLastName(user.lastName);
+            setPhoneNumber(user.phoneNumber);
+            setEmail(user.email);
+            setUUID(user.uuid);
+        }
+    }
+
+    useEffect(() => {
+        getAuthenticate();
+    })
+
     const onShowDatePicker = () => {
         showDatePicker(true);
     }
@@ -52,14 +69,13 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
         }
         try {
             let formData = {
-                uuid: user.uuid,
+                uuid: uuid,
                 first_name: firstName,
                 last_name: lastName,
                 mobile: COUNTRY_CODE + phoneNumber,
                 email: email,
                 message: message,
             };
-            console.log({ ...formData, ...data });
             const response = await fetch(API_URL + '/contact', {
                 method: 'POST',
                 headers: {
@@ -69,8 +85,6 @@ const ApplyForm: FC<TextInputProps> = ({ title, data, onConfirm, onError, ...pro
                 body: JSON.stringify({ ...formData, ...data }),
             });
             const json = await response.json();
-            console.log({ ...formData, ...data });
-            console.log(json);
             if (json.status == "success") {
                 onConfirm("Send message success");
             } else {

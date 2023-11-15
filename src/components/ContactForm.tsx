@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import AppStyle from '../theme';
 import {
     ScrollView,
@@ -8,9 +8,9 @@ import {
 import { Input, Button, Text, Image } from "@rneui/themed";
 import { useSelector } from "react-redux";
 import { API_URL } from "../constants/urls";
-import { COUNTRY_CODE } from "../constants/const";
+import { AUTHENTICATE_KEY, COUNTRY_CODE } from "../constants/consts";
 import LoadingModal from "./LoadingModal";
-import DropShadow from "react-native-drop-shadow";
+import { getData } from "../stores/store";
 
 interface FormProps {
     onConfirm: (message: string) => void;
@@ -18,14 +18,30 @@ interface FormProps {
 }
 
 const ContactForm: FC<FormProps> = ({ onConfirm, onError, ...props }) => {
-    const user = useSelector((state: any) => state.user);
     const [loading, setLoading] = useState(false);
-    const [firstName, setFirstName] = useState(user.firstName);
-    const [lastName, setLastName] = useState(user.lastName);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+    const [uuid, setUUID] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+
+    const getAuthenticate = async () => {
+        let user = await getData(AUTHENTICATE_KEY, null);
+        if (user != null) {
+            setFirstName(user.firstName);
+            setLastName(user.lastName);
+            setPhoneNumber(user.phoneNumber);
+            setEmail(user.email);
+            setUUID(user.uuid);
+        }
+    }
+
+    useEffect(() => {
+        getAuthenticate();
+    })
+
     const onSubmit = async () => {
         setLoading(true)
         if (phoneNumber == "") {
@@ -34,7 +50,7 @@ const ContactForm: FC<FormProps> = ({ onConfirm, onError, ...props }) => {
         }
         try {
             let formData = {
-                uuid: user.uuid,
+                uuid: uuid,
                 first_name: firstName,
                 last_name: lastName,
                 mobile: COUNTRY_CODE + phoneNumber,
