@@ -3,9 +3,7 @@ import AppStyle from '../theme';
 import {
     View,
     Text,
-    ScrollView,
     SafeAreaView,
-    KeyboardAvoidingView,
 } from "react-native";
 import { Button, Slider } from "@rneui/themed";
 import { OutlinedCurrencyInput, OutlinedSelectInput, PercentTextInput } from "../components/OutlinedInput";
@@ -153,13 +151,13 @@ export default function MortgagePage() {
                 <DropShadow style={{
                     width: "100%",
                     top: 0,
-                    shadowColor: "gray",
+                    shadowColor: "#DCDCDC",
                     shadowOffset: {
                         width: 0,
                         height: 2,
                     },
-                    shadowOpacity: 1,
-                    shadowRadius: 4,
+                    shadowOpacity: 1.5,
+                    shadowRadius: 3,
                 }}><View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
                             <PaymentDropdown label="Biweekly Payment" value={paymentPeriod} items={paymentPeriods} onSelect={(item: any) => onChangePaymentPeriod(item)} carretAnimated={true} />

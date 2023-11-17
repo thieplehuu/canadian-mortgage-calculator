@@ -7,7 +7,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useToast } from 'react-native-toast-notifications';
 import { ContactDialog } from '../components/ContactDialog';
 import DropShadow from 'react-native-drop-shadow';
-
+import {Dimensions} from 'react-native';
+import ScaleImage from '../components/ScaleImage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import moment from"moment";
 const HomePage = () => {
 
     const [isLoading, setLoading] = useState(false);
@@ -15,6 +18,7 @@ const HomePage = () => {
     const [bottomSheetVisible, showBottomSheet] = useState(false);
     const navigation = useNavigation();
     const toast = useToast();
+    const windowWidth = Dimensions.get('window').width;
 
     const loadRates = async () => {
         try {
@@ -45,6 +49,18 @@ const HomePage = () => {
             {isLoading ? (
                 <View style={{ flex: 1, justifyContent: "center" }}><ActivityIndicator style={{ alignSelf: "center" }} /></View>
             ) : (<><ScrollView>
+                <View style={[AppStyle.StyleMain.row, {justifyContent: "space-between", flex:1, marginBottom: 12, marginTop:12}]}>
+                    <Text style={[AppStyle.TextStyle.text10, {marginLeft:4}]}>Rates Updated On {moment().format("Do MMMM YYYY")}</Text>
+                    <Icon
+                        style={{alignSelf:"flex-end", marginRight: 20}}
+                            size={24} color="#4F4A45"
+                            name="user-circle"
+                            onPress={() => {
+                                goto('ProfilePage');
+                            }}
+                        />
+                </View>
+
                 <View style={AppStyle.StyleMain.row}>
                     <Card containerStyle={AppStyle.StyleMain.panelContainer}>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#816CEC', '#F4ABED']} style={AppStyle.StyleMain.panelContent}>
@@ -79,15 +95,16 @@ const HomePage = () => {
                         <TouchableOpacity onPress={() => {
                             goto("MortgageCalculatorPage");
                         }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#fcdadb', '#f9f9fe']} style={AppStyle.StyleMain.sectionContent}>
-                                <View style={sectionStyle.columns}>
+                                <View style={[sectionStyle.columns, {height: windowWidth/4}]}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>
                                             <Text style={AppStyle.TextStyle.text3}>Mortgage Calculator</Text>
                                             <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
-                                    <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/mortgage_calculator.png")} />
+                                    <View style={sectionStyle.imageBackground}>
+                                        <ScaleImage                                          
+                                            style={{alignSelf:"flex-end", height: windowWidth/4}} source={require("../../assets/images/mortgage_calculator.png")} />
                                     </View>
                                 </View>
                             </LinearGradient></TouchableOpacity>
@@ -97,15 +114,15 @@ const HomePage = () => {
                         <TouchableOpacity onPress={() => {
                             goto("PurchasePage");
                         }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#fef1e1', '#f8fcfb']} style={AppStyle.StyleMain.sectionContent}>
-                                <View style={sectionStyle.columns}>
+                                <View style={[sectionStyle.columns, {height: windowWidth/4}]}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>
                                             <Text style={AppStyle.TextStyle.text3}>Purchase</Text>
                                             <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
-                                    <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/purchase.png")} />
+                                    <View style={sectionStyle.imageBackground}>
+                                        <ScaleImage style={{alignSelf:"flex-end", height: windowWidth/4}} source={require("../../assets/images/purchase.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -115,15 +132,15 @@ const HomePage = () => {
                         <TouchableOpacity onPress={() => {
                             goto("RefinancePage");
                         }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#b2d5fe', '#f7faff']} style={AppStyle.StyleMain.sectionContent}>
-                                <View style={sectionStyle.columns}>
+                                <View style={[sectionStyle.columns, {height: windowWidth/4}]}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>
                                             <Text style={AppStyle.TextStyle.text3}>Refinance</Text>
                                             <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
-                                    <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/refinance.png")} />
+                                    <View style={sectionStyle.imageBackground}>
+                                        <ScaleImage style={{alignSelf:"flex-end", height: windowWidth/4}} source={require("../../assets/images/refinance.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -133,15 +150,15 @@ const HomePage = () => {
                         <TouchableOpacity onPress={() => {
                             goto("ConsolidationPage");
                         }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#e2d7f8', '#f7f5fd']} style={AppStyle.StyleMain.sectionContent}>
-                                <View style={sectionStyle.columns}>
+                                <View style={[sectionStyle.columns, {height: windowWidth/4}]}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>
                                             <Text style={AppStyle.TextStyle.text3}>Consolidation</Text>
                                             <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
-                                    <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/consolidation.png")} />
+                                    <View style={sectionStyle.imageBackground}>
+                                        <ScaleImage style={{alignSelf:"flex-end", height: windowWidth/4}}  source={require("../../assets/images/consolidation.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -151,15 +168,15 @@ const HomePage = () => {
                         <TouchableOpacity onPress={() => {
                             goto("PreQualifierPage");
                         }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#bfeeef', '#f4f8fd']} style={AppStyle.StyleMain.sectionContent}>
-                                <View style={sectionStyle.columns}>
+                                <View style={[sectionStyle.columns,{height: windowWidth/4}]}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>
                                             <Text style={AppStyle.TextStyle.text3}>Pre-Qualifier</Text>
                                             <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
-                                    <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/pre_qualifier.png")} />
+                                    <View style={sectionStyle.imageBackground}>
+                                        <ScaleImage style={{alignSelf:"flex-end", height: windowWidth/4}} source={require("../../assets/images/pre_qualifier.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -169,15 +186,15 @@ const HomePage = () => {
                         <TouchableOpacity onPress={() => {
                             goto("EquityPage");
                         }}><LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#385A6447', '#F3D2F11F']} style={AppStyle.StyleMain.sectionContent}>
-                                <View style={sectionStyle.columns}>
+                                <View style={[sectionStyle.columns, {height: windowWidth/4}]}>
                                     <View style={sectionStyle.left}>
                                         <View style={sectionStyle.content}>
                                             <Text style={AppStyle.TextStyle.text3}>Equity</Text>
                                             <Text style={AppStyle.TextStyle.text4}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
                                         </View>
                                     </View>
-                                    <View style={sectionStyle.right}>
-                                        <Image style={sectionStyle.image} source={require("../../assets/images/equity.png")} />
+                                    <View style={sectionStyle.imageBackground}>
+                                        <ScaleImage style={{alignSelf:"flex-end", height: windowWidth/4}} source={require("../../assets/images/equity.png")} />
                                     </View>
                                 </View>
                             </LinearGradient>
@@ -191,13 +208,13 @@ const HomePage = () => {
                     <DropShadow style={{
                         width: "100%",
                         top: 0,
-                        shadowColor: "gray",
+                        shadowColor: "#DCDCDC",
                         shadowOffset: {
                             width: 0,
                             height: 2,
                         },
-                        shadowOpacity: 1,
-                        shadowRadius: 4,
+                        shadowOpacity: 1.5,
+                        shadowRadius: 3,
                     }}><View style={AppStyle.StyleMain.footerContainer}>
                             <Button containerStyle={[AppStyle.StyleMain.buttonContainer, { width: "100%", marginTop: 8, marginBottom: 8 }]} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
                                 title="Contact"
@@ -237,22 +254,24 @@ export default HomePage;
 
 const sectionStyle = StyleSheet.create({
     columns: {
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'flex-start'
+        position:'relative'
     },
     left: {
         width: '50%'
     },
-    right: {
-        width: '50%'
+    imageBackground: {
+        height: "100%",
+        width:"100%",
+        position:"absolute",
+        right:0,
+        top:0,
+        bottom:0,
+        alignContent:"flex-end",        
     },
     content: {
         padding: 16
     },
     image: {
-        width: "100%",
-        height: "100%"
+        alignSelf:"flex-end",
     }
 })

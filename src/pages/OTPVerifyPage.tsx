@@ -12,6 +12,7 @@ import LoadingModal from "../components/LoadingModal";
 import { AUTHENTICATE_KEY, COUNTRY_CODE } from "../constants/consts";
 import { setUser } from "../actions/user";
 import { storeData } from "../stores/store";
+import { StackActions } from "@react-navigation/native";
 
 interface Props {
     route: any,
@@ -56,7 +57,9 @@ const OTPVerifyPage: FC<Props> = ({ route, navigation }) => {
                         }
                         dispatch(setUser(auth))
                         storeData(AUTHENTICATE_KEY, auth);
-                        navigation.navigate("HomePage" as never);
+                        navigation.dispatch(
+                            StackActions.replace('HomePage')
+                        );
                     }
                     if (data.status == "error") {
                         setError(data.message);
@@ -67,7 +70,9 @@ const OTPVerifyPage: FC<Props> = ({ route, navigation }) => {
             } else if (action == "SIGNIN") {
                 let auth = user;
                 storeData(AUTHENTICATE_KEY, auth);
-                navigation.navigate("HomePage" as never);
+                navigation.dispatch(
+                    StackActions.replace('HomePage')
+                );
             }
             setLoading(false)
         } catch (error) {

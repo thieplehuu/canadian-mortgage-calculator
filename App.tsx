@@ -22,6 +22,7 @@ import { ToastProvider } from 'react-native-toast-notifications'
 import EquityPage from './src/pages/EquityPage';
 import { MenuProvider } from 'react-native-popup-menu';
 import SplashPage from './src/pages/SplashPage';
+import ProfilePage from './src/pages/ProfilePage';
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
 
@@ -41,12 +42,14 @@ function App(): JSX.Element {
               <Stack.Screen options={{
                 headerShown: false
               }} name="SplashPage" component={SplashPage} />
-
               <Stack.Screen options={{
                 headerShown: false
               }} name="LoginPage" component={LoginPage} />
+              <Stack.Screen
+                name="ProfilePage" component={ProfilePage} 
+                options={{ title: 'My Profile' }}/>
               <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage}
-                options={{ title: 'Verification Code' }} />
+                options={{ title: 'Verification Code' }} />                
               <Stack.Screen options={{
                 headerShown: false
               }} name="HomePage" component={HomePage} />

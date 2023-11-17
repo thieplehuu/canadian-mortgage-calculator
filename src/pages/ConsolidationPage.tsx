@@ -24,7 +24,6 @@ export default function ConsolidationPage() {
         { key: "carv", title: 'Car Loans', amount: 25000, payment: 750 },
         { key: "otherv", title: 'Other Loans', amount: 30000, payment: 900 },
     ]);
-    const [monthly, setMonthly] = useState({ mm: 2500, cm: 600, carm: 750, otherm: 900 });
     const [totalDebt, setTotalDebt] = useState(0);
     const [monthlyPayment, setMonthlyPayment] = useState(0);
     const [newPayment, setNewPayment] = useState(0);
@@ -84,15 +83,13 @@ export default function ConsolidationPage() {
     }
 
     const onChangePayment = (name: string, value: number | null) => {
-        if (value != null) {
-            items.map((item, i) => {
-                if (item.key == name) {
-                    item.payment = value;
-                    items[i] = item;
-                }
-            });
-            setValue(items);
-        }
+        items.map((item: any, i) => {
+            if (item.key == name) {
+                item.payment = value;
+                items[i] = item;
+            }
+        });
+        setValue(items);
         const totalMonthlyPayment = items.reduce((sum, item) => sum + item.payment, 0);
         setMonthlyPayment(totalMonthlyPayment);
     }
@@ -180,13 +177,13 @@ export default function ConsolidationPage() {
                 <DropShadow style={{
                     width: "100%",
                     top: 0,
-                    shadowColor: "gray",
+                    shadowColor: "#DCDCDC",
                     shadowOffset: {
                         width: 0,
                         height: 2,
                     },
-                    shadowOpacity: 1,
-                    shadowRadius: 4,
+                    shadowOpacity: 1.5,
+                    shadowRadius: 3,
                 }}><View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
                             <Text style={AppStyle.TextStyle.text5}>New Monthly Payment</Text>

@@ -104,6 +104,17 @@ const StyleMain = StyleSheet.create({
     color: "#ffffff",
     backgroundColor: "#816CEC",
   },
+  buttonFullwidthOutlined: {
+    width: "100%",
+    borderRadius: 8,
+    borderWidth:1,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderColor:"#816CEC",
+    backgroundColor: "white",
+  },
   bottomSheetHeader: {
     backgroundColor: "#ffffff",
     paddingTop: 12,

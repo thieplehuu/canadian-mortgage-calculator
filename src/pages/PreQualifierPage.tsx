@@ -217,13 +217,13 @@ export default function PreQualifierPage() {
                 <DropShadow style={{
                     width: "100%",
                     top: 0,
-                    shadowColor: "gray",
+                    shadowColor: "#DCDCDC",
                     shadowOffset: {
                         width: 0,
                         height: 2,
                     },
-                    shadowOpacity: 1,
-                    shadowRadius: 4,
+                    shadowOpacity: 1.5,
+                    shadowRadius: 3,
                 }}><View style={AppStyle.StyleMain.footerContainer}>
                         <View style={AppStyle.StyleMain.footerLeftColumn}>
                             <View style={{ flexDirection: "row" }}>

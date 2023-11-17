@@ -179,4 +179,22 @@ const OutlinedSelectInput: FC<SelectInputProps> = ({ value, label, items, onSele
     )
 };
 
-export { OutlinedTextInput, PercentTextInput, OutlinedSelectInput, OutlinedCurrencyInput };
+interface TextProps {
+    label: string;
+    value: string;
+}
+
+const OutlinedText: FC<TextProps> = ({ label, value, ...props }) => {
+    return (
+        <View style={AppStyle.Base.outlinedInputContainer}>
+            <View style={AppStyle.Base.outlinedLabelContainer}>
+                <Text style={AppStyle.Base.label}>{label}</Text>
+            </View>
+            <View style={AppStyle.Base.outlinedTextInput}>
+                <Text style={[AppStyle.Base.label, , { lineHeight: 30 }]}>{value}</Text>
+            </View>
+        </View>
+    )
+};
+
+export { OutlinedTextInput, PercentTextInput, OutlinedSelectInput, OutlinedCurrencyInput, OutlinedText };

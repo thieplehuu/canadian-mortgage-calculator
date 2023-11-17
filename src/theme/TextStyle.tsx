@@ -56,5 +56,10 @@ const TextStyle = StyleSheet.create({
     color: "#816CEC",
     fontWeight: "700"
   },
+  text10: {
+    fontSize: 14,  
+    color: "#816CEC",
+    fontWeight: "600"
+  },
 });
 export default TextStyle;
