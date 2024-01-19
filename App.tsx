@@ -5,7 +5,11 @@
  * @format
  */
 
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigation,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import LoginPage from './src/pages/LoginPage';
@@ -23,15 +27,17 @@ import EquityPage from './src/pages/EquityPage';
 import {MenuProvider} from 'react-native-popup-menu';
 import SplashPage from './src/pages/SplashPage';
 import ProfilePage from './src/pages/ProfilePage';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {TouchableOpacity} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
+  const navigationRef = useNavigationContainerRef();
   return (
     <ToastProvider offset={50} textStyle={{fontSize: 16}}>
       <Provider store={store}>
         <MenuProvider>
-          <NavigationContainer>
+          <NavigationContainer ref={navigationRef}>
             <Stack.Navigator
               initialRouteName="SplashPage"
               screenOptions={{
@@ -39,7 +45,15 @@ function App(): JSX.Element {
                 contentStyle: {
                   backgroundColor: '#FFFFFF',
                 },
-                headerLeft: ()=>(<Icon name="arrow-left" size={18}/>)
+                headerLeft: () => (
+                  <TouchableOpacity
+                    style={{marginRight: 8}}
+                    onPress={() => {
+                      navigationRef.goBack();
+                    }}>
+                    <Icon name="arrowleft" color={'black'} size={24} />
+                  </TouchableOpacity>
+                ),
               }}>
               <Stack.Screen
                 options={{

@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Platform
+  Platform,
 } from 'react-native';
 import {Button, Card} from '@rneui/themed';
 import AppStyle from '../theme';
@@ -170,14 +170,16 @@ const HomePage = () => {
                     style={AppStyle.StyleMain.sectionContent}>
                     <View
                       style={[sectionStyle.columns, {height: windowWidth / 4}]}>
-                      <View style={sectionStyle.left}>
+                      <View style={sectionStyle.left70}>
                         <View style={sectionStyle.content}>
                           <Text style={AppStyle.TextStyle.text3}>
                             {menus.mortgage_calculator.label}
                           </Text>
-                          <Text style={AppStyle.TextStyle.text4}>
-                            {menus.mortgage_calculator.description}
-                          </Text>
+                          <View style={{width: '95%'}}>
+                            <Text style={AppStyle.TextStyle.text4}>
+                              {menus.mortgage_calculator.description}
+                            </Text>
+                          </View>
                         </View>
                       </View>
                       <View style={sectionStyle.imageBackground}>
@@ -388,7 +390,11 @@ const HomePage = () => {
                 <Button
                   containerStyle={[
                     AppStyle.StyleMain.buttonContainer,
-                    {width: '100%', marginTop: 8, marginBottom: Platform.OS === 'ios' ? 8 : 0},
+                    {
+                      width: '100%',
+                      marginTop: 8,
+                      marginBottom: Platform.OS === 'ios' ? 8 : 0,
+                    },
                   ]}
                   buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
                   titleStyle={AppStyle.StyleMain.buttonTitleStyle}
@@ -436,6 +442,9 @@ const sectionStyle = StyleSheet.create({
   },
   left: {
     width: '60%',
+  },
+  left70: {
+    width: '70%',
   },
   imageBackground: {
     height: '100%',
