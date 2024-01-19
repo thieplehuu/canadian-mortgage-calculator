@@ -4,6 +4,7 @@ import {View, Image} from 'react-native';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {getData} from '../stores/store';
 import {AUTHENTICATE_KEY} from '../constants/consts';
+import ScaleImage from '../components/ScaleImage';
 
 export default function SplashPage() {
   const navigation = useNavigation<any>();
@@ -30,7 +31,7 @@ export default function SplashPage() {
           justifyContent: 'center',
         },
       ]}>
-      <Image
+      <ScaleImage
         style={AppStyle.StyleLogin.logo}
         source={require('../../assets/images/logo.png')}
       />
