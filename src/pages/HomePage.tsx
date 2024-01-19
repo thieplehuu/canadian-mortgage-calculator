@@ -25,7 +25,7 @@ const HomePage = () => {
     fixedrate3years: '6.29',
     variablerate: '6.30',
     primerate: '7.20',
-    updated:""
+    updated: '',
   });
   const [menus, setMenus] = useState({
     pre_qualifier: {label: '', description: ''},
@@ -387,7 +387,7 @@ const HomePage = () => {
                 <Button
                   containerStyle={[
                     AppStyle.StyleMain.buttonContainer,
-                    {width: '100%', marginTop: 8, marginBottom: 20},
+                    {width: '100%', marginTop: 8, marginBottom: 12},
                   ]}
                   buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
                   titleStyle={AppStyle.StyleMain.buttonTitleStyle}
