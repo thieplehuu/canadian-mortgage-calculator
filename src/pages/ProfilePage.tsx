@@ -104,6 +104,7 @@ export default function ProfilePage() {
           titleStyle={{
             color: '#816CEC',
             fontSize: 20,
+            width:"100%"
           }}
           title={'Delete Account'}
           onPress={() => {

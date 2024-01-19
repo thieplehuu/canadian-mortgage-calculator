@@ -138,7 +138,6 @@ const StyleMain = StyleSheet.create({
     paddingBottom: 16,
   },
   footerLeftColumn: {
-    flex: 1,
   },
   footerRightColumn: {
     flex: 1,

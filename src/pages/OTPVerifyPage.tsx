@@ -17,7 +17,7 @@ interface Props {
 
 const OTPVerifyPage: FC<Props> = ({route, navigation}) => {
   const [loading, setLoading] = useState(false);
-  const [otp, setOTP] = useState('');
+  const [otp, setOTP] = useState('123456');
   const [error, setError] = useState('');
   const user = useSelector((state: any) => state.user);
   const firebase = useSelector((state: any) => state.firebase);
