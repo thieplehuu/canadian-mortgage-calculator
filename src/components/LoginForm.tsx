@@ -102,6 +102,7 @@ const LoginForm: FC<Props> = ({requestSuccess, onLoginFailed}) => {
         <Button
           containerStyle={AppStyle.StyleMain.buttonContainer}
           buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+          titleStyle={AppStyle.StyleMain.buttonTitleStyle}
           onPress={requestOTP}
           title={'Get OTP'}
         />

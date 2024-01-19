@@ -18,7 +18,6 @@ import DropShadow from 'react-native-drop-shadow';
 import {Dimensions} from 'react-native';
 import ScaleImage from '../components/ScaleImage';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import moment from 'moment';
 const HomePage = () => {
   const [isLoading, setLoading] = useState(false);
   const [rates, setRates] = useState({
@@ -26,6 +25,7 @@ const HomePage = () => {
     fixedrate3years: '6.29',
     variablerate: '6.30',
     primerate: '7.20',
+    updated:""
   });
   const [menus, setMenus] = useState({
     pre_qualifier: {label: '', description: ''},
@@ -68,6 +68,7 @@ const HomePage = () => {
   const goto = async (page: string) => {
     navigation.navigate(page as never);
   };
+
   return (
     <SafeAreaView style={{flex: 1, padding: 12, backgroundColor: '#ffffff'}}>
       {isLoading ? (
@@ -88,7 +89,7 @@ const HomePage = () => {
                 },
               ]}>
               <Text style={[AppStyle.TextStyle.text10, {marginLeft: 4}]}>
-                Rates Updated On {moment().format('Do MMMM YYYY')}
+                {rates.updated}
               </Text>
               <Icon
                 style={{alignSelf: 'flex-end', marginRight: 20}}
@@ -386,9 +387,10 @@ const HomePage = () => {
                 <Button
                   containerStyle={[
                     AppStyle.StyleMain.buttonContainer,
-                    {width: '100%', marginTop: 8, marginBottom: 8},
+                    {width: '100%', marginTop: 8, marginBottom: 20},
                   ]}
                   buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+                  titleStyle={AppStyle.StyleMain.buttonTitleStyle}
                   title="Contact"
                   onPress={() => showBottomSheet(true)}
                 />

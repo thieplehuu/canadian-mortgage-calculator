@@ -15,6 +15,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1C1E4471AACA483DAF4400F5 /* SFPRODISPLAYTHINITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = EC1C73B399BF433A8041560D /* SFPRODISPLAYTHINITALIC.OTF */; };
 		2769FAF92B58FAFF00EDA851 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2769FAF82B58FAFF00EDA851 /* GoogleService-Info.plist */; };
+		2769FAFB2B5A7C4A00EDA851 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2769FAFA2B5A7C4A00EDA851 /* Fonts */; };
 		2943C205B3B4425B89086426 /* SFPRODISPLAYBLACKITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = C13F18D4C2344BC58A8263C9 /* SFPRODISPLAYBLACKITALIC.OTF */; };
 		3079326690AC41A0ABCDB546 /* SFPRODISPLAYMEDIUM.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 0E6D2335444F4E6589666C31 /* SFPRODISPLAYMEDIUM.OTF */; };
 		3960CF22C3AC4F8894C025D2 /* SFPRODISPLAYBOLD.OTF in Resources */ = {isa = PBXBuildFile; fileRef = B0977E09CE414537926C6CD9 /* SFPRODISPLAYBOLD.OTF */; };
@@ -60,6 +61,7 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CanadianMortgageCalculator-CanadianMortgageCalculatorTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D92C9AA9DFC4C2AA498184E /* person.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = person.png; path = ../assets/images/person.png; sourceTree = "<group>"; };
 		2769FAF82B58FAFF00EDA851 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2769FAFA2B5A7C4A00EDA851 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-CanadianMortgageCalculator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CanadianMortgageCalculator.debug.xcconfig"; path = "Target Support Files/Pods-CanadianMortgageCalculator/Pods-CanadianMortgageCalculator.debug.xcconfig"; sourceTree = "<group>"; };
 		44A6C5FF64234572B165EE52 /* logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = logo.png; path = ../assets/images/logo.png; sourceTree = "<group>"; };
 		4F0463858162493CACC99C52 /* SFPRODISPLAYSEMIBOLDITALIC.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYSEMIBOLDITALIC.OTF; path = ../assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 		13B07FAE1A68108700A75B9A /* CanadianMortgageCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				2769FAFA2B5A7C4A00EDA851 /* Fonts */,
 				2769FAF82B58FAFF00EDA851 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -317,6 +320,7 @@
 				BF3269813DFD40FBA898CF88 /* SFPRODISPLAYREGULAR.OTF in Resources */,
 				9D87B529904C4DC2B0C54E79 /* SFPRODISPLAYSEMIBOLDITALIC.OTF in Resources */,
 				1C1E4471AACA483DAF4400F5 /* SFPRODISPLAYTHINITALIC.OTF in Resources */,
+				2769FAFB2B5A7C4A00EDA851 /* Fonts in Resources */,
 				A6A641B91DC6428A9D615A79 /* SFPRODISPLAYULTRALIGHTITALIC.OTF in Resources */,
 				A338AB59E15E4645BBCF78B6 /* consolidation.png in Resources */,
 				78590C3FE820485EA0310A44 /* equity.png in Resources */,
@@ -579,7 +583,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = JE74WS49JS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CanadianMortgageCalculator/Info.plist;
@@ -608,7 +612,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = JE74WS49JS;
 				INFOPLIST_FILE = CanadianMortgageCalculator/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Canadian Mortgage Calculator";

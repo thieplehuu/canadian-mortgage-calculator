@@ -77,7 +77,7 @@ const StyleMain = StyleSheet.create({
     position: 'absolute',
     right: 0,
     left: 0,
-    bottom: 0,
+    bottom: 12,
     backgroundColor: "#ffffff"
   },
 
@@ -89,10 +89,9 @@ const StyleMain = StyleSheet.create({
     borderRadius: 8,
     paddingTop: 8,
     paddingBottom: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
     color: "#ffffff",
     backgroundColor: "#816CEC",
+    display:"flex"
   },
   buttonFullwidthStyle: {
     width: "100%",
@@ -103,6 +102,7 @@ const StyleMain = StyleSheet.create({
     paddingRight: 20,
     color: "#ffffff",
     backgroundColor: "#816CEC",
+    justifyContent: 'center'
   },
   buttonFullwidthOutlined: {
     width: "100%",
@@ -122,6 +122,9 @@ const StyleMain = StyleSheet.create({
     paddingRight: 16,
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  buttonTitleStyle:{
+    width:"100%"
   },
   footerContainer: {
     flex: 1,

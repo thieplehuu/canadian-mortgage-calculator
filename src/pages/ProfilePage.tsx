@@ -116,6 +116,7 @@ export default function ProfilePage() {
           titleStyle={{
             color: 'white',
             fontSize: 20,
+            width:"100%"
           }}
           title={'Logout'}
           onPress={() => {

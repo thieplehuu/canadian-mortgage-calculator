@@ -88,7 +88,13 @@ const RegisterForm: FC<Props> = ({ loginResult, requestSuccess }) => {
                 />
             </View>
             <Text style={AppStyle.StyleMain.error}>{error}</Text>
-            <View style={AppStyle.StyleMain.stretch}><Button containerStyle={AppStyle.StyleMain.buttonContainer} buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} onPress={requestOTP} title={"Get OTP"} /></View>
+            <View style={AppStyle.StyleMain.stretch}>
+                <Button 
+                    containerStyle={AppStyle.StyleMain.buttonContainer} 
+                    buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle} 
+                    titleStyle={AppStyle.StyleMain.buttonTitleStyle}
+                    onPress={requestOTP} title={"Get OTP"} />
+            </View>
             <LoadingModal modalVisible={loading} color={""} modalStyle={undefined} />
         </View>)
 }

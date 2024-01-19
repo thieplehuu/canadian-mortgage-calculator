@@ -61,7 +61,6 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
         body: JSON.stringify(formData),
       });
       const json = await response.json();
-      console.log(json);
       if (json.status == 'success') {
         onConfirm('Send message success');
       } else {
@@ -169,6 +168,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
           <Button
             containerStyle={AppStyle.StyleMain.buttonContainer}
             buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+            titleStyle={AppStyle.StyleMain.buttonTitleStyle}
             title={'Submit Message'}
             onPress={onSubmit}
           />

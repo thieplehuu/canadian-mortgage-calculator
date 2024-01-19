@@ -102,10 +102,6 @@ export default function EquityPage() {
     });
     setEquity(arr);
     let x = remortgage;
-    console.log(mortgage);
-    console.log(remortgage);
-    console.log(x);
-    console.log(ratev);
     if (x > 0) {
       let result = (x * (ratev / 100)) / 12;
       console.log(ratev);

@@ -51,28 +51,29 @@ function App(): JSX.Element {
               <Stack.Screen name="OTPVerifyPage" component={OTPVerifyPage}
                 options={{ title: 'Verification Code' }} />                
               <Stack.Screen options={{
-                headerShown: false
+                headerShown: false,
+                title:"Home Page"
               }} name="HomePage" component={HomePage} />
               <Stack.Screen
                 name="MortgageCalculatorPage"
                 component={MortgagePage}
-                options={{ title: 'Mortgage Calculator' }} />
+                options={{ title: 'Mortgage Payment Calculator' }} />
               <Stack.Screen
                 name="PurchasePage"
                 component={PurchasePage}
-                options={{ title: 'Purchase' }} />
+                options={{ title: 'New Purchase Calculator' }} />
               <Stack.Screen name="RefinancePage"
                 component={RefinancePage}
-                options={{ title: 'Refinance' }} />
+                options={{ title: 'Refinance Calculator' }} />
               <Stack.Screen name="ConsolidationPage"
                 component={ConsolidationPage}
-                options={{ title: 'Consolidation' }} />
+                options={{ title: 'Consolidation Calculator' }} />
               <Stack.Screen name="PreQualifierPage"
                 component={PreQualifierPage}
-                options={{ title: 'Pre-Qualifier' }} />
+                options={{ title: 'Pre-Approval Calculator' }} />
               <Stack.Screen name="EquityPage"
                 component={EquityPage}
-                options={{ title: 'Equity' }} />
+                options={{ title: 'Equity Loan Calculator' }} />
             </Stack.Navigator>
           </NavigationContainer>
         </MenuProvider>
