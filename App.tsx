@@ -23,6 +23,8 @@ import EquityPage from './src/pages/EquityPage';
 import {MenuProvider} from 'react-native-popup-menu';
 import SplashPage from './src/pages/SplashPage';
 import ProfilePage from './src/pages/ProfilePage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
   return (
@@ -37,6 +39,7 @@ function App(): JSX.Element {
                 contentStyle: {
                   backgroundColor: '#FFFFFF',
                 },
+                headerLeft: ()=>(<Icon name="arrow-left" size={18}/>)
               }}>
               <Stack.Screen
                 options={{
