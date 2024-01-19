@@ -387,7 +387,7 @@ const HomePage = () => {
                 <Button
                   containerStyle={[
                     AppStyle.StyleMain.buttonContainer,
-                    {width: '100%', marginTop: 8, marginBottom: 12},
+                    {width: '100%', marginTop: 8, marginBottom: 8},
                   ]}
                   buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
                   titleStyle={AppStyle.StyleMain.buttonTitleStyle}
