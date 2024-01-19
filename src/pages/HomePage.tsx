@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Platform
 } from 'react-native';
 import {Button, Card} from '@rneui/themed';
 import AppStyle from '../theme';
@@ -387,7 +388,7 @@ const HomePage = () => {
                 <Button
                   containerStyle={[
                     AppStyle.StyleMain.buttonContainer,
-                    {width: '100%', marginTop: 8, marginBottom: 8},
+                    {width: '100%', marginTop: 8, marginBottom: Platform.OS === 'ios' ? 8 : 0},
                   ]}
                   buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
                   titleStyle={AppStyle.StyleMain.buttonTitleStyle}

@@ -135,7 +135,7 @@ const StyleMain = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 8,
-    paddingBottom: 8,
+    paddingBottom: 16,
   },
   footerLeftColumn: {
     flex: 1,
