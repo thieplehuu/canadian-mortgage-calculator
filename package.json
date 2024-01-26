@@ -1,5 +1,5 @@
 {
-  "name": "canadianmortgagecalculator",
+  "name": "Canadian Mortgage Calculator",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@gorhom/bottom-sheet": "^4.6.0",
     "@react-native-async-storage/async-storage": "^1.19.5",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/datetimepicker": "^7.6.1",

@@ -20,7 +20,7 @@ export default function SplashPage() {
 
   useEffect(() => {
     getAuthenticate();
-  });
+  }, []);
 
   return (
     <View

@@ -34,7 +34,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     getAuthenticate();
-  });
+  }, []);
 
   const logout = async () => {
     setLoading(true);

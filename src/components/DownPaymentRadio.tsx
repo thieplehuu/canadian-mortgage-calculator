@@ -38,17 +38,19 @@ const DownPaymentRadio: FC<InputProps> = ({ value, items, amount, onSelect, ...p
 
 const styles = StyleSheet.create({
     DownPaymentPanelActive: {
+        minWidth: 81,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 8,
+        padding: 4,
         backgroundColor: "#816CEC",
         marginRight: 8,
         borderRadius: 8
     },
     DownPaymentPanel: {
+        minWidth: 81,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 8,
+        padding: 4,
         marginRight: 8,
         borderRadius: 8,
         borderWidth: 1,

@@ -1,15 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
 import AppStyle from '../theme';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Input, Text, Image, Dialog, Button} from '@rneui/themed';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import {Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, View} from 'react-native';
+import {Input, Text, Button} from '@rneui/themed';
 import {API_URL} from '../constants/urls';
-import {useSelector} from 'react-redux';
-import {formatDate} from '../utils';
 import {AUTHENTICATE_KEY, COUNTRY_CODE} from '../constants/consts';
 import LoadingModal from './LoadingModal';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {getData} from '../stores/store';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 interface TextInputProps {
   title: string;
@@ -31,9 +28,13 @@ const ApplyForm: FC<TextInputProps> = ({
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [uuid, setUUID] = useState('');
-  const [dateString, setDateString] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  
+  const lastNameRef = React.createRef();
+  const emailRef = React.createRef();
+  const phoneNumberRef = React.createRef();
+  const messageRef = React.createRef();
 
   const getAuthenticate = async () => {
     let user = await getData(AUTHENTICATE_KEY, null);
@@ -48,7 +49,7 @@ const ApplyForm: FC<TextInputProps> = ({
 
   useEffect(() => {
     getAuthenticate();
-  });
+  }, []);
 
   const onSubmit = async () => {
     setLoading(true);
@@ -85,88 +86,116 @@ const ApplyForm: FC<TextInputProps> = ({
 
     setLoading(false);
   };
-
+  const headerHeight = useHeaderHeight();
   return (
-    <View style={AppStyle.StyleMain.container}>
-      <Text style={AppStyle.StyleMain.error}>{error}</Text>
-      <View style={AppStyle.StyleMain.input}>
-        <Input
-          inputContainerStyle={{borderBottomWidth: 0}}
-          placeholder="First Name"
-          value={firstName}
-          onChangeText={firstName => setFirstName(firstName)}
-        />
-      </View>
-      <View style={AppStyle.StyleMain.input}>
-        <Input
-          inputContainerStyle={{borderBottomWidth: 0}}
-          placeholder="Last Name"
-          value={lastName}
-          onChangeText={lastName => setLastName(lastName)}
-        />
-      </View>
-      <View style={AppStyle.StyleMain.input}>
-        <Input
-          inputContainerStyle={{borderBottomWidth: 0}}
-          placeholder="Email"
-          value={email}
-          onChangeText={email => setEmail(email)}
-        />
-      </View>
-      <View style={AppStyle.StyleMain.input}>
-        <Input
-          inputContainerStyle={{borderBottomWidth: 0}}
-          placeholder="Phone Number"
-          value={phoneNumber}
-          keyboardType="numeric"
-          leftIcon={
-            <View
-              style={{
-                width: 40,
-                alignContent: 'flex-start',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>
-                  {COUNTRY_CODE}
-                </Text>
-                <View style={AppStyle.StyleMain.InputSeparate} />
-              </View>
-            </View>
-          }
-          onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
-        />
-      </View>
-      <View style={AppStyle.StyleMain.multilineInput}>
-        <Input
-          inputStyle={[
-            AppStyle.StyleMain.TextInput,
-            {
-              height: 90,
-              justifyContent: 'flex-start',
-              textAlignVertical: 'top',
-            },
-          ]}
-          inputContainerStyle={{borderBottomWidth: 0}}
-          placeholder="Enter your message"
-          value={message}
-          onChangeText={message => setMessage(message)}
-        />
-      </View>
-      <LoadingModal
-        modalVisible={loading}
-        color={'#816CEC'}
-        modalStyle={undefined}
-      />
-      <Button
-        containerStyle={AppStyle.StyleMain.DialogSubmitButtonContainer}
-        buttonStyle={AppStyle.StyleMain.DialogSubmitButton}
-        titleStyle={{color: 'white'}}
-        title="Submit Message"
-        onPress={onSubmit}
-      />
-    </View>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} 
+      style={{flex:1}} >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={AppStyle.StyleMain.container}>
+          <Text style={AppStyle.StyleMain.error}>{error}</Text>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="First Name"
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                lastNameRef.current.focus();
+              }}
+              value={firstName}
+              onChangeText={firstName => setFirstName(firstName)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Last Name"
+              ref={lastNameRef}
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                emailRef.current.focus();
+              }}
+              value={lastName}
+              onChangeText={lastName => setLastName(lastName)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Email"
+              returnKeyType="next"
+              ref={emailRef}
+              onSubmitEditing={() => {
+                phoneNumberRef.current.focus();
+              }}
+              value={email}
+              onChangeText={email => setEmail(email)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Phone Number"
+              keyboardType="numeric"           
+              returnKeyType="done"
+              ref={phoneNumberRef}
+              onSubmitEditing={() => {
+                messageRef.current.focus();
+              }}
+              value={phoneNumber}
+              leftIcon={
+                <View
+                  style={{
+                    width: 40,
+                    alignContent: 'flex-start',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>
+                      {COUNTRY_CODE}
+                    </Text>
+                    <View style={AppStyle.StyleMain.InputSeparate} />
+                  </View>
+                </View>
+              }
+              onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.multilineInput}>
+            <Input
+              inputStyle={[
+                AppStyle.StyleMain.TextInput,
+                {
+                  height: 90,
+                  justifyContent: 'flex-start',
+                  textAlignVertical: 'top',
+                },
+              ]}
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Enter your message"         
+              multiline={true}
+              returnKeyType="done"
+              ref={messageRef}
+              blurOnSubmit={true}
+              value={message}
+              onChangeText={message => setMessage(message)}
+            />
+          </View>
+          <LoadingModal
+            modalVisible={loading}
+            color={'#816CEC'}
+            modalStyle={undefined}
+          />
+          <Button
+            containerStyle={AppStyle.StyleMain.DialogSubmitButtonContainer}
+            buttonStyle={AppStyle.StyleMain.DialogSubmitButton}
+            titleStyle={{color: 'white'}}
+            title="Submit Message"            
+            onPress={onSubmit}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

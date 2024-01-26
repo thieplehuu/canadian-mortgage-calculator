@@ -1,11 +1,13 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import AppStyle from '../theme';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, TextInput, TouchableWithoutFeedback, View} from 'react-native';
 import {Input, Button, Text, Image} from '@rneui/themed';
 import {API_URL} from '../constants/urls';
 import {AUTHENTICATE_KEY, COUNTRY_CODE} from '../constants/consts';
 import LoadingModal from './LoadingModal';
 import {getData} from '../stores/store';
+import { Keyboard } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface FormProps {
   onConfirm: (message: string) => void;
@@ -22,6 +24,11 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
+  const lastNameRef = React.createRef();
+  const emailRef = React.createRef();
+  const phoneNumberRef = React.createRef();
+  const messageRef = React.createRef();
+
   const getAuthenticate = async () => {
     let user = await getData(AUTHENTICATE_KEY, null);
     if (user != null) {
@@ -35,7 +42,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
 
   useEffect(() => {
     getAuthenticate();
-  });
+  }, []);
 
   const onSubmit = async () => {
     setLoading(true);
@@ -72,114 +79,135 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
     setLoading(false);
   };
   return (
-    <ScrollView>
-      <View style={AppStyle.StyleMain.container}>
-        <View style={styles.userSection}>
-          <Image
-            style={styles.avatar}
-            source={require('../../assets/images/person.png')}
-          />
-          <View style={styles.userInfo}>
-            <Text style={textStyle.text3}>Suganthan Thavarajasingam</Text>
-            <Text style={textStyle.text4}>Mortgage Broker</Text>
+    <KeyboardAwareScrollView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={AppStyle.StyleMain.container}>
+          <View style={styles.userSection}>
+            <Image
+              style={styles.avatar}
+              source={require('../../assets/images/person.png')}
+            />
+            <View style={styles.userInfo}>
+              <Text style={textStyle.text3}>Suganthan Thavarajasingam</Text>
+              <Text style={textStyle.text4}>Mortgage Broker</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.addressSection}>
-          <View>
-            <Text style={textStyle.text4}>Mortgage Architects</Text>
-            <Text style={textStyle.text4}>​FSRA 1272​8</Text>
-            <Text style={textStyle.text4}>
-              11 Progress Av, Unit 5 Toronto ON M1P 4S7
-            </Text>
+          <View style={styles.addressSection}>
+            <View>
+              <Text style={textStyle.text4}>Mortgage Architects</Text>
+              <Text style={textStyle.text4}>​FSRA 1272​8</Text>
+              <Text style={textStyle.text4}>
+                11 Progress Av, Unit 5 Toronto ON M1P 4S7
+              </Text>
+            </View>
           </View>
-        </View>
-        <Text style={AppStyle.StyleMain.error}>{error}</Text>
-        <View style={AppStyle.StyleMain.input}>
-          <Input
-            inputStyle={AppStyle.StyleMain.TextInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
-            placeholder="First Name"
-            value={firstName}
-            onChangeText={firstName => setFirstName(firstName)}
-          />
-        </View>
-        <View style={AppStyle.StyleMain.input}>
-          <Input
-            inputStyle={AppStyle.StyleMain.TextInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
-            placeholder="Last Name"
-            value={lastName}
-            onChangeText={lastName => setLastName(lastName)}
-          />
-        </View>
-        <View style={AppStyle.StyleMain.input}>
-          <Input
-            inputStyle={AppStyle.StyleMain.TextInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
-            placeholder="Email"
-            value={email}
-            onChangeText={email => setEmail(email)}
-          />
-        </View>
-        <View style={AppStyle.StyleMain.input}>
-          <Input
-            inputStyle={AppStyle.StyleLogin.TextInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
-            placeholder="Phone Number"
-            keyboardType="numeric"
-            value={phoneNumber}
-            leftIcon={
-              <View
-                style={{
-                  width: 40,
-                  alignContent: 'flex-start',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>
-                    {COUNTRY_CODE}
-                  </Text>
-                  <View style={AppStyle.StyleMain.InputSeparate} />
+          <Text style={AppStyle.StyleMain.error}>{error}</Text>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputStyle={AppStyle.StyleMain.TextInput}
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="First Name"
+              value={firstName}
+              returnKeyType="next"onSubmitEditing={() => {
+                lastNameRef.current.focus();
+              }}
+              onChangeText={firstName => setFirstName(firstName)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputStyle={AppStyle.StyleMain.TextInput}
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Last Name"              
+              returnKeyType="next"
+              ref={lastNameRef}
+              onSubmitEditing={() => {
+                emailRef.current.focus();
+              }}
+              value={lastName}
+              onChangeText={lastName => setLastName(lastName)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputStyle={AppStyle.StyleMain.TextInput}
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Email"
+              returnKeyType="next"
+              ref={emailRef}
+              onSubmitEditing={() => {
+                phoneNumberRef.current.focus();
+              }}
+              value={email}
+              onChangeText={email => setEmail(email)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.input}>
+            <Input
+              inputStyle={AppStyle.StyleLogin.TextInput}
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Phone Number"
+              keyboardType="numeric"              
+              returnKeyType="done"
+              ref={phoneNumberRef}
+              onSubmitEditing={() => {
+                messageRef.current.focus();
+              }}
+              value={phoneNumber}
+              leftIcon={
+                <View
+                  style={{
+                    width: 40,
+                    alignContent: 'flex-start',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={AppStyle.StyleMain.phoneInputPrefixLabel}>
+                      {COUNTRY_CODE}
+                    </Text>
+                    <View style={AppStyle.StyleMain.InputSeparate} />
+                  </View>
                 </View>
-              </View>
-            }
-            onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+              }
+              onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.multilineInput}>
+            <Input
+              inputStyle={[
+                AppStyle.StyleMain.TextInput,
+                {
+                  height: 90,
+                  justifyContent: 'flex-start',
+                  textAlignVertical: 'top',
+                },
+              ]}
+              inputContainerStyle={{borderBottomWidth: 0}}
+              placeholder="Enter your message"              
+              returnKeyType="go"              
+              ref={messageRef}
+              value={message}
+              onChangeText={message => setMessage(message)}
+            />
+          </View>
+          <View style={AppStyle.StyleMain.stretch}>
+            <Button
+              containerStyle={AppStyle.StyleMain.buttonContainer}
+              buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+              titleStyle={AppStyle.StyleMain.buttonTitleStyle}
+              title={'Submit Message'}
+              onPress={onSubmit}
+            />
+          </View>
+          <LoadingModal
+            modalVisible={loading}
+            color={'#816CEC'}
+            modalStyle={undefined}
           />
         </View>
-        <View style={AppStyle.StyleMain.multilineInput}>
-          <Input
-            inputStyle={[
-              AppStyle.StyleMain.TextInput,
-              {
-                height: 90,
-                justifyContent: 'flex-start',
-                textAlignVertical: 'top',
-              },
-            ]}
-            inputContainerStyle={{borderBottomWidth: 0}}
-            placeholder="Enter your message"
-            value={message}
-            multiline={true}
-            onChangeText={message => setMessage(message)}
-          />
-        </View>
-        <View style={AppStyle.StyleMain.stretch}>
-          <Button
-            containerStyle={AppStyle.StyleMain.buttonContainer}
-            buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
-            titleStyle={AppStyle.StyleMain.buttonTitleStyle}
-            title={'Submit Message'}
-            onPress={onSubmit}
-          />
-        </View>
-        <LoadingModal
-          modalVisible={loading}
-          color={'#816CEC'}
-          modalStyle={undefined}
-        />
-      </View>
-    </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 
