@@ -31,8 +31,8 @@
 		A338AB59E15E4645BBCF78B6 /* consolidation.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FC6848395F9445799A9E532 /* consolidation.png */; };
 		A6A641B91DC6428A9D615A79 /* SFPRODISPLAYULTRALIGHTITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = AD276F49D04D4B1CB2B9D38A /* SFPRODISPLAYULTRALIGHTITALIC.OTF */; };
 		BF3269813DFD40FBA898CF88 /* SFPRODISPLAYREGULAR.OTF in Resources */ = {isa = PBXBuildFile; fileRef = B7915CE0A2A34D1086670141 /* SFPRODISPLAYREGULAR.OTF */; };
-		FF58986C240D436FB43B998F /* purchase.png in Resources */ = {isa = PBXBuildFile; fileRef = EC9735099F5E401EAC64B511 /* purchase.png */; };
 		BFE7CCD65FF04987AAEECDF1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0115A2E59DE0401E8B251AE8 /* logo.png */; };
+		FF58986C240D436FB43B998F /* purchase.png in Resources */ = {isa = PBXBuildFile; fileRef = EC9735099F5E401EAC64B511 /* purchase.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +49,7 @@
 		00E356EE1AD99517003FC87E /* CanadianMortgageCalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CanadianMortgageCalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CanadianMortgageCalculatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanadianMortgageCalculatorTests.m; sourceTree = "<group>"; };
+		0115A2E59DE0401E8B251AE8 /* logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = logo.png; path = ../assets/images/logo.png; sourceTree = "<group>"; };
 		099D05E84670433A83BC6A9F /* SFPRODISPLAYHEAVYITALIC.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYHEAVYITALIC.OTF; path = ../assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF; sourceTree = "<group>"; };
 		0E6D2335444F4E6589666C31 /* SFPRODISPLAYMEDIUM.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYMEDIUM.OTF; path = ../assets/fonts/SFPRODISPLAYMEDIUM.OTF; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CanadianMortgageCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CanadianMortgageCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +82,6 @@
 		EC1C73B399BF433A8041560D /* SFPRODISPLAYTHINITALIC.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYTHINITALIC.OTF; path = ../assets/fonts/SFPRODISPLAYTHINITALIC.OTF; sourceTree = "<group>"; };
 		EC9735099F5E401EAC64B511 /* purchase.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = purchase.png; path = ../assets/images/purchase.png; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		0115A2E59DE0401E8B251AE8 /* logo.png */ = {isa = PBXFileReference; name = "logo.png"; path = "../assets/images/logo.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -583,7 +583,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = JE74WS49JS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CanadianMortgageCalculator/Info.plist;
@@ -612,7 +612,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = JE74WS49JS;
 				INFOPLIST_FILE = CanadianMortgageCalculator/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Canadian Mortgage Calculator";
