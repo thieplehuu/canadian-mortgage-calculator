@@ -1,12 +1,19 @@
 import React, {FC, useEffect, useState} from 'react';
 import AppStyle from '../theme';
-import {Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {Input, Text, Button} from '@rneui/themed';
 import {API_URL} from '../constants/urls';
 import {AUTHENTICATE_KEY, COUNTRY_CODE} from '../constants/consts';
 import LoadingModal from './LoadingModal';
 import {getData} from '../stores/store';
-import { useHeaderHeight } from '@react-navigation/elements';
+import {useHeaderHeight} from '@react-navigation/elements';
 
 interface TextInputProps {
   title: string;
@@ -30,7 +37,7 @@ const ApplyForm: FC<TextInputProps> = ({
   const [uuid, setUUID] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  
+
   const lastNameRef = React.createRef();
   const emailRef = React.createRef();
   const phoneNumberRef = React.createRef();
@@ -88,8 +95,7 @@ const ApplyForm: FC<TextInputProps> = ({
   };
   const headerHeight = useHeaderHeight();
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} 
-      style={{flex:1}} >
+    <ScrollView automaticallyAdjustKeyboardInsets={true} style={{flex: 1}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={AppStyle.StyleMain.container}>
           <Text style={AppStyle.StyleMain.error}>{error}</Text>
@@ -99,7 +105,7 @@ const ApplyForm: FC<TextInputProps> = ({
               placeholder="First Name"
               returnKeyType="next"
               onSubmitEditing={() => {
-                lastNameRef.current.focus();
+                lastNameRef.current?.focus();
               }}
               value={firstName}
               onChangeText={firstName => setFirstName(firstName)}
@@ -112,7 +118,7 @@ const ApplyForm: FC<TextInputProps> = ({
               ref={lastNameRef}
               returnKeyType="next"
               onSubmitEditing={() => {
-                emailRef.current.focus();
+                emailRef.current?.focus();
               }}
               value={lastName}
               onChangeText={lastName => setLastName(lastName)}
@@ -125,7 +131,7 @@ const ApplyForm: FC<TextInputProps> = ({
               returnKeyType="next"
               ref={emailRef}
               onSubmitEditing={() => {
-                phoneNumberRef.current.focus();
+                phoneNumberRef.current?.focus();
               }}
               value={email}
               onChangeText={email => setEmail(email)}
@@ -135,11 +141,11 @@ const ApplyForm: FC<TextInputProps> = ({
             <Input
               inputContainerStyle={{borderBottomWidth: 0}}
               placeholder="Phone Number"
-              keyboardType="numeric"           
+              keyboardType="numeric"
               returnKeyType="done"
               ref={phoneNumberRef}
               onSubmitEditing={() => {
-                messageRef.current.focus();
+                messageRef.current?.focus();
               }}
               value={phoneNumber}
               leftIcon={
@@ -172,7 +178,7 @@ const ApplyForm: FC<TextInputProps> = ({
                 },
               ]}
               inputContainerStyle={{borderBottomWidth: 0}}
-              placeholder="Enter your message"         
+              placeholder="Enter your message"
               multiline={true}
               returnKeyType="done"
               ref={messageRef}
@@ -190,12 +196,12 @@ const ApplyForm: FC<TextInputProps> = ({
             containerStyle={AppStyle.StyleMain.DialogSubmitButtonContainer}
             buttonStyle={AppStyle.StyleMain.DialogSubmitButton}
             titleStyle={{color: 'white'}}
-            title="Submit Message"            
+            title="Submit Message"
             onPress={onSubmit}
           />
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

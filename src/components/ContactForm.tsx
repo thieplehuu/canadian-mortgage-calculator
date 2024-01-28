@@ -1,13 +1,20 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import AppStyle from '../theme';
-import {KeyboardAvoidingView, StyleSheet, TextInput, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {Input, Button, Text, Image} from '@rneui/themed';
 import {API_URL} from '../constants/urls';
 import {AUTHENTICATE_KEY, COUNTRY_CODE} from '../constants/consts';
 import LoadingModal from './LoadingModal';
 import {getData} from '../stores/store';
-import { Keyboard } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {Keyboard} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 interface FormProps {
   onConfirm: (message: string) => void;
@@ -79,7 +86,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
     setLoading(false);
   };
   return (
-    <KeyboardAwareScrollView>
+    <ScrollView automaticallyAdjustKeyboardInsets={true} style={{flex: 1}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={AppStyle.StyleMain.container}>
           <View style={styles.userSection}>
@@ -108,8 +115,9 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
               inputContainerStyle={{borderBottomWidth: 0}}
               placeholder="First Name"
               value={firstName}
-              returnKeyType="next"onSubmitEditing={() => {
-                lastNameRef.current.focus();
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                lastNameRef.current?.focus();
               }}
               onChangeText={firstName => setFirstName(firstName)}
             />
@@ -118,11 +126,11 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
             <Input
               inputStyle={AppStyle.StyleMain.TextInput}
               inputContainerStyle={{borderBottomWidth: 0}}
-              placeholder="Last Name"              
+              placeholder="Last Name"
               returnKeyType="next"
               ref={lastNameRef}
               onSubmitEditing={() => {
-                emailRef.current.focus();
+                emailRef.current?.focus();
               }}
               value={lastName}
               onChangeText={lastName => setLastName(lastName)}
@@ -136,7 +144,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
               returnKeyType="next"
               ref={emailRef}
               onSubmitEditing={() => {
-                phoneNumberRef.current.focus();
+                phoneNumberRef.current?.focus();
               }}
               value={email}
               onChangeText={email => setEmail(email)}
@@ -147,11 +155,11 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
               inputStyle={AppStyle.StyleLogin.TextInput}
               inputContainerStyle={{borderBottomWidth: 0}}
               placeholder="Phone Number"
-              keyboardType="numeric"              
+              keyboardType="numeric"
               returnKeyType="done"
               ref={phoneNumberRef}
               onSubmitEditing={() => {
-                messageRef.current.focus();
+                messageRef.current?.focus();
               }}
               value={phoneNumber}
               leftIcon={
@@ -184,8 +192,8 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
                 },
               ]}
               inputContainerStyle={{borderBottomWidth: 0}}
-              placeholder="Enter your message"              
-              returnKeyType="go"              
+              placeholder="Enter your message"
+              returnKeyType="go"
               ref={messageRef}
               value={message}
               onChangeText={message => setMessage(message)}
@@ -207,7 +215,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
           />
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 
