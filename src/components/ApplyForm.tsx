@@ -2,8 +2,6 @@ import React, {FC, useEffect, useState} from 'react';
 import AppStyle from '../theme';
 import {
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
   TouchableWithoutFeedback,
   View,
@@ -13,7 +11,6 @@ import {API_URL} from '../constants/urls';
 import {AUTHENTICATE_KEY, COUNTRY_CODE} from '../constants/consts';
 import LoadingModal from './LoadingModal';
 import {getData} from '../stores/store';
-import {useHeaderHeight} from '@react-navigation/elements';
 
 interface TextInputProps {
   title: string;
@@ -93,12 +90,12 @@ const ApplyForm: FC<TextInputProps> = ({
 
     setLoading(false);
   };
-  const headerHeight = useHeaderHeight();
   return (
-    <ScrollView automaticallyAdjustKeyboardInsets={true} style={{flex: 1}}>
+    <ScrollView automaticallyAdjustKeyboardInsets={true}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={AppStyle.StyleMain.container}>
           <Text style={AppStyle.StyleMain.error}>{error}</Text>
+          <View style={{height: 50}}></View>
           <View style={AppStyle.StyleMain.input}>
             <Input
               inputContainerStyle={{borderBottomWidth: 0}}
@@ -192,10 +189,11 @@ const ApplyForm: FC<TextInputProps> = ({
             color={'#816CEC'}
             modalStyle={undefined}
           />
+
           <Button
-            containerStyle={AppStyle.StyleMain.DialogSubmitButtonContainer}
-            buttonStyle={AppStyle.StyleMain.DialogSubmitButton}
-            titleStyle={{color: 'white'}}
+            containerStyle={AppStyle.StyleMain.buttonContainer}
+            buttonStyle={AppStyle.StyleMain.buttonFullwidthStyle}
+            titleStyle={AppStyle.StyleMain.buttonTitleStyle}
             title="Submit Message"
             onPress={onSubmit}
           />
