@@ -31,8 +31,8 @@
 		A6A641B91DC6428A9D615A79 /* SFPRODISPLAYULTRALIGHTITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = AD276F49D04D4B1CB2B9D38A /* SFPRODISPLAYULTRALIGHTITALIC.OTF */; };
 		BF3269813DFD40FBA898CF88 /* SFPRODISPLAYREGULAR.OTF in Resources */ = {isa = PBXBuildFile; fileRef = B7915CE0A2A34D1086670141 /* SFPRODISPLAYREGULAR.OTF */; };
 		BFE7CCD65FF04987AAEECDF1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0115A2E59DE0401E8B251AE8 /* logo.png */; };
-		FF58986C240D436FB43B998F /* purchase.png in Resources */ = {isa = PBXBuildFile; fileRef = EC9735099F5E401EAC64B511 /* purchase.png */; };
 		EEAB76D97FCC4D6384CAEDDE /* pre_qualifier.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6A1493F43B4331BD14752F /* pre_qualifier.png */; };
+		FF58986C240D436FB43B998F /* purchase.png in Resources */ = {isa = PBXBuildFile; fileRef = EC9735099F5E401EAC64B511 /* purchase.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,9 +79,9 @@
 		C13F18D4C2344BC58A8263C9 /* SFPRODISPLAYBLACKITALIC.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYBLACKITALIC.OTF; path = ../assets/fonts/SFPRODISPLAYBLACKITALIC.OTF; sourceTree = "<group>"; };
 		CE820530C35D46B1A9FE749A /* mortgage_calculator.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = mortgage_calculator.png; path = ../assets/images/mortgage_calculator.png; sourceTree = "<group>"; };
 		EC1C73B399BF433A8041560D /* SFPRODISPLAYTHINITALIC.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYTHINITALIC.OTF; path = ../assets/fonts/SFPRODISPLAYTHINITALIC.OTF; sourceTree = "<group>"; };
+		EC6A1493F43B4331BD14752F /* pre_qualifier.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = pre_qualifier.png; path = ../assets/images/pre_qualifier.png; sourceTree = "<group>"; };
 		EC9735099F5E401EAC64B511 /* purchase.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = purchase.png; path = ../assets/images/purchase.png; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		EC6A1493F43B4331BD14752F /* pre_qualifier.png */ = {isa = PBXFileReference; name = "pre_qualifier.png"; path = "../assets/images/pre_qualifier.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -583,7 +583,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = JE74WS49JS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = CanadianMortgageCalculator/Info.plist;
@@ -612,7 +612,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = JE74WS49JS;
 				INFOPLIST_FILE = CanadianMortgageCalculator/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Canadian Mortgage Calculator";
