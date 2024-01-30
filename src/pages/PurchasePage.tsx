@@ -152,6 +152,16 @@ export default function PurchasePage() {
 
   const onChangeRate = (value: any) => {
     setRate(value);
+    setResult(
+      calculateMortgage(
+        amount -
+          amount * (dPayment[dPerc].percent / 100) +
+          (amount - DminAmount) * insurance,
+        value,
+        amortization.value,
+        paymentPeriod.value,
+      ),
+    );
   };
 
   const onChangeAmortization = (item: any) => {
