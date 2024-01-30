@@ -51,7 +51,7 @@ export default function ConsolidationPage() {
     setNewPayment(calculateMortgage(totalDebtCalculated, rate, 30, 'monthly'));
     setTotalDebt(totalDebtCalculated);
     setMonthlyPayment(items.reduce((sum, item) => sum + item.payment, 0));
-  }, [rate]);
+  }, []);
 
   const onChangeAmount = (name: string, value: number | null) => {
     items.map((item: any, i) => {

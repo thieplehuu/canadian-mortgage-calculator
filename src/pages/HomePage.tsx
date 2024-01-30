@@ -442,6 +442,7 @@ const sectionStyle = StyleSheet.create({
   },
   left: {
     width: '60%',
+    zIndex: 99,
   },
   left70: {
     width: '70%',
@@ -456,7 +457,7 @@ const sectionStyle = StyleSheet.create({
     alignContent: 'flex-end',
   },
   content: {
-    padding: 16,
+    padding: 12,
   },
   image: {
     alignSelf: 'flex-end',

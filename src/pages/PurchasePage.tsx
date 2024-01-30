@@ -76,7 +76,7 @@ export default function PurchasePage() {
       ),
     );
     DownPaymentCalc(amount, DminAmount);
-  }, [rate, DminAmount]);
+  }, [DminAmount]);
   useEffect(() => {
     let value;
     if (amount <= 500000) {

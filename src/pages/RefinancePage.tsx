@@ -72,7 +72,7 @@ export default function RefinancePage() {
         paymentPeriod.value,
       ),
     );
-  }, [rate]);
+  }, []);
 
   const onChangeHomeValue = (value: any) => {
     setHomeValue(value);
@@ -96,6 +96,14 @@ export default function RefinancePage() {
 
   const onChangeRate = (value: any) => {
     setRate(value);
+    setResult(
+      calculateMortgage(
+        maxAmount,
+        value,
+        amortization.value,
+        paymentPeriod.value,
+      ),
+    );
   };
 
   const onChangeAmortization = (item: any) => {

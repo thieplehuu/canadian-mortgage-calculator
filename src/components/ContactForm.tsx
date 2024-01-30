@@ -1,12 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
 import AppStyle from '../theme';
-import {ScrollView, StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {Input, Button, Text, Image} from '@rneui/themed';
 import {API_URL} from '../constants/urls';
 import {AUTHENTICATE_KEY, COUNTRY_CODE} from '../constants/consts';
 import LoadingModal from './LoadingModal';
 import {getData} from '../stores/store';
-import { Keyboard } from 'react-native';
+import {Keyboard} from 'react-native';
 
 interface FormProps {
   onConfirm: (message: string) => void;
@@ -68,7 +73,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
       });
       const json = await response.json();
       if (json.status == 'success') {
-        onConfirm('Send message success');
+        onConfirm(json.message);
       } else {
         onError(json.message);
       }
@@ -107,7 +112,8 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
               inputContainerStyle={{borderBottomWidth: 0}}
               placeholder="First Name"
               value={firstName}
-              returnKeyType="next"onSubmitEditing={() => {
+              returnKeyType="next"
+              onSubmitEditing={() => {
                 lastNameRef.current.focus();
               }}
               onChangeText={firstName => setFirstName(firstName)}
@@ -117,7 +123,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
             <Input
               inputStyle={AppStyle.StyleMain.TextInput}
               inputContainerStyle={{borderBottomWidth: 0}}
-              placeholder="Last Name"              
+              placeholder="Last Name"
               returnKeyType="next"
               ref={lastNameRef}
               onSubmitEditing={() => {
@@ -146,7 +152,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
               inputStyle={AppStyle.StyleLogin.TextInput}
               inputContainerStyle={{borderBottomWidth: 0}}
               placeholder="Phone Number"
-              keyboardType="numeric"              
+              keyboardType="numeric"
               returnKeyType="done"
               ref={phoneNumberRef}
               onSubmitEditing={() => {
@@ -183,7 +189,7 @@ const ContactForm: FC<FormProps> = ({onConfirm, onError, ...props}) => {
                 },
               ]}
               inputContainerStyle={{borderBottomWidth: 0}}
-              placeholder="Enter your message"     
+              placeholder="Enter your message"
               multiline={true}
               returnKeyType="done"
               blurOnSubmit={true}

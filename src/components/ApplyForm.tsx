@@ -2,6 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import AppStyle from '../theme';
 import {
   Keyboard,
+  Platform,
   ScrollView,
   TouchableWithoutFeedback,
   View,
@@ -80,7 +81,7 @@ const ApplyForm: FC<TextInputProps> = ({
       });
       const json = await response.json();
       if (json.status == 'success') {
-        onConfirm('Send message success');
+        onConfirm(json.message);
       } else {
         onError(json.message);
       }
@@ -95,7 +96,8 @@ const ApplyForm: FC<TextInputProps> = ({
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={AppStyle.StyleMain.container}>
           <Text style={AppStyle.StyleMain.error}>{error}</Text>
-          <View style={{height: 50}}></View>
+          {Platform.OS === 'ios' && <View style={{height: 50}}></View>}
+
           <View style={AppStyle.StyleMain.input}>
             <Input
               inputContainerStyle={{borderBottomWidth: 0}}

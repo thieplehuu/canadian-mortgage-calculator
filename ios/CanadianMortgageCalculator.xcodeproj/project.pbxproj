@@ -25,7 +25,6 @@
 		78590C3FE820485EA0310A44 /* equity.png in Resources */ = {isa = PBXBuildFile; fileRef = 1982CC36440441C397F326A2 /* equity.png */; };
 		819E1A9631A14F8D847A1097 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D92C9AA9DFC4C2AA498184E /* person.png */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8280CD74082F4842AE75C9A0 /* pre_qualifier.png in Resources */ = {isa = PBXBuildFile; fileRef = CC111CEAD29C492188DCAF5F /* pre_qualifier.png */; };
 		9D87B529904C4DC2B0C54E79 /* SFPRODISPLAYSEMIBOLDITALIC.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 4F0463858162493CACC99C52 /* SFPRODISPLAYSEMIBOLDITALIC.OTF */; };
 		9E079513A55A481EAB11A8C0 /* mortgage_calculator.png in Resources */ = {isa = PBXBuildFile; fileRef = CE820530C35D46B1A9FE749A /* mortgage_calculator.png */; };
 		A338AB59E15E4645BBCF78B6 /* consolidation.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FC6848395F9445799A9E532 /* consolidation.png */; };
@@ -33,6 +32,7 @@
 		BF3269813DFD40FBA898CF88 /* SFPRODISPLAYREGULAR.OTF in Resources */ = {isa = PBXBuildFile; fileRef = B7915CE0A2A34D1086670141 /* SFPRODISPLAYREGULAR.OTF */; };
 		BFE7CCD65FF04987AAEECDF1 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0115A2E59DE0401E8B251AE8 /* logo.png */; };
 		FF58986C240D436FB43B998F /* purchase.png in Resources */ = {isa = PBXBuildFile; fileRef = EC9735099F5E401EAC64B511 /* purchase.png */; };
+		EEAB76D97FCC4D6384CAEDDE /* pre_qualifier.png in Resources */ = {isa = PBXBuildFile; fileRef = EC6A1493F43B4331BD14752F /* pre_qualifier.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,11 +77,11 @@
 		B7915CE0A2A34D1086670141 /* SFPRODISPLAYREGULAR.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYREGULAR.OTF; path = ../assets/fonts/SFPRODISPLAYREGULAR.OTF; sourceTree = "<group>"; };
 		BB8D0FBE4AF54731B184F7A8 /* refinance.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = refinance.png; path = ../assets/images/refinance.png; sourceTree = "<group>"; };
 		C13F18D4C2344BC58A8263C9 /* SFPRODISPLAYBLACKITALIC.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYBLACKITALIC.OTF; path = ../assets/fonts/SFPRODISPLAYBLACKITALIC.OTF; sourceTree = "<group>"; };
-		CC111CEAD29C492188DCAF5F /* pre_qualifier.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = pre_qualifier.png; path = ../assets/images/pre_qualifier.png; sourceTree = "<group>"; };
 		CE820530C35D46B1A9FE749A /* mortgage_calculator.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = mortgage_calculator.png; path = ../assets/images/mortgage_calculator.png; sourceTree = "<group>"; };
 		EC1C73B399BF433A8041560D /* SFPRODISPLAYTHINITALIC.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFPRODISPLAYTHINITALIC.OTF; path = ../assets/fonts/SFPRODISPLAYTHINITALIC.OTF; sourceTree = "<group>"; };
 		EC9735099F5E401EAC64B511 /* purchase.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = purchase.png; path = ../assets/images/purchase.png; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EC6A1493F43B4331BD14752F /* pre_qualifier.png */ = {isa = PBXFileReference; name = "pre_qualifier.png"; path = "../assets/images/pre_qualifier.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,10 +205,10 @@
 				8FC6848395F9445799A9E532 /* consolidation.png */,
 				1982CC36440441C397F326A2 /* equity.png */,
 				CE820530C35D46B1A9FE749A /* mortgage_calculator.png */,
-				CC111CEAD29C492188DCAF5F /* pre_qualifier.png */,
 				EC9735099F5E401EAC64B511 /* purchase.png */,
 				BB8D0FBE4AF54731B184F7A8 /* refinance.png */,
 				0115A2E59DE0401E8B251AE8 /* logo.png */,
+				EC6A1493F43B4331BD14752F /* pre_qualifier.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -324,11 +324,11 @@
 				A338AB59E15E4645BBCF78B6 /* consolidation.png in Resources */,
 				78590C3FE820485EA0310A44 /* equity.png in Resources */,
 				9E079513A55A481EAB11A8C0 /* mortgage_calculator.png in Resources */,
-				8280CD74082F4842AE75C9A0 /* pre_qualifier.png in Resources */,
 				2769FAF92B58FAFF00EDA851 /* GoogleService-Info.plist in Resources */,
 				FF58986C240D436FB43B998F /* purchase.png in Resources */,
 				02CFF473D9BC4E3FB021BA1B /* refinance.png in Resources */,
 				BFE7CCD65FF04987AAEECDF1 /* logo.png in Resources */,
+				EEAB76D97FCC4D6384CAEDDE /* pre_qualifier.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
