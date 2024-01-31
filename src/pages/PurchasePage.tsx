@@ -39,7 +39,7 @@ export default function PurchasePage() {
   ]);
   const [amortization, setAmotization] = useState(amortizations[0]);
   const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
-  const [rate, setRate] = useState(5.19);
+  const [rate, setRate] = useState(0.0);
   const [DminAmount, setDMinAmount] = useState(0);
   const [dPerc, setDPerc] = useState(0);
   const [insurance, setInsurance] = useState(0);
@@ -58,6 +58,16 @@ export default function PurchasePage() {
       });
       const json = await response.json();
       setRate(json.rate.fixedrate5years);
+      setResult(
+        calculateMortgage(
+          amount -
+            amount * (dPayment[dPerc].percent / 100) +
+            (amount - DminAmount) * insurance,
+          json.rate.fixedrate5years,
+          amortization.value,
+          paymentPeriod.value,
+        ),
+      );
       //setResult(
       //    calculateMortgage(amount, json.rate.fixedrate5years, amortization.value, paymentPeriod.value)
       //);
@@ -66,6 +76,7 @@ export default function PurchasePage() {
     }
   };
   useEffect(() => {
+    loadRates();
     let value;
     if (amount <= 500000) {
       value = amount * 0.05;
@@ -75,17 +86,7 @@ export default function PurchasePage() {
       value = amount * 0.2;
     }
     setDMinAmount(value);
-    loadRates();
-    /*
-    setResult(
-      calculateMortgage(
-        amount - amount * (dPayment[dPerc].percent / 100),
-        rate,
-        amortization.value,
-        paymentPeriod.value,
-      ),
-    );*/
-    DownPaymentCalc(amount, DminAmount);
+    DownPaymentCalc(amount, value);
   }, [DminAmount]);
 
   const downPaymentUpdate = (e: any) => {
