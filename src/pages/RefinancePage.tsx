@@ -30,7 +30,7 @@ export default function RefinancePage() {
   const [homeValue, setHomeValue] = useState(400000);
   const [amortization, setAmotization] = useState(amortizations[0]);
   const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
-  const [rate, setRate] = useState(5.59);
+  const [rate, setRate] = useState(0.0);
   const [maxAmount, setMaxAmount] = useState(homeValue * 0.8);
   const [result, setResult] = useState(0);
   const [loan, setLoan] = useState(homeValue * 0.25);

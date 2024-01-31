@@ -1,6 +1,6 @@
 import {Text, TextInput, View} from 'react-native';
 import AppStyle from '../theme';
-import {FC, useRef, useState} from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import {rateToNumber} from '../utils';
 import CurrencyInput from 'react-native-currency-input';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -91,13 +91,17 @@ const PercentTextInput: FC<PercentInputProps> = ({
   const [editValue, setEditValue] = useState(value);
   const refInput = useRef();
 
+  useEffect(() => {
+    setEditValue(value);
+  }, []);
+
   const onBlur = () => {
     setEditing(false);
   };
 
   const onSetEditing = (edit: boolean) => {
     setEditing(edit);
-    setEditValue(rateToNumber(editValue).toString());
+    setEditValue(rateToNumber(value).toString());
     setTimeout(() => {
       refInput.current.focus();
     }, 0);
@@ -108,7 +112,7 @@ const PercentTextInput: FC<PercentInputProps> = ({
   };
 
   const fullText = () => {
-    return rateToNumber(editValue) + '%';
+    return rateToNumber(value) + '%';
   };
   return (
     <View style={AppStyle.Base.outlinedInputContainer}>

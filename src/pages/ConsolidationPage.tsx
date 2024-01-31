@@ -21,7 +21,7 @@ export default function ConsolidationPage() {
   const [monthlyPayment, setMonthlyPayment] = useState(0);
   const [newPayment, setNewPayment] = useState(0);
   const [totalDebtCalc, setTotalDebtCalc] = useState(0);
-  const [rate, setRate] = useState(5.59);
+  const [rate, setRate] = useState(0.0);
   const [bottomSheetVisible, showBottomSheet] = useState(false);
   const [keyboardStatus, setKeyboardStatus] = useState('KEYBOARD_HIDE');
   const toast = useToast();

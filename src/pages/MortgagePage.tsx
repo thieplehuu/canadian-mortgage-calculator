@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AppStyle from '../theme';
 import {View, Text, SafeAreaView} from 'react-native';
-import {Button, Slider} from '@rneui/themed';
+import {Button, Input, Slider} from '@rneui/themed';
 import {
   OutlinedCurrencyInput,
   OutlinedSelectInput,
@@ -28,7 +28,7 @@ import DropShadow from 'react-native-drop-shadow';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default function MortgagePage() {
-  const [rate, setRate] = useState(5.59);
+  const [rate, setRate] = useState(0.0);
   const [amortization, setAmotization] = useState(amortizations[0]);
   const [amount, setAmount] = useState(inititalQuota);
   const [paymentPeriod, setPaymentPeriod] = useState(paymentPeriods[0]);
