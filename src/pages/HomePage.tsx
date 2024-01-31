@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   Platform,
+  RefreshControl,
 } from 'react-native';
 import {Button, Card} from '@rneui/themed';
 import AppStyle from '../theme';
@@ -20,6 +21,7 @@ import {Dimensions} from 'react-native';
 import ScaleImage from '../components/ScaleImage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 const HomePage = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setLoading] = useState(false);
   const [rates, setRates] = useState({
     fixedrate5years: '5.59',
@@ -66,9 +68,17 @@ const HomePage = () => {
   useEffect(() => {
     loadRates();
   }, []);
+
   const goto = async (page: string) => {
     navigation.navigate(page as never);
   };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(async () => {
+      await loadRates();
+      setRefreshing(false);
+    }, 1000);
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1, padding: 12, backgroundColor: '#ffffff'}}>
@@ -78,7 +88,10 @@ const HomePage = () => {
         </View>
       ) : (
         <>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
             <View
               style={[
                 AppStyle.StyleMain.row,

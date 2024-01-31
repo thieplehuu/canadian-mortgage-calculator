@@ -16,7 +16,6 @@ export default function ProfilePage() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
   const [uuid, setUUID] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const toast = useToast();
@@ -27,7 +26,6 @@ export default function ProfilePage() {
       setFirstName(user.firstName);
       setLastName(user.lastName);
       setPhoneNumber(COUNTRY_CODE + ' ' + user.phoneNumber);
-      setEmail(user.email);
       setUUID(user.uuid);
     }
   };
@@ -93,9 +91,6 @@ export default function ProfilePage() {
         <View style={[AppStyle.StyleMain.row]}>
           <OutlinedText label={'Phone Number'} value={phoneNumber} />
         </View>
-        <View style={[AppStyle.StyleMain.row]}>
-          <OutlinedText label={'Email'} value={email} />
-        </View>
       </View>
       <View>
         <Button
@@ -104,7 +99,7 @@ export default function ProfilePage() {
           titleStyle={{
             color: '#816CEC',
             fontSize: 20,
-            width:"100%"
+            width: '100%',
           }}
           title={'Delete Account'}
           onPress={() => {
@@ -117,7 +112,7 @@ export default function ProfilePage() {
           titleStyle={{
             color: 'white',
             fontSize: 20,
-            width:"100%"
+            width: '100%',
           }}
           title={'Logout'}
           onPress={() => {
