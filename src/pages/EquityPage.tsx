@@ -16,14 +16,15 @@ export default function EquityPage() {
   const [remortgage, setReMortgate] = useState(0);
   const [equity, setEquity] = useState([]);
   const [ratev, setRatev] = useState(10.95);
-  const [mortgatePercent, setMortgatePercent] = useState(0);
-  const [reMortgatePercent, setReMortgatePercent] = useState(0);
+  const [yellowPercent, setYellowPercent] = useState(0);
+  const [greenPercent, setGreenPercent] = useState(0);
+  const [redPercent, setRedPercent] = useState(0);
+  const [remortgagemax, setReMortgateMax] = useState(0);
   const [result, setResult] = useState(0);
   const [bottomSheetVisible, showBottomSheet] = useState(false);
   const [keyboardStatus, setKeyboardStatus] = useState('KEYBOARD_HIDE');
   const toast = useToast();
 
-  const remortgagemax = property * 0.8;
   const loadRates = async () => {
     try {
       const response = await fetch(API_URL + '/rate', {
@@ -104,14 +105,17 @@ export default function EquityPage() {
     let x = remortgage;
     if (x > 0) {
       let result = (x * (ratev / 100)) / 12;
-      console.log(ratev);
       setResult(result);
     }
-
+    let yellow = mortgage;
+    let red = (20 / 100) * property;
+    let green = property - (yellow + red);
+    setReMortgateMax(green);
     let mortgatePercent = (mortgage * 100) / property;
-    setMortgatePercent(mortgatePercent);
-    let reMortgatePercent = 80 - mortgatePercent;
-    setReMortgatePercent(reMortgatePercent);
+    setYellowPercent(mortgatePercent);
+    let reMortgatePercent = ((property - (yellow + red)) * 100) / property;
+    setGreenPercent(reMortgatePercent);
+    setRedPercent((red * 100) / property);
   };
 
   return (
@@ -152,7 +156,7 @@ export default function EquityPage() {
             }}>
             <View
               style={{
-                width: mortgatePercent.toString() + '%',
+                width: yellowPercent.toString() + '%',
                 alignItems: 'stretch',
                 alignContent: 'center',
                 justifyContent: 'center',
@@ -169,7 +173,7 @@ export default function EquityPage() {
 
             <View
               style={{
-                width: reMortgatePercent.toString() + '%',
+                width: greenPercent.toString() + '%',
                 alignItems: 'stretch',
               }}>
               <Slider
@@ -197,7 +201,7 @@ export default function EquityPage() {
             </View>
             <View
               style={{
-                width: '20%',
+                width: redPercent.toString() + '%',
                 alignItems: 'stretch',
                 alignContent: 'center',
                 justifyContent: 'center',
@@ -218,7 +222,7 @@ export default function EquityPage() {
             }}>
             <View
               style={{
-                width: (mortgatePercent + 7).toString() + '%',
+                width: (yellowPercent + 7).toString() + '%',
                 alignItems: 'flex-end',
                 alignContent: 'center',
                 justifyContent: 'center',
@@ -227,7 +231,7 @@ export default function EquityPage() {
             </View>
             <View
               style={{
-                width: reMortgatePercent.toString() + '%',
+                width: greenPercent.toString() + '%',
                 alignItems: 'flex-end',
                 alignContent: 'center',
                 justifyContent: 'center',
