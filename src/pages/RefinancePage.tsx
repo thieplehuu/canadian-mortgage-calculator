@@ -52,7 +52,7 @@ export default function RefinancePage() {
       setResult(
         calculateMortgage(
           maxAmount,
-          rate,
+          json.rate.fixedrate5years,
           amortization.value,
           paymentPeriod.value,
         ),
@@ -64,14 +64,6 @@ export default function RefinancePage() {
 
   useEffect(() => {
     loadRates();
-    setResult(
-      calculateMortgage(
-        maxAmount,
-        rate,
-        amortization.value,
-        paymentPeriod.value,
-      ),
-    );
   }, []);
 
   const onChangeHomeValue = (value: any) => {

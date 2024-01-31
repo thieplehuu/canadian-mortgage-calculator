@@ -47,6 +47,14 @@ export default function MortgagePage() {
       });
       const json = await response.json();
       setRate(json.rate.fixedrate5years);
+      setResult(
+        calculateMortgage(
+          inititalQuota,
+          json.rate.fixedrate5years,
+          amortization.value,
+          paymentPeriod.value,
+        ),
+      );
     } catch (error) {
       console.error(error);
     }
@@ -54,14 +62,6 @@ export default function MortgagePage() {
 
   useEffect(() => {
     loadRates();
-    setResult(
-      calculateMortgage(
-        inititalQuota,
-        rate,
-        amortization.value,
-        paymentPeriod.value,
-      ),
-    );
   }, []);
 
   const onChangeMortgate = (value: any) => {
