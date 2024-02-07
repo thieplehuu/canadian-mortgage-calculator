@@ -37,6 +37,14 @@ export default function ConsolidationPage() {
       });
       const json = await response.json();
       setRate(json.rate.fixedrate5years);
+      
+      const totalDebtCalculated = items.reduce(
+        (sum, item) => sum + item.amount,
+        0,
+      );
+      setNewPayment(calculateMortgage(totalDebtCalculated, json.rate.fixedrate5years, 30, 'monthly'));
+      setTotalDebt(totalDebtCalculated);
+      setMonthlyPayment(items.reduce((sum, item) => sum + item.payment, 0));
     } catch (error) {
       console.error(error);
     }
@@ -44,13 +52,6 @@ export default function ConsolidationPage() {
 
   useEffect(() => {
     loadRates();
-    const totalDebtCalculated = items.reduce(
-      (sum, item) => sum + item.amount,
-      0,
-    );
-    setNewPayment(calculateMortgage(totalDebtCalculated, rate, 30, 'monthly'));
-    setTotalDebt(totalDebtCalculated);
-    setMonthlyPayment(items.reduce((sum, item) => sum + item.payment, 0));
   }, []);
 
   const onChangeAmount = (name: string, value: number | null) => {
